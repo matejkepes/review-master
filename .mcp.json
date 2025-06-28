@@ -1,0 +1,30 @@
+{
+    "mcpServers": {
+        "sequentialthinking": {
+            "command": "docker",
+            "args": [
+                "run",
+                "--rm",
+                "-i",
+                "mcp/sequentialthinking"
+            ]
+        },
+        "playwright": {
+            "command": "npx",
+            "args": [
+                "@playwright/mcp@latest"
+            ]
+        },
+        "memory": {
+            "command": "docker",
+            "args": [
+                "run",
+                "-i",
+                "-v",
+                "claude-memory:/app/dist",
+                "--rm",
+                "mcp/memory"
+            ]
+        }
+    }
+}
