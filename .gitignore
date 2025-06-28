@@ -1,0 +1,10 @@
+# Ignore all subdirectory repos
+/google_my_business/
+/google_reviews/
+/google_reviews_fe/
+/google_reviews_ui/
+/rm_client_portal/
+/rm_client_portal_fe/
+
+# OS files
+.DS_Store
