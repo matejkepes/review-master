@@ -1,0 +1,55 @@
+- id: 1
+  enabled: 1
+  name: Taxi Company 1
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 2
+  enabled: 1
+  name: Taxi Company 2 DiSC
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 3
+  enabled: 1
+  name: Taxi Company 3 Multi Message
+  note: ''
+  country: GB
+  partner_id: 2
+
+- id: 4
+  enabled: 1
+  name: Taxi Company 4 Use Message from DB
+  note: ''
+  country: GB
+  partner_id: 2
+
+- id: 5
+  enabled: 1
+  name: Taxi Company 5 do dispatcher check
+  note: ''
+  country: GB
+  partner_id: 2
+
+- id: 6
+  enabled: 1
+  name: Autocab 1 Test Server
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 7
+  enabled: 1
+  name: Test alternate message service Message Media
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 8
+  enabled: 1
+  name: Test alternate message service Veezu
+  note: ''
+  country: GB
+  partner_id: 1

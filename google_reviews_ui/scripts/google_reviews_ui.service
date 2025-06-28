@@ -1,0 +1,30 @@
+[Unit]
+Description=Google Reviews UI service
+ConditionPathExists=/home/ubuntu/Documents/code/golang/google_reviews_ui
+After=network.target
+
+[Service]
+Type=simple
+# should run this as a different user
+User=root
+Group=root
+#LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+#StartLimitIntervalSec=60
+
+WorkingDirectory=/home/ubuntu/Documents/code/golang/google_reviews_ui
+ExecStart=/home/ubuntu/Documents/code/golang/google_reviews_ui/google_reviews_ui
+
+# make sure log directory exists and owned by syslog (log in same directory as exe file)
+#PermissionsStartOnly=true
+#ExecStartPre=/bin/mkdir -p /var/log/google_reviews_ui
+#ExecStartPre=/bin/chown syslog:adm /var/log/google_reviews_ui
+#ExecStartPre=/bin/chmod 755 /var/log/google_reviews_ui
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=google_reviews_ui
+
+[Install]
+WantedBy=multi-user.target

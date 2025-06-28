@@ -1,0 +1,11 @@
+gitignore
+
+.DS_Store
+
+log_viewer
+**/secrets_*.go
+certs/*
+config/config.properties
+
+.vscode/*
+*.log

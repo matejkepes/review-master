@@ -1,0 +1,111 @@
+- id: 1
+  enabled: 1
+  name: Taxi Company 1
+  country: GB
+  note: "testing"
+  partner_id: 1
+
+- id: 2
+  enabled: 1
+  name: Taxi Company 2 DiSC
+  country: GB
+  note: "testing"
+  partner_id: 1
+
+- id: 3
+  enabled: 1
+  name: Taxi Company 3 Multi Message
+  country: GB
+  note: "testing"
+  partner_id: 2
+
+- id: 4
+  enabled: 1
+  name: Taxi Company 4 iCabbi App
+  country: GB
+  note: "testing"
+  partner_id: 2
+
+- id: 5
+  enabled: 1
+  name: Taxi Company 5 iCabbi App Message From DB
+  country: GB
+  note: "testing"
+  partner_id: 2
+
+- id: 6
+  enabled: 1
+  name: Taxi Company 6 iCabbi App Message From DB do dispatcher check
+  country: GB
+  note: "testing"
+  partner_id: 2
+
+- id: 7
+  enabled: 1
+  name: Taxi Company 7 replace telephone country code with 0
+  country: GB
+  note: "testing"
+  partner_id: 2
+
+- id: 8
+  enabled: 1
+  name: Taxi Company 8 set weekdays all to false
+  country: GB
+  note: "testing"
+  partner_id: 2
+
+- id: 9
+  enabled: 1
+  name: Taxi Company 9 Multi Message from DB
+  country: GB
+  note: "testing"
+  partner_id: 2
+
+- id: 10
+  enabled: 1
+  name: Ride Private Hire
+  country: GB
+  note: "testing"
+  partner_id: 1
+
+- id: 11
+  enabled: 1
+  name: Autocab 1 Test Server
+  country: GB
+  note: "testing"
+  partner_id: 1
+
+- id: 12
+  enabled: 1
+  name: Test Review Master SMS Gateway
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 13
+  enabled: 1
+  name: Autocab 2 Test Server New API V1
+  country: GB
+  note: "testing"
+  partner_id: 1
+
+- id: 14
+  enabled: 1
+  name: Test Review Master SMS Gateway Use Master Queue
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 15
+  enabled: 1
+  name: Autocab 3 Test Server New API V2
+  country: GB
+  note: "testing"
+  partner_id: 1
+
+- id: 16
+  enabled: 1
+  name: Autocab 4 Test Server New API V2 Send SMS using API V1
+  country: GB
+  note: "testing"
+  partner_id: 1

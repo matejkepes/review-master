@@ -1,0 +1,10 @@
+gitignore 
+
+.DS_Store
+
+send_sms
+**/secrets_*.go
+certs/*
+config/config.properties
+
+.vscode/*

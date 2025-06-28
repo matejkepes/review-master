@@ -1,0 +1,27 @@
+- id: 1
+  enabled: 1
+  name: Taxi Company 1
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 2
+  enabled: 1
+  name: Taxi Company 2
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 3
+  enabled: 1
+  name: Taxi Company 3 Multi Message
+  note: ''
+  country: GB
+  partner_id: 2
+
+- id: 4
+  enabled: 1
+  name: City Taxis Sheffield
+  note: '17-5-21 MG Changed to use Gateway instaed of SMS app - scott sent in details\nAlso removed excesss times and reverted back to 10-2pm\n19-2-21 MG: Added Review responses for City Taxis Sheffield'
+  country: GB
+  partner_id: 2

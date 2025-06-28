@@ -1,0 +1,24 @@
+{{ define "fe/index.tmpl" }}
+{{/*
+  NOTE:
+  	THIS DIRECTORY IS WHERE THE TEMPLATE SAMPLES ARE SAVED IN THE git REPO.
+	THIS IS DONE TO PREVENT RESAVING THE CHANGES MADE TO templates FILES BECAUSE THEY CHANGE FREQUENTLY.
+	JUST COPY THE FILES IN THIS DIRECTORY TO THE templates DIRECTORY IN THE PROJECT ROOT MAKING THE
+	CHANGES TO THE FILE OUTLINED BELOW.
+
+  NOTE: Just paste the index.html file contents into here.
+  NOTE: Need following in server.go:
+	// serve up static content
+	r.Static("/js", "./static/dist/spa/js")
+	r.Static("/css", "./static/dist/spa/css")
+	r.StaticFile("/favicon.ico", "./static/dist/spa/icons/favicon.ico")
+	r.Static("/statics", "./static/dist/spa/statics")
+	r.Static("/fonts", "./static/dist/spa/fonts")
+	r.Static("/icons", "./static/dist/spa/icons")
+
+  and templates setup in server.go:
+  r := SetupRouter(db, config, "templates/*")
+
+*/}}
+<!DOCTYPE html><html><head><title>Review Master</title><meta charset=utf-8><meta name=description content="Google Reviews front end"><meta name=format-detection content="telephone=no"><meta name=msapplication-tap-highlight content=no><meta name=viewport content="user-scalable=no,initial-scale=1,maximum-scale=1,minimum-scale=1,width=device-width"><link rel=icon type=image/png sizes=128x128 href=icons/favicon-128x128.png><link rel=icon type=image/png sizes=96x96 href=icons/favicon-96x96.png><link rel=icon type=image/png sizes=32x32 href=icons/favicon-32x32.png><link rel=icon type=image/png sizes=16x16 href=icons/favicon-16x16.png><link rel=icon type=image/ico href=favicon.ico><script defer src=js/vendor.63bd743e.js></script><script defer src=js/app.d65a09d0.js></script><link href=css/vendor.985acc40.css rel=stylesheet><link href=css/app.31d6cfe0.css rel=stylesheet></head><body><div id=q-app></div></body></html>
+{{ end }}

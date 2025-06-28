@@ -1,0 +1,30 @@
+[Unit]
+Description=Log viewer service
+ConditionPathExists=/home/ubuntu/Documents/code/golang/log_viewer
+After=network.target
+
+[Service]
+Type=simple
+# should run this as a different user
+User=root
+Group=root
+#LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+#StartLimitIntervalSec=60
+
+WorkingDirectory=/home/ubuntu/Documents/code/golang/log_viewer
+ExecStart=/home/ubuntu/Documents/code/golang/log_viewer/log_viewer
+
+# make sure log directory exists and owned by syslog (log in same directory as exe file)
+#PermissionsStartOnly=true
+#ExecStartPre=/bin/mkdir -p /var/log/log_viewer
+#ExecStartPre=/bin/chown syslog:adm /var/log/log_viewer
+#ExecStartPre=/bin/chmod 755 /var/log/log_viewer
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=log_viewer
+
+[Install]
+WantedBy=multi-user.target

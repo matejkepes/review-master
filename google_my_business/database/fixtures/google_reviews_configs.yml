@@ -1,0 +1,501 @@
+# # Britannia - St Helens
+# - id: 12
+#   enabled: 1
+#   min_send_frequency: 90
+#   max_send_count: 200
+#   max_daily_send_count: 200
+#   token: ehisGtTlwwNYolT7svCPjnp3jIJ8M-PmpEKc8TBuzwo34DQMBZ3Qd7PDPBZG6Sv1Rubbish
+#   telephone_parameter: t
+#   send_from_icabbi_app: 0
+#   # app_key: a678975e61280c82f77d7d4804091f68cad12345
+#   # secret_key: d89010ad22426ab3d52b26d2ad869c650be14567
+#   # send_url: https://api.icabbi.com/uk17
+#   app_key: a602075e61280c82f77d7d4804091f68cadcb3a9
+#   secret_key: d806b0ad22426ab3d52b26d2ad869c650be14b63
+#   # send_url: https://api.icabbi.com/uk57
+#   # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+#   send_url: https://sendsms.taxisdev.co.uk/sendsms
+#   http_get: 0
+#   send_success_response: {"success":"1"}
+#   time_zone: "Europe/London"
+#   multi_message_enabled: 1
+#   message_parameter: m
+#   multi_message_separator: SSSSS
+#   use_database_message: 0
+#   message: "change me"
+#   dispatcher_checks_enabled: 1
+#   dispatcher_url: https://api.icabbi.com/uk57
+#   dispatcher_type: "ICABBI"
+#   booking_id_parameter: b
+#   is_booking_for_now_diff_minutes: 10
+#   booking_now_pickup_to_contact_minutes: 10
+#   pre_booking_pickup_to_contact_minutes: 3
+#   replace_telephone_country_code: 0
+#   replace_telephone_country_code_with: "0"
+#   google_my_business_review_reply_enabled: 1
+#   google_my_business_location_name: "Britannia Taxis - St Helens Branch"
+#   google_my_business_postal_code: "WA10 1QF"
+#   google_my_business_reply_to_unspecfified_star_rating: 0
+#   google_my_business_unspecfified_star_rating_reply: "Thank you <name> for your review"
+#   google_my_business_reply_to_one_star_rating: 0
+#   google_my_business_one_star_rating_reply: "Thank you <name> for your review"
+#   google_my_business_reply_to_two_star_rating: 0
+#   google_my_business_two_star_rating_reply: "Thank you <name> for your review"
+#   google_my_business_reply_to_three_star_rating: 1
+#   google_my_business_three_star_rating_reply: "Thank you <name> for your review"
+#   google_my_business_reply_to_four_star_rating: 1
+#   google_my_business_four_star_rating_reply: "Thank you <name> for your review"
+#   google_my_business_reply_to_five_star_rating: 1
+#   google_my_business_five_star_rating_reply: "Thank you <name> for your review for rating 5 reply 1SSSSSThank you for your review for rating 5 reply 2"
+#   google_my_business_report_enabled: 1
+#   email_address: "greenicycle@gmail.com"
+#   client_id: 11
+
+# commented out so do not cause potential issues on google my business (highly unlikely)
+# Britannia - St Helens again to test database postcode is wrong for google my business but see if can get the report
+# This has the google my business reply disabled and the report enabled
+# - id: 13
+#   enabled: 1
+#   min_send_frequency: 90
+#   max_send_count: 200
+#   max_daily_send_count: 200
+#   token: ehisGtTlwwNYolT7svCPjnp3jIJ8M-PmpEKc8TBuzwo34DQMBZ3Qd7PDPBZG6Sv1Rubbish1
+#   telephone_parameter: t
+#   send_from_icabbi_app: 0
+#   # app_key: a678975e61280c82f77d7d4804091f68cad12345
+#   # secret_key: d89010ad22426ab3d52b26d2ad869c650be14567
+#   # send_url: https://api.icabbi.com/uk17
+#   app_key: a602075e61280c82f77d7d4804091f68cadcb3a9
+#   secret_key: d806b0ad22426ab3d52b26d2ad869c650be14b63
+#   # send_url: https://api.icabbi.com/uk57
+#   # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+#   send_url: https://sendsms.taxisdev.co.uk/sendsms
+#   http_get: 0
+#   send_success_response: {"success":"1"}
+#   time_zone: "Europe/London"
+#   multi_message_enabled: 1
+#   message_parameter: m
+#   multi_message_separator: SSSSS
+#   use_database_message: 0
+#   message: "change me"
+#   dispatcher_checks_enabled: 1
+#   dispatcher_url: https://api.icabbi.com/uk57
+#   dispatcher_type: "ICABBI"
+#   booking_id_parameter: b
+#   is_booking_for_now_diff_minutes: 10
+#   booking_now_pickup_to_contact_minutes: 10
+#   pre_booking_pickup_to_contact_minutes: 3
+#   replace_telephone_country_code: 0
+#   replace_telephone_country_code_with: "0"
+#   google_my_business_review_reply_enabled: 0
+#   google_my_business_location_name: "Britannia Taxis"
+#   google_my_business_postal_code: "WA10 1QI"
+#   google_my_business_reply_to_unspecfified_star_rating: 0
+#   google_my_business_unspecfified_star_rating_reply: "Thank you <name> for your review"
+#   google_my_business_reply_to_one_star_rating: 0
+#   google_my_business_one_star_rating_reply: "Thank you <name> for your review"
+#   google_my_business_reply_to_two_star_rating: 0
+#   google_my_business_two_star_rating_reply: "Thank you <name> for your review"
+#   google_my_business_reply_to_three_star_rating: 1
+#   google_my_business_three_star_rating_reply: "Thank you <name> for your review"
+#   google_my_business_reply_to_four_star_rating: 1
+#   google_my_business_four_star_rating_reply: "Thank you <name> for your review"
+#   google_my_business_reply_to_five_star_rating: 1
+#   google_my_business_five_star_rating_reply: "Thank you <name> for your review for rating 5 reply 1SSSSSThank you for your review for rating 5 reply 2"
+#   google_my_business_report_enabled: 1
+#   email_address: "greenicycle@gmail.com"
+#   client_id: 11
+
+# City Taxis Sheffield - NOTE: This may not work now, could be out of date
+- id: 14
+  enabled: 1
+  min_send_frequency: 90
+  max_send_count: 200
+  max_daily_send_count: 200
+  token: Ly2KtxLPHY0l6Zpe53oOe8tXIX21M9wfi2HlclnTXMUMWkDwEXVqWGOkVh9-DOhm
+  telephone_parameter: number
+  send_from_icabbi_app: 0
+  app_key: 9324c30750ec6e7b735aa6f5310fef7aeff8f5cb
+  secret_key: 264ddb9516203d4d8b9e095f954ff1d00caa309e
+  send_url: http://gateway.citytaxis.com:9000/cb/sms_http.php
+  http_get: 0
+  send_success_response: EMPTY
+  time_zone: "Europe/London"
+  multi_message_enabled: 1
+  message_parameter: msg
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "Thanks for choosing City Taxis, we would love to hear your feedback. Please tap on the link to tell us how we did http://bit.ly/CityReviews"
+  dispatcher_checks_enabled: 1
+  dispatcher_url: https://api.citytaxisdispatch.com/sh/
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_pair_code: "1235"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 1
+  google_my_business_location_name: "City Taxis"
+  google_my_business_postal_code: "S9 2LR"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: ""
+  google_my_business_reply_to_one_star_rating: 1
+  google_my_business_one_star_rating_reply: "Hi <name>, Sorry to hear of your experience. Please can you email your booking details to feedback@citytaxis.com so we can investigate this? Many thanks!"
+  google_my_business_reply_to_two_star_rating: 1
+  google_my_business_two_star_rating_reply: "Hi <name>, Thanks for your feedback. To help improve our services, further feedback on your rating would be appreciated feedback@citytaxis.com Many thanks - City Taxis team!!"
+  google_my_business_reply_to_three_star_rating: 1
+  google_my_business_three_star_rating_reply: "Hi <name>, Thanks for your feedback.To help improve our services, further feedback on your rating would be appreciated feedback@citytaxis.com Many thanks - City Taxis team!!"
+  google_my_business_reply_to_four_star_rating: 1
+  google_my_business_four_star_rating_reply: "Hi <name>, many thanks for the feedback! We would love to know how to turn these 4 stars into a 5-star review! feedback@citytaxis.com"
+  google_my_business_reply_to_five_star_rating: 1
+  google_my_business_five_star_rating_reply: "Thank you <name> for your review for rating 5 reply 1SSSSSThank you for your review for rating 5 reply 2"
+  google_my_business_report_enabled: 1
+  email_address: "greenicycle@gmail.com"
+  client_id: 3
+  monthly_review_analysis_enabled: true
+
+# City Taxis Sheffield but the name will not be found in Google My Business, set wrongly on purpose to find name is wrong report
+- id: 15
+  enabled: 1
+  min_send_frequency: 90
+  max_send_count: 200
+  max_daily_send_count: 200
+  token: Ly2KtxLPHY0l6Zpe53oOe8tXIX21M9wfi2HlclnTXMUMWkDwEXVqWGOkVh9-ABcd
+  telephone_parameter: number
+  send_from_icabbi_app: 0
+  app_key: 9324c30750ec6e7b735aa6f5310fef7aeff8f5cb
+  secret_key: 264ddb9516203d4d8b9e095f954ff1d00caa309e
+  send_url: http://gateway.citytaxis.com:9000/cb/sms_http.php
+  http_get: 0
+  send_success_response: EMPTY
+  time_zone: "Europe/London"
+  multi_message_enabled: 1
+  message_parameter: msg
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "Thanks for choosing City Taxis, we would love to hear your feedback. Please tap on the link to tell us how we did http://bit.ly/CityReviews"
+  dispatcher_checks_enabled: 1
+  dispatcher_url: https://api.citytaxisdispatch.com/sh/
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_pair_code: "1235"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 1
+  google_my_business_location_name: "Name is wrong"
+  google_my_business_postal_code: "S9 2LR"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: ""
+  google_my_business_reply_to_one_star_rating: 1
+  google_my_business_one_star_rating_reply: "Hi <name>, Sorry to hear of your experience. Please can you email your booking details to feedback@citytaxis.com so we can investigate this? Many thanks!"
+  google_my_business_reply_to_two_star_rating: 1
+  google_my_business_two_star_rating_reply: "Hi <name>, Thanks for your feedback. To help improve our services, further feedback on your rating would be appreciated feedback@citytaxis.com Many thanks - City Taxis team!!"
+  google_my_business_reply_to_three_star_rating: 1
+  google_my_business_three_star_rating_reply: "Hi <name>, Thanks for your feedback.To help improve our services, further feedback on your rating would be appreciated feedback@citytaxis.com Many thanks - City Taxis team!!"
+  google_my_business_reply_to_four_star_rating: 1
+  google_my_business_four_star_rating_reply: "Hi <name>, many thanks for the feedback! We would love to know how to turn these 4 stars into a 5-star review! feedback@citytaxis.com"
+  google_my_business_reply_to_five_star_rating: 1
+  google_my_business_five_star_rating_reply: "Thank you <name> for your review for rating 5 reply 1SSSSSThank you for your review for rating 5 reply 2"
+  google_my_business_report_enabled: 1
+  email_address: "greenicycle@gmail.com"
+  client_id: 3
+
+# City Taxis Sheffield but the postcode will not be found in Google My Business, set wrongly on purpose to find name is wrong report
+- id: 16
+  enabled: 1
+  min_send_frequency: 90
+  max_send_count: 200
+  max_daily_send_count: 200
+  token: Ly2KtxLPHY0l6Zpe53oOe8tXIX21M9wfi2HlclnTXMUMWkDwEXVqWGOkVh9-EFgh
+  telephone_parameter: number
+  send_from_icabbi_app: 0
+  app_key: 9324c30750ec6e7b735aa6f5310fef7aeff8f5cb
+  secret_key: 264ddb9516203d4d8b9e095f954ff1d00caa309e
+  send_url: http://gateway.citytaxis.com:9000/cb/sms_http.php
+  http_get: 0
+  send_success_response: EMPTY
+  time_zone: "Europe/London"
+  multi_message_enabled: 1
+  message_parameter: msg
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "Thanks for choosing City Taxis, we would love to hear your feedback. Please tap on the link to tell us how we did http://bit.ly/CityReviews"
+  dispatcher_checks_enabled: 1
+  dispatcher_url: https://api.citytaxisdispatch.com/sh/
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_pair_code: "1235"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 1
+  google_my_business_location_name: "City Taxis"
+  google_my_business_postal_code: "S5 4ZA"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: ""
+  google_my_business_reply_to_one_star_rating: 1
+  google_my_business_one_star_rating_reply: "Hi <name>, Sorry to hear of your experience. Please can you email your booking details to feedback@citytaxis.com so we can investigate this? Many thanks!"
+  google_my_business_reply_to_two_star_rating: 1
+  google_my_business_two_star_rating_reply: "Hi <name>, Thanks for your feedback. To help improve our services, further feedback on your rating would be appreciated feedback@citytaxis.com Many thanks - City Taxis team!!"
+  google_my_business_reply_to_three_star_rating: 1
+  google_my_business_three_star_rating_reply: "Hi <name>, Thanks for your feedback.To help improve our services, further feedback on your rating would be appreciated feedback@citytaxis.com Many thanks - City Taxis team!!"
+  google_my_business_reply_to_four_star_rating: 1
+  google_my_business_four_star_rating_reply: "Hi <name>, many thanks for the feedback! We would love to know how to turn these 4 stars into a 5-star review! feedback@citytaxis.com"
+  google_my_business_reply_to_five_star_rating: 1
+  google_my_business_five_star_rating_reply: "Thank you <name> for your review for rating 5 reply 1SSSSSThank you for your review for rating 5 reply 2"
+  google_my_business_report_enabled: 1
+  email_address: "greenicycle@gmail.com"
+  client_id: 3
+
+# - id: 3
+#   enabled: 1
+#   min_send_frequency: 90
+#   max_send_count: 2000
+#   max_daily_send_count: 500
+#   token: Ly2KtxLPHY0l6Zpe53oOe8tXIX21M9wfi2HlclnTXMUMWkDwEXVqWGOkVh9-DOhm
+#   telephone_parameter: number
+#   send_from_icabbi_app: 0
+#   app_key: 9324c30750ec6e7b735aa6f5310fef7aeff8f5cb
+#   secret_key: 264ddb9516203d4d8b9e095f954ff1d00caa309e
+#   send_url: http://gateway.citytaxis.com:9000/cb/sms_http.php
+#   http_get: 0
+#   send_success_response: PROCEEDING
+#   time_zone: Europe/London
+#   multi_message_enabled: 1
+#   message_parameter: msg
+#   multi_message_separator: SSSSS
+#   use_database_message: 1
+#   message: Thanks for choosing Veezu, we would love to hear your feedback https://ratemytaxi.net/Veezu_CityTaxisSSSSSThanks for choosing Veezu, we would love to hear your feedback https://ratemytaxi.net/Veezu-CitySSSSSThanks for choosing Veezu, we would love to hear your feedback https://ratemytaxi.net/Veezu_City_TaxisSSSSSThanks for choosing Veezu, we would love to hear your feedback https://ratemytaxi.net/Veezu_CitySSSSSThanks for choosing Veezu, we would love to hear your feedback https://ratemytaxi.net/VeezuBarnsleySSSSSThanks for choosing Veezu, we would love to hear your feedback https://ratemytaxi.net/VeezuSSSSSThanks for choosing Veezu, we would love to hear your feedback https://ratemytaxi.net/VeezuSSSSSThanks for choosing Veezu, we would love to hear your feedback https://ratemytaxi.net/Veezu_Barnsley
+#   send_delay_enabled: 1
+#   send_delay: 1
+#   dispatcher_checks_enabled: 1
+#   dispatcher_url: https://api.citytaxisdispatch.com/sh/
+#   dispatcher_type: ICABBI
+#   booking_id_parameter: b
+#   is_booking_for_now_diff_minutes: 10
+#   booking_now_pickup_to_contact_minutes: 10
+#   pre_booking_pickup_to_contact_minutes: 3
+#   replace_telephone_country_code: 0
+#   replace_telephone_country_code_with: 0
+#   review_master_sms_gateway_enabled: 0
+#   review_master_sms_gateway_use_master_queue: 0
+#   review_master_sms_gateway_pair_code: ''
+#   alternate_message_service_enabled: 0
+#   alternate_message_service: ''
+#   alternate_message_service_secret1: ''
+#   companies: ''
+#   booking_source_mobile_app_state: -1
+#   google_my_business_review_reply_enabled: 0
+#   google_my_business_location_name: ''
+#   google_my_business_postal_code: ''
+#   google_my_business_reply_to_unspecfified_star_rating: 0
+#   google_my_business_unspecfified_star_rating_reply: ''
+#   google_my_business_reply_to_one_star_rating: 0
+#   google_my_business_one_star_rating_reply: ''
+#   google_my_business_reply_to_two_star_rating: 0
+#   google_my_business_two_star_rating_reply: ''
+#   google_my_business_reply_to_three_star_rating: 0
+#   google_my_business_three_star_rating_reply: ''
+#   google_my_business_reply_to_four_star_rating: 0
+#   google_my_business_four_star_rating_reply: ''
+#   google_my_business_reply_to_five_star_rating: 0
+#   google_my_business_five_star_rating_reply: ''
+#   google_my_business_report_enabled: 1
+#   email_address: mark@taxisolutions.co.uk
+#   client_id: 3
+
+- id: 334
+  enabled: 1
+  min_send_frequency: 90
+  max_send_count: 2000
+  max_daily_send_count: 200
+  token: PvWYsx47S7M0zPzMx65-1EUzof35qwGkv20khyzooNoZr7aYhDxRO9RuTmhXhgqN
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  app_key: ''
+  secret_key: ''
+  send_url: http://icabbi.com
+  http_get: 0
+  send_success_response: ok
+  time_zone: Europe/London
+  multi_message_enabled: 1
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: change me
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: ICABBI
+  dispatcher_type: http://icabbi.com
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: 0
+  review_master_sms_gateway_enabled: 0
+  review_master_sms_gateway_use_master_queue: 0
+  review_master_sms_gateway_pair_code: pffujht9tcdm
+  alternate_message_service_enabled: 0
+  alternate_message_service: ''
+  alternate_message_service_secret1: ''
+  companies: ''
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 1
+  google_my_business_location_name: Veezu Barnsley
+  google_my_business_postal_code: S75 2BL
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: testing
+  google_my_business_reply_to_one_star_rating: 1
+  google_my_business_one_star_rating_reply: Hey <name>, we're sorry to hear you're unhappy with the service. Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu, we will be happy to look into this Thank you, VeezuSSSSSHi <name>, it's regrettable to hear you experienced problems with your ride. We would like to investigate this further to improve our passenger experience. Please send your details using our feedback form ‍https://feedbThank you, VeezuSSSSSHi <name>, Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu for us to be able to look into this furtherThank you, VeezuSSSSSHi <name>, it's regrettable that you didn't receive the service you expected. Please send us your detailed feedback via our feedback form ‍https://feedback.veezu.co.uk/veezu Thanks a lot!SSSSSWe are sorry to see your 1* review. Please allow us to look into fixing this for you. Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu
+  google_my_business_reply_to_two_star_rating: 1
+  google_my_business_two_star_rating_reply: Thank you for leaving a review <name>, both negative and positive feedback helps us improve as a business, Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu with how we could improve our services in the future, we would be very grateful.SSSSSOur passenger experience team would like your help on how we can improve our services for you on future rides. Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezuSSSSS<name>, Could you please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu Thank you, VeezuSSSSSWe are sorry to see your feedback, <name>. So that we can investigate this, please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu
+  google_my_business_reply_to_three_star_rating: 1
+  google_my_business_three_star_rating_reply: <name> Thank you for your feedback. Is there anything we could have done further to improve your experience with Veezu?SSSSSHi <name>, thanks a lot for the time you have taken to leave us a review. Feel free to send us details of how we can get a 5* review next time. ‍https://feedback.veezu.co.uk/veezuSSSSSFeedback is always important to us, we would love to hear on how we can improve our services. Please use our form ‍https://feedback.veezu.co.uk/veezu and we will be back in touch. Many thanks, Veezu.SSSSSWe are sorry to see your feedback, <name>. To allow us to investigate, please can you send details of your booking using our online form ‍https://feedback.veezu.co.uk/veezu
+  google_my_business_reply_to_four_star_rating: 1
+  google_my_business_four_star_rating_reply: <name> We would love to know how to turn these 4 stars into a 5-star review! What would we have to do to improve our services? ‍https://feedback.veezu.co.uk/veezuSSSSSThanks for the review <name>, I hope we can offer a 5-star service next time!SSSSSThanks for the feedback <name>, hope to see you again soon!SSSSSWe're happy that you had a good ride <name>, but we're always looking for ways to improve. Was there anything we could have done to get that extra star? ‍https://feedback.veezu.co.uk/veezuSSSSSWe are so grateful for your review, <name>. Thanks for sharing your rating with us!
+  google_my_business_reply_to_five_star_rating: 1
+  google_my_business_five_star_rating_reply: Thank you for your feedback <name>. We really appreciate it.SSSSSThanks for the 5* review <name>. The teamfeedback!SSSSSHello <name>, thank you for the 5-star rating! We appreciate you taking the time to leave your messages and we look forward to seeing you again soon!SSSSSAmazing to see the 5* review!SSSSSHi <name>, thank you for your review! I am glad you had a positive experience with us! We appreciate all feedback we rThank you, VeezuSSSSSThanks for your feedback <name>. So glad you enjoyed your ride with Veezu. We hope to see you again soon.SSSSSHi <name>, we're so glad you enjoyed your ride with us, and thanks for the 5-Star rating.SSSSSThank you for the review, <name>! We love to hear positive feedback from passengers. We will be sure to pass it onto the Veezu team!
+  google_my_business_report_enabled: 1
+  email_address: paulgreenicycle@gmail.com
+  client_id: 3
+
+# - id: 335
+#   enabled: 1
+#   min_send_frequency: 90
+#   max_send_count: 2000
+#   max_daily_send_count: 200
+#   token: QElXCxWGHm1nIeDgiUVLu8EXdQNKGJPXySpfkolB-ntXuOnDdaa8MMNOPwLStEIz
+#   telephone_parameter: t
+#   send_from_icabbi_app: 0
+#   app_key: 
+#   secret_key: 
+#   send_url: http://icabbi.com
+#   http_get: 0
+#   send_success_response: ok
+#   time_zone: Europe/London
+#   multi_message_enabled: 1
+#   message_parameter: m
+#   multi_message_separator: SSSSS
+#   use_database_message: 0
+#   message: change me
+#   send_delay_enabled: 0
+#   send_delay: 10
+#   dispatcher_checks_enabled: 0
+#   dispatcher_url: ICABBI
+#   dispatcher_type: http://icabbi.com
+#   booking_id_parameter: b
+#   is_booking_for_now_diff_minutes: 10
+#   booking_now_pickup_to_contact_minutes: 10
+#   pre_booking_pickup_to_contact_minutes: 3
+#   replace_telephone_country_code: 0
+#   replace_telephone_country_code_with: 0
+#   review_master_sms_gateway_enabled: 0
+#   review_master_sms_gateway_use_master_queue: 0
+#   review_master_sms_gateway_pair_code: pffujht9tcdm
+#   alternate_message_service_enabled: 0
+#   alternate_message_service: ""
+#   alternate_message_service_secret1: ""
+#   companies: 
+#   booking_source_mobile_app_state: -1
+#   google_my_business_review_reply_enabled: 1
+#   google_my_business_location_name: Veezu Derby
+#   google_my_business_postal_code: DE1 2RU
+#   google_my_business_reply_to_unspecfified_star_rating: 0
+#   google_my_business_unspecfified_star_rating_reply: testing
+#   google_my_business_reply_to_one_star_rating: 1
+#   google_my_business_one_star_rating_reply: Hey <name>, we're sorry to hear you're unhappy with the service. Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu, we will be happy to look into this Thank you, VeezuSSSSSHi <name>, it's regrettable to hear you experienced problems with your ride. We would like to investigate this further to improve our passenger experience. Please send your details using our feedback form ‍https://feedbThank you, VeezuSSSSSHi <name>, Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu for us to be able to look into this furtherThank you, VeezuSSSSSHi <name>, it's regrettable that you didn't receive the service you expected. Please send us your detailed feedback via our feedback form ‍https://feedback.veezu.co.uk/veezu Thanks a lot!SSSSSWe are sorry to see your 1* review. Please allow us to look into fixing this for you. Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu
+#   google_my_business_reply_to_two_star_rating: 1
+#   google_my_business_two_star_rating_reply: Thank you for leaving a review <name>, both negative and positive feedback helps us improve as a business, Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu with how we could improve our services in the future, we would be very grateful.SSSSSOur passenger experience team would like your help on how we can improve our services for you on future rides. Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezuSSSSS<name>, Could you please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu Thank you, VeezuSSSSSWe are sorry to see your feedback, <name>. So that we can investigate this, please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu
+#   google_my_business_reply_to_three_star_rating: 1
+#   google_my_business_three_star_rating_reply: <name> Thank you for your feedback. Is there anything we could have done further to improve your experience with Veezu?SSSSSHi <name>, thanks a lot for the time you have taken to leave us a review. Feel free to send us details of how we can get a 5* review next time. ‍https://feedback.veezu.co.uk/veezuSSSSSFeedback is always important to us, we would love to hear on how we can improve our services. Please use our form ‍https://feedback.veezu.co.uk/veezu and we will be back in touch. Many thanks, Veezu.SSSSSWe are sorry to see your feedback, <name>. To allow us to investigate, please can you send details of your booking using our online form ‍https://feedback.veezu.co.uk/veezu
+#   google_my_business_reply_to_four_star_rating: 1
+#   google_my_business_four_star_rating_reply: <name> We would love to know how to turn these 4 stars into a 5-star review! What would we have to do to improve our services? ‍https://feedback.veezu.co.uk/veezuSSSSSThanks for the review <name>, I hope we can offer a 5-star service next time!SSSSSThanks for the feedback <name>, hope to see you again soon!SSSSSWe're happy that you had a good ride <name>, but we're always looking for ways to improve. Was there anything we could have done to get that extra star? ‍https://feedback.veezu.co.uk/veezuSSSSSWe are so grateful for your review, <name>. Thanks for sharing your rating with us!
+#   google_my_business_reply_to_five_star_rating: 1
+#   google_my_business_five_star_rating_reply: Thank you for your feedback <name>. We really appreciate it.SSSSSThanks for the 5* review <name>. The teamfeedback!SSSSSHello <name>, thank you for the 5-star rating! We appreciate you taking the time to leave your messages and we look forward to seeing you again soon!SSSSSAmazing to see the 5* review!SSSSSHi <name>, thank you for your review! I am glad you had a positive experience with us! We appreciate all feedback we rThank you, VeezuSSSSSThanks for your feedback <name>. So glad you enjoyed your ride with Veezu. We hope to see you again soon.SSSSSHi <name>, we're so glad you enjoyed your ride with us, and thanks for the 5-Star rating.SSSSSThank you for the review, <name>! We love to hear positive feedback from passengers. We will be sure to pass it onto the Veezu team!
+#   google_my_business_report_enabled: 1
+#   email_address: mark@taxisolutions.co.uk
+#   client_id: 3
+
+# - id: 336
+#   enabled: 1
+#   min_send_frequency: 90
+#   max_send_count: 2000
+#   max_daily_send_count: 200
+#   token: vwpnS0cuZI60N8haWk3Hs7Qi1xjwWg-lGzH9LP_99YvE3aU8L4_72f2HnC2neVe-
+#   telephone_parameter: t
+#   send_from_icabbi_app: 0
+#   app_key: 
+#   secret_key: 
+#   send_url: http://icabbi.com
+#   http_get: 0
+#   send_success_response: ok
+#   time_zone: Europe/London
+#   multi_message_enabled: 1
+#   message_parameter: m
+#   multi_message_separator: SSSSS
+#   use_database_message: 0
+#   message: change me
+#   send_delay_enabled: 0
+#   send_delay: 10
+#   dispatcher_checks_enabled: 0
+#   dispatcher_url: ICABBI
+#   dispatcher_type: http://icabbi.com
+#   booking_id_parameter: b
+#   is_booking_for_now_diff_minutes: 10
+#   booking_now_pickup_to_contact_minutes: 10
+#   pre_booking_pickup_to_contact_minutes: 3
+#   replace_telephone_country_code: 0
+#   replace_telephone_country_code_with: 0
+#   review_master_sms_gateway_enabled: 0
+#   review_master_sms_gateway_use_master_queue: 0
+#   review_master_sms_gateway_pair_code: pffujht9tcdm
+#   alternate_message_service_enabled: 0
+#   alternate_message_service: "" 
+#   alternate_message_service_secret1: ""
+#   companies: 
+#   booking_source_mobile_app_state: -1
+#   google_my_business_review_reply_enabled: 1
+#   google_my_business_location_name: Veezu Rotherham
+#   google_my_business_postal_code: S60 1RH
+#   google_my_business_reply_to_unspecfified_star_rating: 0
+#   google_my_business_unspecfified_star_rating_reply: testing
+#   google_my_business_reply_to_one_star_rating: 1
+#   google_my_business_one_star_rating_reply: Hey <name>, we're sorry to hear you're unhappy with the service. Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu, we will be happy to look into this Thank you, VeezuSSSSSHi <name>, it's regrettable to hear you experienced problems with your ride. We would like to investigate this further to improve our passenger experience. Please send your details using our feedback form ‍https://feedbThank you, VeezuSSSSSHi <name>, Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu for us to be able to look into this furtherThank you, VeezuSSSSSHi <name>, it's regrettable that you didn't receive the service you expected. Please send us your detailed feedback via our feedback form ‍https://feedback.veezu.co.uk/veezu Thanks a lot!SSSSSWe are sorry to see your 1* review. Please allow us to look into fixing this for you. Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu
+#   google_my_business_reply_to_two_star_rating: 1
+#   google_my_business_two_star_rating_reply: Thank you for leaving a review <name>, both negative and positive feedback helps us improve as a business, Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu with how we could improve our services in the future, we would be very grateful.SSSSSOur passenger experience team would like your help on how we can improve our services for you on future rides. Please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezuSSSSS<name>, Could you please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu Thank you, VeezuSSSSSWe are sorry to see your feedback, <name>. So that we can investigate this, please send your details using our feedback form ‍https://feedback.veezu.co.uk/veezu
+#   google_my_business_reply_to_three_star_rating: 1
+#   google_my_business_three_star_rating_reply: <name> Thank you for your feedback. Is there anything we could have done further to improve your experience with Veezu?SSSSSHi <name>, thanks a lot for the time you have taken to leave us a review. Feel free to send us details of how we can get a 5* review next time. ‍https://feedback.veezu.co.uk/veezuSSSSSFeedback is always important to us, we would love to hear on how we can improve our services. Please use our form ‍https://feedback.veezu.co.uk/veezu and we will be back in touch. Many thanks, Veezu.SSSSSWe are sorry to see your feedback, <name>. To allow us to investigate, please can you send details of your booking using our online form ‍https://feedback.veezu.co.uk/veezu
+#   google_my_business_reply_to_four_star_rating: 1
+#   google_my_business_four_star_rating_reply: <name> We would love to know how to turn these 4 stars into a 5-star review! What would we have to do to improve our services? ‍https://feedback.veezu.co.uk/veezuSSSSSThanks for the review <name>, I hope we can offer a 5-star service next time!SSSSSThanks for the feedback <name>, hope to see you again soon!SSSSSWe're happy that you had a good ride <name>, but we're always looking for ways to improve. Was there anything we could have done to get that extra star? ‍https://feedback.veezu.co.uk/veezuSSSSSWe are so grateful for your review, <name>. Thanks for sharing your rating with us!
+#   google_my_business_reply_to_five_star_rating: 1
+#   google_my_business_five_star_rating_reply: Thank you for your feedback <name>. We really appreciate it.SSSSSThanks for the 5* review <name>. The teamfeedback!SSSSSHello <name>, thank you for the 5-star rating! We appreciate you taking the time to leave your messages and we look forward to seeing you again soon!SSSSSAmazing to see the 5* review!SSSSSHi <name>, thank you for your review! I am glad you had a positive experience with us! We appreciate all feedback we rThank you, VeezuSSSSSThanks for your feedback <name>. So glad you enjoyed your ride with Veezu. We hope to see you again soon.SSSSSHi <name>, we're so glad you enjoyed your ride with us, and thanks for the 5-Star rating.SSSSSThank you for the review, <name>! We love to hear positive feedback from passengers. We will be sure to pass it onto the Veezu team!
+#   google_my_business_report_enabled: 1
+#   email_address: mark@taxisolutions.co.uk
+#   client_id: 3

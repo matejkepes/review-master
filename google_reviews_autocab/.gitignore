@@ -1,0 +1,10 @@
+gitignore 
+
+.DS_Store
+
+google_reviews_autocab
+**/secrets_*.go
+config/config.properties
+
+.vscode/*
+*.log

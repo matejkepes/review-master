@@ -1,0 +1,17 @@
+gitignore 
+
+.DS_Store
+
+my_business
+**/secrets_*.go
+config/config.properties
+
+.vscode/*
+
+*.log
+
+google_api_credentials/*
+credentials.json
+**/credentials.json
+token.json
+**/token.json

@@ -1,10 +1,39 @@
-# Ignore all subdirectory repos
-/google_my_business/
-/google_reviews/
-/google_reviews_fe/
-/google_reviews_ui/
-/rm_client_portal/
-/rm_client_portal_fe/
-
 # OS files
 .DS_Store
+
+# IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Go binaries
+*.exe
+*/main
+google_my_business/google_my_business
+google_my_business/my_business
+google_reviews/google_reviews
+google_reviews_ui/google_reviews_ui
+rm_client_portal/rm_client_portal
+log_viewer/log_viewer
+send_sms/send_sms
+send_sms_ui/send_sms_ui
+send_email_check/send_email_check
+
+# Node modules and build artifacts
+node_modules/
+dist/
+.npm/
+.cache/
+
+# Config files with secrets
+credentials.json
+token.json
+*.key
+*.crt
+*.pem
+
+# Temporary files
+*.tmp
+*.log
+*.pid

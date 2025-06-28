@@ -1,0 +1,51 @@
+{{ define "send_sms/form.tmpl" }}
+<html>
+<head>
+  <title>Send SMS</title>
+</head>
+<body>
+  <h1>{{ .title }}</h1>
+  <p>{{ .content }}</p>
+  <form action="/sendsms" method="POST">
+    <label for="tels">Telephone Numbers (enter each number on a new line)</label>
+    <div><textarea name="tels" rows="20" cols="15" id="telId" onkeyup="setTelCount()"></textarea></div>
+    <div>
+        telephone count: <span id="telCount">0</span>
+        <br/>
+        <br/>
+    </div>
+    <label for="msg">Message</label>
+    <div><textarea name="msg" rows="4" cols="80" id="msgId" onkeyup="setCharCount()"></textarea></div>
+    <div>
+      character count: <span id="charCount">0</span>
+      <br/>
+      <br/>
+    </div>
+    <div><input type="submit" value="Send"></div>
+  </form>
+  <script type="text/javascript">
+    function setCharCount() {
+      document.getElementById("charCount").innerHTML = document.getElementById("msgId").value.length;
+    }
+    function setTelCount() {
+      document.getElementById("telCount").innerHTML = document.getElementById("telId").value.split('\n').length - 1;
+    }
+  </script>
+</body>
+</html>
+{{ end }}
+
+{{ define "send_sms/output.tmpl" }}
+<html>
+<head>
+  <title>Send SMS</title>
+</head>
+<body>
+  <h1>{{ .title }}</h1>
+  <p>{{ .content }}</p>
+  <p>{{ .status }}</p>
+  <p>{{ .message }}</p>
+  <p><a href="/sendsms">Send Another SMS</p>
+</body>
+</html>
+{{ end }}

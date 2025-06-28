@@ -1,0 +1,1035 @@
+- id: 1
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 20
+  token: QxrH0iJc3wv/lj/YKVppNYRad7tN0Z3x
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  app_key: ""
+  secret_key: ""
+  send_url: https://test1.veezu.co.uk:8893/api/v1/sendmessage
+  # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+  # send_url: https://sendsms.taxisdev.co.uk/sendsms
+  http_get: 0
+  send_success_response: returnSendSms=success
+  # send_success_response: {"success":"1"}
+  time_zone: "Europe/London"
+  multi_message_enabled: 0
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "change me"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: ""
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "1234"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Taxi Company 1"
+  google_my_business_postal_code: "AB1 2CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 1
+
+- id: 2
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 2
+  token: z4JXJfxtNmPH575qPAnhlV_FBgzShqPR
+  telephone_parameter: number
+  send_from_icabbi_app: 0
+  app_key: ""
+  secret_key: ""
+  # send_url: https://test1.veezu.co.uk:8893/api/v1/sendmessage
+  send_url: https://alpha11v3r:WArphc37F9Bp@disc1.discec2alphataxisremote.co.uk/api/dischopper.php?
+  http_get: 1
+  send_success_response: EMPTY
+  time_zone: "Europe/London"
+  multi_message_enabled: 0
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "change me"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: ""
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "1235"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Taxi Company 2"
+  google_my_business_postal_code: "AB1 3CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 2
+
+# Multi message
+- id: 3
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 2
+  token: OYBpBsZ9OhR-nbsupMQU_hCTJuaoqtZw
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  app_key: ""
+  secret_key: ""
+  send_url: https://test1.veezu.co.uk:8893/api/v1/sendmessage
+  # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+  # send_url: https://sendsms.taxisdev.co.uk/sendsms
+  http_get: 0
+  send_success_response: returnSendSms=success
+  # send_success_response: {"success":"1"}
+  time_zone: "Europe/London"
+  multi_message_enabled: 1
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "change me"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: ""
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "1236"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Taxi Company 3"
+  google_my_business_postal_code: "AB1 4CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 3
+
+# send from iCabbi APP
+- id: 4
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 2
+  token: OYBpBsZ9OhR-nbsupMQU_hCTJuaabtZ1
+  telephone_parameter: t
+  send_from_icabbi_app: 1
+  app_key: a678975e61280c82f77d7d4804091f68cad12345
+  secret_key: d89010ad22426ab3d52b26d2ad869c650be14567
+  send_url: https://api.icabbi.com/uk17
+  # app_key: a602075e61280c82f77d7d4804091f68cadcb3a9
+  # secret_key: d806b0ad22426ab3d52b26d2ad869c650be14b63
+  # send_url: https://api.icabbi.com/uk57
+  # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+  # send_url: https://sendsms.taxisdev.co.uk/sendsms
+  http_get: 0
+  send_success_response: ok
+  time_zone: "Europe/London"
+  multi_message_enabled: 0
+  message_parameter: message
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "change me"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: ""
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "1237"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Taxi Company 4"
+  google_my_business_postal_code: "AB1 5CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 4
+
+# send from iCabbi APP send message from DB
+- id: 5
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 2
+  token: OYBpBsZ9OhR-nbsupMQU_hCTJuaabtZ2
+  telephone_parameter: t
+  send_from_icabbi_app: 1
+  app_key: a678975e61280c82f77d7d4804091f68cad12345
+  secret_key: d89010ad22426ab3d52b26d2ad869c650be14567
+  send_url: https://api.icabbi.com/uk17
+  # app_key: a602075e61280c82f77d7d4804091f68cadcb3a9
+  # secret_key: d806b0ad22426ab3d52b26d2ad869c650be14b63
+  # send_url: https://api.icabbi.com/uk57
+  # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+  # send_url: https://sendsms.taxisdev.co.uk/sendsms
+  http_get: 0
+  send_success_response: ok
+  time_zone: "Europe/London"
+  multi_message_enabled: 0
+  message_parameter: message
+  multi_message_separator: SSSSS
+  use_database_message: 1
+  message: "Message from database"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: ""
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "1238"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Taxi Company 5"
+  google_my_business_postal_code: "AB1 6CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 5
+
+# send from iCabbi APP send message from DB do dispatcher check
+- id: 6
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 2
+  token: OYBpBsZ9OhR-nbsupMQU_hCTJuaabtZ3
+  telephone_parameter: t
+  send_from_icabbi_app: 1
+  app_key: a678975e61280c82f77d7d4804091f68cad12345
+  secret_key: d89010ad22426ab3d52b26d2ad869c650be14567
+  send_url: https://api.icabbi.com/uk17
+  # app_key: a602075e61280c82f77d7d4804091f68cadcb3a9
+  # secret_key: d806b0ad22426ab3d52b26d2ad869c650be14b63
+  # send_url: https://api.icabbi.com/uk57
+  # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+  # send_url: https://sendsms.taxisdev.co.uk/sendsms
+  http_get: 0
+  send_success_response: ok
+  time_zone: "Europe/London"
+  multi_message_enabled: 0
+  message_parameter: message
+  multi_message_separator: SSSSS
+  use_database_message: 1
+  message: "Message from database"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 1
+  dispatcher_url: https://api.icabbi.com/uk57
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "1239"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Taxi Company 6"
+  google_my_business_postal_code: "AB1 7CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 6
+
+# replace telephone country code with 0
+- id: 7
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 2
+  token: OYBpBsZ9OhR-nbsupMQU_hCTJuaabtZ4
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  app_key: ""
+  secret_key: ""
+  app_key: ""
+  secret_key: ""
+  send_url: https://test1.veezu.co.uk:8893/api/v1/sendmessage
+  # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+  # send_url: https://sendsms.taxisdev.co.uk/sendsms
+  http_get: 0
+  send_success_response: returnSendSms=success
+  # send_success_response: {"success":"1"}
+  time_zone: "Europe/London"
+  multi_message_enabled: 0
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "change me"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: ""
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 1
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "1230"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Taxi Company 7"
+  google_my_business_postal_code: "AB1 8CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 7
+
+- id: 8
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 2
+  token: OYBpBsZ9OhR-nbsupMQU_hCTJuaabtZ5
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  app_key: ""
+  secret_key: ""
+  send_url: https://test1.veezu.co.uk:8893/api/v1/sendmessage
+  # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+  # send_url: https://sendsms.taxisdev.co.uk/sendsms
+  http_get: 0
+  send_success_response: returnSendSms=success
+  # send_success_response: {"success":"1"}
+  time_zone: "Europe/London"
+  multi_message_enabled: 0
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "change me"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: ""
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "1231"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Taxi Company 8"
+  google_my_business_postal_code: "AB1 9CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 8
+
+# send from iCabbi APP send multi message with links from DB do dispatcher check
+- id: 9
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 2
+  token: OYBpBsZ9OhR-nbsupMQU_hCTJuaabtZ6
+  telephone_parameter: t
+  send_from_icabbi_app: 1
+  app_key: a678975e61280c82f77d7d4804091f68cad12345
+  secret_key: d89010ad22426ab3d52b26d2ad869c650be14567
+  send_url: https://api.icabbi.com/uk17
+  # app_key: a602075e61280c82f77d7d4804091f68cadcb3a9
+  # secret_key: d806b0ad22426ab3d52b26d2ad869c650be14b63
+  # send_url: https://api.icabbi.com/uk57
+  # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+  # send_url: https://sendsms.taxisdev.co.uk/sendsms
+  http_get: 0
+  send_success_response: ok
+  time_zone: "Europe/London"
+  multi_message_enabled: 1
+  message_parameter: message
+  multi_message_separator: SSSSS
+  use_database_message: 1
+  message: "Enjoyed your journey with Britannia? Please feel free to leave a review http://bit.ly/BritanniaReviewsSSSSSEnjoyed your journey with Britannia? Please feel free to leave a review http://bit.ly/Britannia_ReviewSSSSSEnjoyed your journey with Britannia? Please feel free to leave a review http://bit.ly/Britannia_Taxis_ReviewsSSSSSEnjoyed your journey with Britannia? Please feel free to leave a review http://bit.ly/BritanniaReview"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 1
+  dispatcher_url: https://api.icabbi.com/uk57
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "1232"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Taxi Company 9"
+  google_my_business_postal_code: "AB1 2DD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 9
+
+# Ride / Drive set up problem with message
+- id: 10
+  enabled: 1
+  min_send_frequency: 90
+  max_send_count: 200
+  max_daily_send_count: 200
+  token: gDVTnJ7peYBX8WvIsomu9dkBPULR1rcwZrURQNIqdce3kRIXPQLiyj8IILuXZmhN
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  # app_key: a678975e61280c82f77d7d4804091f68cad12345
+  # secret_key: d89010ad22426ab3d52b26d2ad869c650be14567
+  # send_url: https://api.icabbi.com/uk17
+  app_key: a602075e61280c82f77d7d4804091f68cadcb3a9
+  secret_key: d806b0ad22426ab3d52b26d2ad869c650be14b63
+  # send_url: https://api.icabbi.com/uk57
+  # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+  send_url: https://sendsms.taxisdev.co.uk/sendsms
+  http_get: 0
+  send_success_response: {"success":"1"}
+  time_zone: "Europe/London"
+  multi_message_enabled: 1
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "change me"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 1
+  dispatcher_url: https://api.icabbi.com/uk57
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "1233"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Taxi Company 10"
+  google_my_business_postal_code: "AB1 3DD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 10
+
+# Ride / Drive set up problem with message
+- id: 11
+  enabled: 1
+  min_send_frequency: 90
+  max_send_count: 200
+  max_daily_send_count: 200
+  token: ehisGtTlwwNYolT7svCPjnp3jIJ8M-PmpEKc8TBuzwo34DQMBZ3Qd7PDPBZG6Sv1
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  # app_key: a678975e61280c82f77d7d4804091f68cad12345
+  # secret_key: d89010ad22426ab3d52b26d2ad869c650be14567
+  # send_url: https://api.icabbi.com/uk17
+  app_key: a602075e61280c82f77d7d4804091f68cadcb3a9
+  secret_key: d806b0ad22426ab3d52b26d2ad869c650be14b63
+  # send_url: https://api.icabbi.com/uk57
+  # send_url: https://appmessages.veezu.co.uk/api/v1/sendmessage
+  send_url: https://sendsms.taxisdev.co.uk/sendsms
+  http_get: 0
+  send_success_response: {"success":"1"}
+  time_zone: "Europe/London"
+  multi_message_enabled: 1
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "change me"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 1
+  dispatcher_url: https://api.icabbi.com/uk57
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "2234"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Taxi Company 11"
+  google_my_business_postal_code: "AB1 4DD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 10
+
+# Autocab 1 test server (Using app_key as userame and secret_key as password)
+- id: 12
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 20
+  token: QxrH0iJc3wv/lj/YKVppNYRad7tN0Z3x123
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  app_key: "Digital"
+  secret_key: "Digicomms1!"
+  send_url: ""
+  http_get: 0
+  send_success_response: returnSendSms=success
+  # send_success_response: {"success":"1"}
+  time_zone: "Europe/London"
+  multi_message_enabled: 1
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 1
+  message: "Enjoyed your journey with Autocab 1 Test Server? Please feel free to leave a review http://bit.ly/Autocab1TestServerSSSSSEnjoyed your journey with Autocab 1 Test Server? Please feel free to leave a review http://bit.ly/Autocab1TestServerSSSSSEnjoyed your journey with Autocab 1 Test Server? Please feel free to leave a review http://bit.ly/Autocab1TestServerSSSSSEnjoyed your journey with Autocab 1 Test Server? Please feel free to leave a review http://bit.ly/Autocab1TestServer"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: "https://ghost-main-static-b36cb86a19e14a2386de12935fac6526.ghostapi.app:29003/"
+  dispatcher_type: "AUTOCAB"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  # change to true to test using review master sms gateway to send messages
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "3234"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Autocab Taxi Company 1"
+  google_my_business_postal_code: "AB1 2CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 11
+
+# send from Review Master SMS Gateway APP
+- id: 13
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 2
+  token: OYBpBsZ9OhR-nbsupMQU_hCTJuaabtZ1gsfsfp
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  app_key: ""
+  secret_key: ""
+  send_url: ""
+  http_get: 0
+  send_success_response: ok
+  time_zone: "Europe/London"
+  multi_message_enabled: 0
+  message_parameter: message
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "change me"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: ""
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: true
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "tpyh17azv43y"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Test Review Master SMS Gateway"
+  google_my_business_postal_code: "AB1 5CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 12
+
+# Autocab 2 test server new API V1 (Using app_key as subscription key)
+- id: 14
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 20
+  token: QxrH0iJc3wv/lj/YKVppNYRad7tN0Z3xdysi
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  app_key: "368884f877b3457e9f5e33ddfa3805aa"
+  secret_key: ""
+  send_url: ""
+  http_get: 0
+  send_success_response: returnSendSms=success
+  # send_success_response: {"success":"1"}
+  time_zone: "Europe/London"
+  multi_message_enabled: 1
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 1
+  message: "Enjoyed your journey with Autocab 2 Test Server new API V1? Please feel free to leave a review http://bit.ly/Autocab1TestServerSSSSSEnjoyed your journey with Autocab 1 Test Server? Please feel free to leave a review http://bit.ly/Autocab1TestServerSSSSSEnjoyed your journey with Autocab 1 Test Server? Please feel free to leave a review http://bit.ly/Autocab1TestServerSSSSSEnjoyed your journey with Autocab 1 Test Server? Please feel free to leave a review http://bit.ly/Autocab1TestServer"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: "https://autocab-api.azure-api.net/"
+  dispatcher_type: "AUTOCAB_V1"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  # change to true to test using review master sms gateway to send messages
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "9834"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Autocab Taxi Company 2"
+  google_my_business_postal_code: "AB1 2CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 13
+
+# send from Review Master SMS Gateway APP Use Master Queue
+- id: 15
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 2
+  token: OYBpBsZ9OhR-nbsupMQU_hCTJuaabtZ1gsfsfp123
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  app_key: ""
+  secret_key: ""
+  send_url: ""
+  http_get: 0
+  send_success_response: ok
+  time_zone: "Europe/London"
+  multi_message_enabled: 0
+  message_parameter: message
+  multi_message_separator: SSSSS
+  use_database_message: 0
+  message: "change me"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: ""
+  dispatcher_type: "ICABBI"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  review_master_sms_gateway_enabled: true
+  review_master_sms_gateway_use_master_queue: true
+  review_master_sms_gateway_pair_code: "tpyh17azv8uf"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Test Review Master SMS Gateway Use Master Queue"
+  google_my_business_postal_code: "AB1 5CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 14
+
+# Autocab 3 test server new API V2 (Using app_key as subscription key)
+- id: 16
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 20
+  token: QxrH0iJc3wv/lj/YKVppNYRad7tN0Z3xesfs
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  app_key: "368884f877b3457e9f5e33ddfa343526a"
+  secret_key: ""
+  send_url: ""
+  http_get: 0
+  send_success_response: returnSendSms=success
+  # send_success_response: {"success":"1"}
+  time_zone: "Europe/London"
+  multi_message_enabled: 1
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 1
+  message: "Enjoyed your journey with Autocab 3 Test Server new API V2? Please feel free to leave a review http://bit.ly/Autocab3TestServerSSSSSEnjoyed your journey with Autocab 3 Test Server? Please feel free to leave a review http://bit.ly/Autocab3TestServerSSSSSEnjoyed your journey with Autocab 3 Test Server? Please feel free to leave a review http://bit.ly/Autocab3TestServerSSSSSEnjoyed your journey with Autocab 3 Test Server? Please feel free to leave a review http://bit.ly/Autocab3TestServer"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: "https://autocab-api.azure-api.net/"
+  dispatcher_type: "AUTOCAB_V2"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  # change to true to test using review master sms gateway to send messages
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "9834"
+  alternate_message_service_enabled: false
+  alternate_message_service: ""
+  alternate_message_service_secret1: ""
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Autocab Taxi Company 3"
+  google_my_business_postal_code: "AB1 2CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 15
+
+# Autocab 4 test server new API V2 (Using app_key as subscription key)
+# Using Autocab API V1 Send SMS
+- id: 17
+  enabled: 1
+  min_send_frequency: 21
+  max_send_count: 10
+  max_daily_send_count: 20
+  token: QxrH0iPc4wv/lj/YKVppNYRad7tN0Z3wasfs
+  telephone_parameter: t
+  send_from_icabbi_app: 0
+  app_key: "368884f877b3457e9f5e33ddfa343526a"
+  secret_key: ""
+  send_url: ""
+  http_get: 0
+  send_success_response: ok
+  time_zone: "Europe/London"
+  multi_message_enabled: 1
+  message_parameter: m
+  multi_message_separator: SSSSS
+  use_database_message: 1
+  message: "Enjoyed your journey with Autocab 4 Test Server new API V2 using API V1 to send SMS? Please feel free to leave a review http://bit.ly/Autocab3TestServerSSSSSEnjoyed your journey with Autocab 4 Test Server? Please feel free to leave a review http://bit.ly/Autocab3TestServerSSSSSEnjoyed your journey with Autocab 4 Test Server? Please feel free to leave a review http://bit.ly/Autocab3TestServerSSSSSEnjoyed your journey with Autocab 4 Test Server? Please feel free to leave a review http://bit.ly/Autocab3TestServer"
+  send_delay_enabled: 0
+  send_delay: 10
+  dispatcher_checks_enabled: 0
+  dispatcher_url: "https://autocab-api.azure-api.net/"
+  dispatcher_type: "AUTOCAB_V2"
+  booking_id_parameter: b
+  is_booking_for_now_diff_minutes: 10
+  booking_now_pickup_to_contact_minutes: 10
+  pre_booking_pickup_to_contact_minutes: 3
+  replace_telephone_country_code: 0
+  replace_telephone_country_code_with: "0"
+  # change to true to test using review master sms gateway to send messages
+  review_master_sms_gateway_enabled: false
+  review_master_sms_gateway_use_master_queue: false
+  review_master_sms_gateway_pair_code: "9834"
+  alternate_message_service_enabled: true
+  alternate_message_service: "AUTOCAB_V1"
+  alternate_message_service_secret1: "5a63a90b1f55412bbe9fef44ac40c95c"
+  companies: ""
+  booking_source_mobile_app_state: -1
+  google_my_business_review_reply_enabled: 0
+  google_my_business_location_name: "Autocab Taxi Company 4"
+  google_my_business_postal_code: "AB1 2CD"
+  google_my_business_reply_to_unspecfified_star_rating: 0
+  google_my_business_unspecfified_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_one_star_rating: 0
+  google_my_business_one_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_two_star_rating: 0
+  google_my_business_two_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_three_star_rating: 0
+  google_my_business_three_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_four_star_rating: 0
+  google_my_business_four_star_rating_reply: "Thank you for your review"
+  google_my_business_reply_to_five_star_rating: 0
+  google_my_business_five_star_rating_reply: "Thank you for your review"
+  google_my_business_report_enabled: 0
+  email_address: "test@test.com"
+  client_id: 16

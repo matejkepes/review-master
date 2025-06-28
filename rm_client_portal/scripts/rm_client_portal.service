@@ -1,0 +1,30 @@
+[Unit]
+Description=Google Reviews (Review Master) Client Portal service
+ConditionPathExists=/home/ubuntu/Documents/code/golang/rm_client_portal
+After=network.target
+
+[Service]
+Type=simple
+# should run this as a different user
+User=root
+Group=root
+#LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+#StartLimitIntervalSec=60
+
+WorkingDirectory=/home/ubuntu/Documents/code/golang/rm_client_portal
+ExecStart=/home/ubuntu/Documents/code/golang/rm_client_portal/rm_client_portal
+
+# make sure log directory exists and owned by syslog (log in same directory as exe file)
+#PermissionsStartOnly=true
+#ExecStartPre=/bin/mkdir -p /var/log/rm_client_portal
+#ExecStartPre=/bin/chown syslog:adm /var/log/rm_client_portal
+#ExecStartPre=/bin/chmod 755 /var/log/rm_client_portal
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=rm_client_portal
+
+[Install]
+WantedBy=multi-user.target

@@ -1,0 +1,30 @@
+[Unit]
+Description=Send SMS service
+ConditionPathExists=/home/ubuntu/Documents/code/golang/send_sms
+After=network.target
+
+[Service]
+Type=simple
+# should run this as a different user
+User=root
+Group=root
+#LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+#StartLimitIntervalSec=60
+
+WorkingDirectory=/home/ubuntu/Documents/code/golang/send_sms
+ExecStart=/home/ubuntu/Documents/code/golang/send_sms/send_sms
+
+# make sure log directory exists and owned by syslog (log in same directory as exe file)
+#PermissionsStartOnly=true
+#ExecStartPre=/bin/mkdir -p /var/log/send_sms
+#ExecStartPre=/bin/chown syslog:adm /var/log/send_sms
+#ExecStartPre=/bin/chmod 755 /var/log/send_sms
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=send_sms
+
+[Install]
+WantedBy=multi-user.target

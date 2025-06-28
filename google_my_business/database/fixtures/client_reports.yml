@@ -1,0 +1,6 @@
+- report_id: 1
+  client_id: 2
+  report_period_start: 2023-04-01 00:00:00
+  report_period_end: 2023-04-30 23:59:59
+  generated_at: 2023-05-02 14:30:00
+  locations: '[{"analysis":{"overall_summary":{"summary_text":"Fixture test report","positive_themes":["Service quality","Response time"],"negative_themes":["Price"],"overall_perception":"Mostly positive","average_rating":4.2},"sentiment_analysis":{"positive_count":12,"positive_percentage":80.0,"neutral_count":2,"neutral_percentage":13.3,"negative_count":1,"negative_percentage":6.7,"total_reviews":15,"sentiment_trend":"Improving"}},"metadata":{"generatedAt":"2023-05-02T14:30:00Z","reviewCount":15,"locationID":"fixture-location","locationName":"Fixture Location","businessName":"Fixture Business","clientID":2,"analyzerID":"fixture-analyzer","analyzerName":"Fixture Analyzer","analyzerModel":"gpt-4"}}]' 

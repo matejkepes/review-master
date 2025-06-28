@@ -1,0 +1,23 @@
+- id: 1
+  telephone: 447123456789
+  last_sent: RAW=DATE_ADD(NOW(), INTERVAL -40 DAY)
+  last_sent_date: RAW=DATE(DATE_ADD(NOW(), INTERVAL -40 DAY))
+  sent_count: 1
+  stop: 0
+  client_id: 1
+
+- id: 2
+  telephone: 447123456788
+  last_sent: RAW=DATE_ADD(NOW(), INTERVAL -10 DAY)
+  last_sent_date: RAW=DATE(DATE_ADD(NOW(), INTERVAL -10 DAY))
+  sent_count: 3
+  stop: 1
+  client_id: 1
+
+- id: 3
+  telephone: 447123456785
+  last_sent: RAW=NOW()
+  last_sent_date: RAW=CURDATE()
+  sent_count: 3
+  stop: 0
+  client_id: 1

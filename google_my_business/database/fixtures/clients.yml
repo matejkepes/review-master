@@ -1,0 +1,20 @@
+# - id: 11
+#   enabled: 1
+#   name: Britannia - St Helens
+#   note: ''
+#   country: GB
+#   partner_id: 2
+
+- id: 3
+  enabled: 1
+  name: City Taxis Sheffield
+  note: '17-5-21 MG Changed to use Gateway instaed of SMS app - scott sent in details\nAlso removed excesss times and reverted back to 10-2pm\n19-2-21 MG: Added Review responses for City Taxis Sheffield'
+  country: GB
+  partner_id: 2
+
+# - id: 3
+#   enabled: 1
+#   name: Veezu - City Taxis Sheffield
+#   note: '17-5-21 MG Changed to use Gateway instaed of SMS app - scott sent in details\nAlso removed excesss times and reverted back to 10-2pm\n19-2-21 MG: Added Review responses for City Taxis Sheffield\n5-4-23 MG Changed app link at request from Sacha\n28-6-23 MG Added configs for Derby/Rotherham/Excel and responses also, no GMB access for Barnsley\n9-10-23 Re branded all links for Veezu, added City Barnsley, added delay, changed times Weekends and Fri 6am-6pm, added Veezu Trustpilot Links\n12-12-23 MG Changed response form to remove feedback form and replace with email\n8-5-23 MG Rebranded repsonses and added Veezu Barsnsley Pitt Street'
+#   country: GB
+#   partner_id: 2

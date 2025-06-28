@@ -1,0 +1,53 @@
+- id: 1
+  stats_date: RAW=DATE(DATE_ADD(NOW(), INTERVAL -40 DAY))
+  sent_count: 20
+  requested_count: 40
+  client_id: 1
+
+- id: 2
+  stats_date: RAW=DATE(DATE_ADD(NOW(), INTERVAL -39 DAY))
+  sent_count: 11
+  requested_count: 14
+  client_id: 1
+
+- id: 3
+  stats_date: RAW=DATE(DATE_ADD(NOW(), INTERVAL -38 DAY))
+  sent_count: 15
+  requested_count: 123
+  client_id: 1
+
+- id: 4
+  stats_date: RAW=DATE(DATE_ADD(NOW(), INTERVAL -20 DAY))
+  sent_count: 5
+  requested_count: 67
+  client_id: 1
+
+- id: 6
+  stats_date: RAW=DATE(DATE_ADD(NOW(), INTERVAL -10 DAY))
+  sent_count: 78
+  requested_count: 584
+  client_id: 1
+
+- id: 7
+  stats_date: RAW=DATE(DATE_ADD(NOW(), INTERVAL -9 DAY))
+  sent_count: 16
+  requested_count: 165
+  client_id: 1
+
+- id: 8
+  stats_date: RAW=DATE(DATE_ADD(NOW(), INTERVAL -8 DAY))
+  sent_count: 3
+  requested_count: 7
+  client_id: 1
+
+- id: 9
+  stats_date: RAW=DATE(DATE_ADD(NOW(), INTERVAL -10 DAY))
+  sent_count: 4
+  requested_count: 176
+  client_id: 3
+
+- id: 10
+  stats_date: RAW=DATE(DATE_ADD(NOW(), INTERVAL -9 DAY))
+  sent_count: 9
+  requested_count: 109
+  client_id: 3

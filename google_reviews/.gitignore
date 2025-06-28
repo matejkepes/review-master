@@ -1,0 +1,13 @@
+gitignore 
+
+.DS_Store
+
+google_reviews
+**/secrets_*.go
+certs/*
+config/config.properties
+
+.vscode/*
+*.log
+
+tmp/

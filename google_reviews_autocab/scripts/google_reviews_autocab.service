@@ -1,0 +1,30 @@
+[Unit]
+Description=Google Review Autocab service
+ConditionPathExists=/home/ubuntu/Documents/code/golang/google_reviews_autocab
+After=network.target
+
+[Service]
+Type=simple
+# should run this as a different user
+User=root
+Group=root
+#LimitNOFILE=1024
+
+Restart=on-failure
+RestartSec=10
+#StartLimitIntervalSec=60
+
+WorkingDirectory=/home/ubuntu/Documents/code/golang/google_reviews_autocab
+ExecStart=/home/ubuntu/Documents/code/golang/google_reviews_autocab/google_reviews_autocab
+
+# make sure log directory exists and owned by syslog (log in same directory as exe file)
+#PermissionsStartOnly=true
+#ExecStartPre=/bin/mkdir -p /var/log/google_reviews_autocab
+#ExecStartPre=/bin/chown syslog:adm /var/log/google_reviews_autocab
+#ExecStartPre=/bin/chmod 755 /var/log/google_reviews_autocab
+#StandardOutput=syslog
+#StandardError=syslog
+#SyslogIdentifier=google_reviews_autocab
+
+[Install]
+WantedBy=multi-user.target

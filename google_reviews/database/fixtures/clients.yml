@@ -1,0 +1,136 @@
+- id: 1
+  enabled: 1
+  name: Taxi Company 1
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 2
+  enabled: 1
+  name: Taxi Company 2 DiSC
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 3
+  enabled: 1
+  name: Taxi Company 3 Multi Message
+  note: ''
+  country: GB
+  partner_id: 2
+
+- id: 4
+  enabled: 1
+  name: Taxi Company 4 iCabbi App
+  note: ''
+  country: GB
+  partner_id: 2
+
+- id: 5
+  enabled: 1
+  name: Taxi Company 5 iCabbi App Message From DB
+  note: ''
+  country: GB
+  partner_id: 2
+
+- id: 6
+  enabled: 1
+  name: Taxi Company 6 iCabbi App Message From DB do dispatcher check
+  note: ''
+  country: GB
+  partner_id: 2
+
+- id: 7
+  enabled: 1
+  name: Taxi Company 7 replace telephone country code with 0
+  note: ''
+  country: GB
+  partner_id: 2
+
+- id: 8
+  enabled: 1
+  name: Taxi Company 8 set weekdays all to false
+  note: ''
+  country: GB
+  partner_id: 2
+
+- id: 9
+  enabled: 1
+  name: Taxi Company 9 Multi Message from DB
+  note: ''
+  country: GB
+  partner_id: 2
+
+- id: 10
+  enabled: 1
+  name: Ride Private Hire
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 11
+  enabled: 1
+  name: Autocab 1 Test Server
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 12
+  enabled: 1
+  name: Test Review Master SMS Gateway
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 13
+  enabled: 1
+  name: Test alternate message service Message Media
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 14
+  enabled: 1
+  name: Test Review Master SMS Gateway Use Master Queue
+  note: ''
+  country: GB
+  partner_id: 1
+
+- id: 15
+  enabled: 1
+  name: Test Dutch company Telephone Not Found
+  note: ''
+  country: NL
+  partner_id: 1
+
+# Cordic
+- id: 16
+  enabled: 1
+  name: Cordic Taxi Company 1
+  note: ''
+  country: GB
+  partner_id: 1
+
+# Cab 9
+- id: 17
+  enabled: 1
+  name: Cab 9 Taxi Company 1
+  note: ''
+  country: GB
+  partner_id: 1
+
+# disabled client
+- id: 18
+  enabled: 0
+  name: Disabled client Taxi Company 1
+  note: ''
+  country: GB
+  partner_id: 1
+
+# Veezu alternate message_service
+- id: 19
+  enabled: 1
+  name: Veezu Taxi Company Alternate Message Service 1
+  note: ''
+  country: GB
+  partner_id: 1
