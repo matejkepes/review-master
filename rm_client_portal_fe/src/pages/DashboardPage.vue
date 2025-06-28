@@ -295,9 +295,9 @@ const loadReviews = async () => {
     // add the time
     const startTime = `${startDate}T00:00:00Z`;
     const endTime = `${endDate}T23:59:59Z`;
-    const response = await apiService.getReviews(startTime, endTime);
+    const response = await apiService.getReviews(startTime, endTime, selectedClient.value.id);
 
-    // Aggregate ratings across all locations
+    // Aggregate ratings across all locations (now already filtered by backend)
     const totalRatings = {
       one: 0,
       two: 0,

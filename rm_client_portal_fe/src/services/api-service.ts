@@ -160,11 +160,13 @@ class ApiService {
     }
   }
 
-  async getReviews(startTime: string, endTime: string): Promise<ReviewsResponse> {
+  async getReviews(startTime: string, endTime: string, clientId?: number): Promise<ReviewsResponse> {
     try {
-      const response = await this.api.get('/auth/reviews', {
-        params: { start_time: startTime, end_time: endTime },
-      })
+      const params: any = { start_time: startTime, end_time: endTime }
+      if (clientId !== undefined) {
+        params.client_id = clientId
+      }
+      const response = await this.api.get('/auth/reviews', { params })
       return ReviewsResponseSchema.parse(response.data)
     } catch (error: any) {
       throw new ApiError(error.response?.status, error.message, error.response?.data)
