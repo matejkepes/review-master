@@ -5,6 +5,7 @@ import (
 	"log"
 	"rm_client_portal/database"
 	"rm_client_portal/google_my_business_api"
+	"strconv"
 
 	jwt "github.com/appleboy/gin-jwt"
 	"github.com/gin-gonic/gin"
@@ -57,12 +58,47 @@ func ReportOnReviewsAndInsights(c *gin.Context) {
 	email := getEmailFromJWT(c)
 	startTime := c.Query("start_time")
 	endTime := c.Query("end_time")
+	clientIDParam := c.Query("client_id")
+	
 	accounts := google_my_business_api.GetAccounts()
 	clientIDs := database.GetClientIDsForUserEmail(email)
-	// log.Printf("clientIDs = %v\n", clientIDs)
+	
+	// If client_id parameter is provided, filter to only that client
+	var filterClientIDs []uint64
+	if clientIDParam != "" {
+		clientID, err := strconv.ParseUint(clientIDParam, 10, 64)
+		if err != nil {
+			c.JSON(400, gin.H{
+				"error": "Invalid client_id parameter",
+			})
+			return
+		}
+		
+		// Validate that the user has access to this client
+		hasAccess := false
+		for _, userClientID := range clientIDs {
+			if userClientID == clientID {
+				hasAccess = true
+				break
+			}
+		}
+		
+		if !hasAccess {
+			c.JSON(403, gin.H{
+				"error": "Access denied to specified client",
+			})
+			return
+		}
+		
+		filterClientIDs = []uint64{clientID}
+	} else {
+		filterClientIDs = clientIDs
+	}
+	
+	// log.Printf("filterClientIDs = %v\n", filterClientIDs)
 	var locs []database.GoogleReviewsConfigAndGoogleMyBusinessLocation
 	for _, a := range accounts {
-		l := google_my_business_api.GetLocationsCheckClientID(a, clientIDs)
+		l := google_my_business_api.GetLocationsCheckClientID(a, filterClientIDs)
 		for _, g := range l {
 			g.GoogleReviewRatings = google_my_business_api.ReportOnReviewsWeb(g, startTime, endTime)
 			// insights

@@ -4,6 +4,8 @@
     <!-- max 800px width, centered -->
     <div style="max-width: 800px; margin: 0 auto;">
 
+      <!-- Currently Viewing Client Indicator -->
+      <ClientViewingIndicator />
 
       <!-- Performance Overview Section -->
       <div class="q-mt-lg">
@@ -51,6 +53,7 @@
 import { computed, ref, watch } from 'vue';
 import { useStore } from 'stores/store';
 import { useApiService, type UserStatsResponse } from 'src/services/api-service';
+import ClientViewingIndicator from 'src/components/ClientViewingIndicator.vue';
 
 const { apiService } = useApiService();
 
@@ -114,7 +117,7 @@ const chartSeries = ref<{ name: string; data: ChartDataPoint[]; color?: string }
   }
 ]);
 
-// Get the selected client from store
+// Get the selected client from store (for chart filtering)
 const selectedClient = computed(() =>
   store.clients.find(client => client.id === store.selectedClientId)
 );
@@ -295,9 +298,9 @@ const loadReviews = async () => {
     // add the time
     const startTime = `${startDate}T00:00:00Z`;
     const endTime = `${endDate}T23:59:59Z`;
-    const response = await apiService.getReviews(startTime, endTime);
+    const response = await apiService.getReviews(startTime, endTime, selectedClient.value.id);
 
-    // Aggregate ratings across all locations
+    // Aggregate ratings across all locations (now already filtered by backend)
     const totalRatings = {
       one: 0,
       two: 0,

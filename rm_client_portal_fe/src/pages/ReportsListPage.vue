@@ -3,6 +3,9 @@
     <!-- max 800px width, centered -->
     <div style="max-width: 800px; margin: 0 auto;">
 
+      <!-- Currently Viewing Client Indicator -->
+      <ClientViewingIndicator />
+
       <div class="text-h6 q-mb-md">Monthly Reports</div>
 
       <!-- Loading spinner -->
@@ -51,6 +54,7 @@ import { ref, onMounted, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import { useStore } from 'stores/store';
 import { apiService } from 'src/services/api-service';
+import ClientViewingIndicator from 'src/components/ClientViewingIndicator.vue';
 
 const router = useRouter();
 const store = useStore();
