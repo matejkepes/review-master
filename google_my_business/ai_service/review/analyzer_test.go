@@ -542,6 +542,21 @@ func TestAnalyzeWithMixedReviews(t *testing.T) {
 			result.Analysis.OverallSummary.AverageRating, expectedAverage)
 	}
 
+	expectedPositiveCount := 2 // 4 and 5 star reviews
+	if result.Analysis.SentimentAnalysis.PositiveCount != expectedPositiveCount {
+		t.Errorf("Expected PositiveCount %d, got %d", expectedPositiveCount, result.Analysis.SentimentAnalysis.PositiveCount)
+	}
+
+	expectedNeutralCount := 1 // 3 star reviews
+	if result.Analysis.SentimentAnalysis.NeutralCount != expectedNeutralCount {
+		t.Errorf("Expected NeutralCount %d, got %d", expectedNeutralCount, result.Analysis.SentimentAnalysis.NeutralCount)
+	}
+
+	expectedNegativeCount := 1 // 1 and 2 star reviews
+	if result.Analysis.SentimentAnalysis.NegativeCount != expectedNegativeCount {
+		t.Errorf("Expected NegativeCount %d, got %d", expectedNegativeCount, result.Analysis.SentimentAnalysis.NegativeCount)
+	}
+
 	// Log for debugging
 	t.Logf("Analysis completed - TotalReviews: %d, Metadata ReviewCount: %d, Average Rating: %f",
 		result.Analysis.SentimentAnalysis.TotalReviews,
