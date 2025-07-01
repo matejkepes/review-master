@@ -190,6 +190,22 @@ func NewAnalyzer(provider ai_service.LLMProvider, config AnalyzerConfig) *Review
 	}
 }
 
+// calculateSentimentCounts calculates sentiment counts from review ratings
+func calculateSentimentCounts(ratings []int) (positive, neutral, negative int) {
+	for _, rating := range ratings {
+		switch {
+		case rating >= 4: // 4-5 stars = positive
+			positive++
+		case rating == 3: // 3 stars = neutral
+			neutral++
+		case rating <= 2: // 1-2 stars = negative
+			negative++
+		}
+	}
+
+	return positive, neutral, negative
+}
+
 // preparePrompt creates a prompt for the LLM based on a batch of reviews
 func (a *ReviewAnalyzer) preparePrompt(batch ReviewBatch) string {
 	// Format reviews as a string
@@ -377,6 +393,14 @@ func (a *ReviewAnalyzer) Analyze(batch ReviewBatch) (*shared.AnalysisResult, err
 	// Set the report period separately to handle the struct with json tags
 	result.Metadata.ReportPeriod.StartDate = batch.ReportPeriod.StartDate
 	result.Metadata.ReportPeriod.EndDate = batch.ReportPeriod.EndDate
+
+	// Calculate sentiment counts directly from ratings (override LLM-provided counts)
+	positiveCount, neutralCount, negativeCount := calculateSentimentCounts(allRatings)
+
+	// Override LLM-provided sentiment analysis with calculated values
+	result.Analysis.SentimentAnalysis.PositiveCount = positiveCount
+	result.Analysis.SentimentAnalysis.NeutralCount = neutralCount
+	result.Analysis.SentimentAnalysis.NegativeCount = negativeCount
 
 	// Ensure TotalReviews reflects all reviews, not just those with text content
 	// This must be done after all validation to avoid breaking the analysis logic
