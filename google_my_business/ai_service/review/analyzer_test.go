@@ -647,7 +647,7 @@ func TestSentimentPercentageCalculation(t *testing.T) {
 			},
 			{
 				ID:     "rev_4",
-				Text:   "", // No text content  
+				Text:   "", // No text content
 				Rating: 4,  // Positive
 				Date:   time.Date(2023, 5, 25, 12, 0, 0, 0, time.UTC),
 			},
@@ -685,23 +685,23 @@ func TestSentimentPercentageCalculation(t *testing.T) {
 	expectedNegativePercentage := 25.0 // 1 negative out of 4 total
 
 	if result.Analysis.SentimentAnalysis.PositivePercentage != expectedPositivePercentage {
-		t.Errorf("PositivePercentage should be %.1f%% (1/4), got %.1f%%", 
+		t.Errorf("PositivePercentage should be %.1f%% (1/4), got %.1f%%",
 			expectedPositivePercentage, result.Analysis.SentimentAnalysis.PositivePercentage)
 	}
 	if result.Analysis.SentimentAnalysis.NegativePercentage != expectedNegativePercentage {
-		t.Errorf("NegativePercentage should be %.1f%% (1/4), got %.1f%%", 
+		t.Errorf("NegativePercentage should be %.1f%% (1/4), got %.1f%%",
 			expectedNegativePercentage, result.Analysis.SentimentAnalysis.NegativePercentage)
 	}
 
 	// Verify the percentages add up correctly (counts should sum to total when including non-text reviews)
-	totalPercentage := result.Analysis.SentimentAnalysis.PositivePercentage + 
-						result.Analysis.SentimentAnalysis.NeutralPercentage + 
-						result.Analysis.SentimentAnalysis.NegativePercentage
-	
+	totalPercentage := result.Analysis.SentimentAnalysis.PositivePercentage +
+		result.Analysis.SentimentAnalysis.NeutralPercentage +
+		result.Analysis.SentimentAnalysis.NegativePercentage
+
 	// Should be 50% since we only have sentiment data for 2 out of 4 reviews
 	expectedTotalPercentage := 50.0
 	if totalPercentage != expectedTotalPercentage {
-		t.Errorf("Total percentage should be %.1f%% (only 2 reviews have sentiment data), got %.1f%%", 
+		t.Errorf("Total percentage should be %.1f%% (only 2 reviews have sentiment data), got %.1f%%",
 			expectedTotalPercentage, totalPercentage)
 	}
 
