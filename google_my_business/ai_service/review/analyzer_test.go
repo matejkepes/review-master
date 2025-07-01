@@ -557,9 +557,38 @@ func TestAnalyzeWithMixedReviews(t *testing.T) {
 		t.Errorf("Expected NegativeCount %d, got %d", expectedNegativeCount, result.Analysis.SentimentAnalysis.NegativeCount)
 	}
 
+	// Verify that percentages are calculated correctly from counts
+	expectedPositivePercentage := float64(expectedPositiveCount) / float64(expectedTotalReviews) * 100 // 2/4 * 100 = 50%
+	if result.Analysis.SentimentAnalysis.PositivePercentage != expectedPositivePercentage {
+		t.Errorf("Expected PositivePercentage %.1f%%, got %.1f%%", expectedPositivePercentage, result.Analysis.SentimentAnalysis.PositivePercentage)
+	}
+
+	expectedNeutralPercentage := float64(expectedNeutralCount) / float64(expectedTotalReviews) * 100 // 1/4 * 100 = 25%
+	if result.Analysis.SentimentAnalysis.NeutralPercentage != expectedNeutralPercentage {
+		t.Errorf("Expected NeutralPercentage %.1f%%, got %.1f%%", expectedNeutralPercentage, result.Analysis.SentimentAnalysis.NeutralPercentage)
+	}
+
+	expectedNegativePercentage := float64(expectedNegativeCount) / float64(expectedTotalReviews) * 100 // 1/4 * 100 = 25%
+	if result.Analysis.SentimentAnalysis.NegativePercentage != expectedNegativePercentage {
+		t.Errorf("Expected NegativePercentage %.1f%%, got %.1f%%", expectedNegativePercentage, result.Analysis.SentimentAnalysis.NegativePercentage)
+	}
+
+	// Verify percentages add up to 100%
+	totalPercentage := result.Analysis.SentimentAnalysis.PositivePercentage +
+		result.Analysis.SentimentAnalysis.NeutralPercentage +
+		result.Analysis.SentimentAnalysis.NegativePercentage
+	if totalPercentage != 100.0 {
+		t.Errorf("Percentages should add up to 100%%, got %.1f%%", totalPercentage)
+	}
+
 	// Log for debugging
 	t.Logf("Analysis completed - TotalReviews: %d, Metadata ReviewCount: %d, Average Rating: %f",
 		result.Analysis.SentimentAnalysis.TotalReviews,
 		result.Metadata.ReviewCount,
 		result.Analysis.OverallSummary.AverageRating)
+	t.Logf("Sentiment percentages - Positive: %.1f%%, Neutral: %.1f%%, Negative: %.1f%%, Total: %.1f%%",
+		result.Analysis.SentimentAnalysis.PositivePercentage,
+		result.Analysis.SentimentAnalysis.NeutralPercentage,
+		result.Analysis.SentimentAnalysis.NegativePercentage,
+		totalPercentage)
 }

@@ -402,6 +402,11 @@ func (a *ReviewAnalyzer) Analyze(batch ReviewBatch) (*shared.AnalysisResult, err
 	result.Analysis.SentimentAnalysis.NeutralCount = neutralCount
 	result.Analysis.SentimentAnalysis.NegativeCount = negativeCount
 
+	// set percentages
+	result.Analysis.SentimentAnalysis.PositivePercentage = float64(positiveCount) / float64(len(allRatings)) * 100
+	result.Analysis.SentimentAnalysis.NeutralPercentage = float64(neutralCount) / float64(len(allRatings)) * 100
+	result.Analysis.SentimentAnalysis.NegativePercentage = float64(negativeCount) / float64(len(allRatings)) * 100
+
 	// Ensure TotalReviews reflects all reviews, not just those with text content
 	// This must be done after all validation to avoid breaking the analysis logic
 	result.Analysis.SentimentAnalysis.TotalReviews = len(allRatings)
