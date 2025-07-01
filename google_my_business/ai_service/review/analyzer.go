@@ -382,5 +382,15 @@ func (a *ReviewAnalyzer) Analyze(batch ReviewBatch) (*shared.AnalysisResult, err
 	// This must be done after all validation to avoid breaking the analysis logic
 	result.Analysis.SentimentAnalysis.TotalReviews = len(allRatings)
 
+	// Recalculate percentages based on the corrected total to ensure mathematical consistency
+	// The AI calculated percentages based only on reviews with text, but we need percentages
+	// based on all reviews (including those without text content)
+	if result.Analysis.SentimentAnalysis.TotalReviews > 0 {
+		totalReviews := float64(result.Analysis.SentimentAnalysis.TotalReviews)
+		result.Analysis.SentimentAnalysis.PositivePercentage = (float64(result.Analysis.SentimentAnalysis.PositiveCount) / totalReviews) * 100.0
+		result.Analysis.SentimentAnalysis.NeutralPercentage = (float64(result.Analysis.SentimentAnalysis.NeutralCount) / totalReviews) * 100.0
+		result.Analysis.SentimentAnalysis.NegativePercentage = (float64(result.Analysis.SentimentAnalysis.NegativeCount) / totalReviews) * 100.0
+	}
+
 	return result, nil
 }

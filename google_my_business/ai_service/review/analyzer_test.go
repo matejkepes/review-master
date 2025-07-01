@@ -548,3 +548,165 @@ func TestAnalyzeWithMixedReviews(t *testing.T) {
 		result.Metadata.ReviewCount,
 		result.Analysis.OverallSummary.AverageRating)
 }
+
+// TestSentimentPercentageCalculation specifically tests that percentages are calculated correctly
+// when some reviews have no text content
+func TestSentimentPercentageCalculation(t *testing.T) {
+	// Create a mock provider that returns sentiment counts based only on text reviews
+	mockProvider := NewMockLLMProvider()
+	mockProvider.AddMockResponse("any", "any", `{
+		"analysis": {
+			"overall_summary": {
+				"summary_text": "Test analysis",
+				"average_rating": 3.5,
+				"positive_themes": ["Good service"],
+				"negative_themes": ["Some issues"],
+				"overall_perception": "Mixed feedback"
+			},
+			"sentiment_analysis": {
+				"positive_count": 1,
+				"neutral_count": 0,
+				"negative_count": 1,
+				"positive_percentage": 50.0,
+				"neutral_percentage": 0.0,
+				"negative_percentage": 50.0,
+				"total_reviews": 2,
+				"sentiment_trend": "Mixed sentiment"
+			},
+			"key_takeaways": {
+				"strengths": [
+					{
+						"category": "Service",
+						"description": "Good customer service",
+						"example": "Staff was helpful"
+					}
+				],
+				"areas_for_improvement": [
+					{
+						"category": "Timeliness",
+						"description": "Need to improve punctuality",
+						"example": "Driver was late"
+					}
+				]
+			},
+			"negative_review_breakdown": {
+				"categories": [
+					{
+						"name": "Poor Communication",
+						"count": 1,
+						"percentage": 100.0
+					}
+				],
+				"improvement_recommendations": [
+					"Improve communication with customers"
+				]
+			},
+			"training_recommendations": {
+				"for_operators": [
+					"Enhance customer service training"
+				],
+				"for_drivers": [
+					"Focus on punctuality training"
+				]
+			}
+		}
+	}`, nil)
+
+	config := AnalyzerConfig{
+		SystemPrompt:           "Test system prompt",
+		MaxTokens:              1000,
+		ModelName:              "test-model",
+		IncludeThemes:          true,
+		IncludeRecommendations: true,
+		AnalyzerID:             "test-analyzer",
+		AnalyzerName:           "Test Analyzer",
+	}
+
+	analyzer := NewAnalyzer(mockProvider, config)
+
+	// Create batch with 4 reviews: 2 with text (1 positive, 1 negative), 2 without text (both positive)
+	batch := ReviewBatch{
+		Reviews: []Review{
+			{
+				ID:     "rev_1",
+				Text:   "Great service, very friendly staff",
+				Rating: 5, // Positive
+				Date:   time.Date(2023, 5, 10, 14, 30, 0, 0, time.UTC),
+			},
+			{
+				ID:     "rev_2",
+				Text:   "Driver was late, not happy",
+				Rating: 2, // Negative
+				Date:   time.Date(2023, 5, 15, 9, 45, 0, 0, time.UTC),
+			},
+			{
+				ID:     "rev_3",
+				Text:   "", // No text content
+				Rating: 5,  // Positive
+				Date:   time.Date(2023, 5, 20, 18, 15, 0, 0, time.UTC),
+			},
+			{
+				ID:     "rev_4",
+				Text:   "", // No text content  
+				Rating: 4,  // Positive
+				Date:   time.Date(2023, 5, 25, 12, 0, 0, 0, time.UTC),
+			},
+		},
+		LocationName: "Test Location",
+		LocationID:   "test-location-123",
+		BusinessName: "Test Business",
+		ClientID:     1,
+		PostalCode:   "12345",
+	}
+	batch.ReportPeriod.StartDate = "2023-05-01"
+	batch.ReportPeriod.EndDate = "2023-05-31"
+
+	// Run analysis
+	result, err := analyzer.Analyze(batch)
+	if err != nil {
+		t.Fatalf("Analysis failed: %v", err)
+	}
+
+	// Verify total reviews includes all 4 reviews
+	if result.Analysis.SentimentAnalysis.TotalReviews != 4 {
+		t.Errorf("TotalReviews should be 4, got %d", result.Analysis.SentimentAnalysis.TotalReviews)
+	}
+
+	// AI should report counts based only on text reviews: 1 positive, 1 negative
+	if result.Analysis.SentimentAnalysis.PositiveCount != 1 {
+		t.Errorf("PositiveCount should be 1 (from text reviews), got %d", result.Analysis.SentimentAnalysis.PositiveCount)
+	}
+	if result.Analysis.SentimentAnalysis.NegativeCount != 1 {
+		t.Errorf("NegativeCount should be 1 (from text reviews), got %d", result.Analysis.SentimentAnalysis.NegativeCount)
+	}
+
+	// But percentages should be recalculated based on all 4 reviews: 1/4 = 25%
+	expectedPositivePercentage := 25.0 // 1 positive out of 4 total
+	expectedNegativePercentage := 25.0 // 1 negative out of 4 total
+
+	if result.Analysis.SentimentAnalysis.PositivePercentage != expectedPositivePercentage {
+		t.Errorf("PositivePercentage should be %.1f%% (1/4), got %.1f%%", 
+			expectedPositivePercentage, result.Analysis.SentimentAnalysis.PositivePercentage)
+	}
+	if result.Analysis.SentimentAnalysis.NegativePercentage != expectedNegativePercentage {
+		t.Errorf("NegativePercentage should be %.1f%% (1/4), got %.1f%%", 
+			expectedNegativePercentage, result.Analysis.SentimentAnalysis.NegativePercentage)
+	}
+
+	// Verify the percentages add up correctly (counts should sum to total when including non-text reviews)
+	totalPercentage := result.Analysis.SentimentAnalysis.PositivePercentage + 
+						result.Analysis.SentimentAnalysis.NeutralPercentage + 
+						result.Analysis.SentimentAnalysis.NegativePercentage
+	
+	// Should be 50% since we only have sentiment data for 2 out of 4 reviews
+	expectedTotalPercentage := 50.0
+	if totalPercentage != expectedTotalPercentage {
+		t.Errorf("Total percentage should be %.1f%% (only 2 reviews have sentiment data), got %.1f%%", 
+			expectedTotalPercentage, totalPercentage)
+	}
+
+	t.Logf("Percentage calculation test - Positive: %.1f%%, Negative: %.1f%%, Total: %.1f%%",
+		result.Analysis.SentimentAnalysis.PositivePercentage,
+		result.Analysis.SentimentAnalysis.NegativePercentage,
+		totalPercentage)
+}
