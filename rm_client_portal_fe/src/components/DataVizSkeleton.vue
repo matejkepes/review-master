@@ -130,7 +130,6 @@
 }
 
 .menu-button {
-  border-radius: 50%;
 }
 
 /* Enhanced pulsating animation */
