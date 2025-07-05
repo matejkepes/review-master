@@ -150,7 +150,7 @@ const chartSeries = ref<{ name: string; data: ChartDataPoint[]; color?: string }
   {
     name: 'Sent',
     data: [],
-    color: '#2E3A5E'
+    color: '#05062c'
   },
   {
     name: 'Requested',
@@ -262,7 +262,7 @@ const parseStatsResponse = (response: UserStatsResponse) => {
         x: new Date(stat.date).getTime(),
         y: stat.sent
       })).reverse(),
-      color: '#2E3A5E'
+      color: '#05062c'
     },
     {
       name: 'Requested',
@@ -320,7 +320,7 @@ const reviewChartOptions = ref({
     strokeDashArray: 3,
     borderColor: '#e0e0e0'
   },
-  colors: ['#2E3A5E'],
+  colors: ['#05062c'],
   legend: {
     show: false
   }
