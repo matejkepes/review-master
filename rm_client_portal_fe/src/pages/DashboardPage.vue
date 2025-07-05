@@ -17,33 +17,70 @@
 
         <!-- Stats content will go here -->
         <div v-if="isLoading">
-          <q-spinner-dots size="40px" color="primary" />
+          <SmartLoadingSpinner loadingType="dashboard" />
         </div>
-        <div v-else class="row q-col-gutter-md">
-          <div class="col-12">
-            <apexchart type="area" height="350" :options="chartOptions" :series="chartSeries" />
+        <div v-else-if="hasStatsError" class="text-center q-pa-lg">
+          <q-icon name="error_outline" size="48px" color="negative" class="q-mb-md" />
+          <div class="text-subtitle1 text-grey-7">Failed to load statistics</div>
+          <q-btn color="primary" label="Retry" @click="loadStats" class="q-mt-md" />
+        </div>
+        <transition name="fade" appear>
+          <div v-if="!isLoading && !hasStatsError" class="row q-col-gutter-md">
+            <div class="col-12">
+              <apexchart type="area" height="350" :options="chartOptions" :series="chartSeries" />
+            </div>
           </div>
-        </div>
+        </transition>
       </div>
 
       <!-- Reviews Section -->
       <div class="q-mt-xl">
-        <div class="text-h6 q-mb-md">Reviews</div>
 
         <div v-if="isLoadingReviews">
-          <q-spinner-dots size="40px" color="primary" />
-        </div>
-        <div v-else class="row q-col-gutter-md">
-          <!-- Ratings Distribution -->
-          <div class="col-12">
-            <apexchart type="bar" height="350" :options="reviewChartOptions" :series="reviewChartSeries" />
+          <!-- Section-level loading message -->
+          <SmartLoadingSpinner loadingType="reviews" :sectionLevel="true" />
+          
+          <!-- Single unified content area -->
+          <div class="unified-skeleton-container">
+            <DataVizSkeleton />
           </div>
+        </div>
+        <div v-else-if="hasReviewsError" class="text-center q-pa-lg">
+          <q-icon name="error_outline" size="48px" color="negative" class="q-mb-md" />
+          <div class="text-subtitle1 text-grey-7">Failed to load reviews</div>
+          <q-btn color="primary" label="Retry" @click="loadReviews" class="q-mt-md" />
+        </div>
+        <transition name="fade" appear>
+          <div v-if="!isLoadingReviews && !hasReviewsError">
+            <!-- Profile Interactions -->
+            <div class="q-mt-xl">
+              <div class="text-h6 q-mb-lg">Profile Interactions</div>
+              <div class="row q-col-gutter-lg justify-center">
+                <div class="col-6">
+                  <div class="interaction-metric-card">
+                    <div class="interaction-number">{{ insightsChartSeries[0]?.data[0] || 0 }}</div>
+                    <div class="interaction-label text-grey-6">WEBSITE CLICKS</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="interaction-metric-card">
+                    <div class="interaction-number">{{ insightsChartSeries[0]?.data[1] || 0 }}</div>
+                    <div class="interaction-label text-grey-6">CALL BUTTON CLICKS</div>
+                  </div>
+                </div>
+              </div>
+            </div>
 
-          <!-- Insights -->
-          <div class="col-12 q-mt-md">
-            <apexchart type="bar" height="350" :options="insightsChartOptions" :series="insightsChartSeries" />
+            <!-- Rating Distribution -->
+            <div class="q-mt-xl">
+              <div class="row items-center q-mb-md justify-between">
+                <div class="text-h6">Rating Distribution</div>
+                <q-btn flat round icon="menu" color="grey-6" />
+              </div>
+              <apexchart type="bar" height="350" :options="reviewChartOptions" :series="reviewChartSeries" />
+            </div>
           </div>
-        </div>
+        </transition>
       </div>
     </div>
   </q-page>
@@ -54,6 +91,8 @@ import { computed, ref, watch } from 'vue';
 import { useStore } from 'stores/store';
 import { useApiService, type UserStatsResponse } from 'src/services/api-service';
 import ClientViewingIndicator from 'src/components/ClientViewingIndicator.vue';
+import SmartLoadingSpinner from 'src/components/SmartLoadingSpinner.vue';
+import DataVizSkeleton from 'src/components/DataVizSkeleton.vue';
 
 const { apiService } = useApiService();
 
@@ -61,6 +100,9 @@ const { apiService } = useApiService();
 const store = useStore();
 const isLoading = ref(false);
 const isLoadingReviews = ref(false);
+const hasStatsError = ref(false);
+const hasReviewsError = ref(false);
+
 
 // Add this type near the top of the script
 type ChartDataPoint = {
@@ -108,12 +150,12 @@ const chartSeries = ref<{ name: string; data: ChartDataPoint[]; color?: string }
   {
     name: 'Sent',
     data: [],
-    color: '#11189E'
+    color: '#05062c'
   },
   {
     name: 'Requested',
     data: [],
-    color: '#F6CC53'
+    color: '#F2C037'
   }
 ]);
 
@@ -155,18 +197,17 @@ const getDateRange = (period: { days?: number; months?: number }) => {
 const loadStats = async () => {
   if (!selectedClient.value) return;
 
+  const { startDate, endDate } = getDateRange(selectedPeriod.value!.value);
+  const timeGrouping = selectedPeriod.value!.value.months ? 'Month' : 'Day';
+  
   isLoading.value = true;
+  hasStatsError.value = false;
   try {
-    const { startDate, endDate } = getDateRange(selectedPeriod.value!.value);
-    const response = await apiService.getUserStats(
-      startDate!,
-      endDate!,
-      // "Day" or "Month"
-      selectedPeriod.value!.value.months ? 'Month' : 'Day'
-    );
+    const response = await apiService.getUserStats(startDate!, endDate!, timeGrouping);
     parseStatsResponse(response);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Failed to load stats:', error);
+    hasStatsError.value = true;
   } finally {
     isLoading.value = false;
   }
@@ -208,7 +249,7 @@ const parseStatsResponse = (response: UserStatsResponse) => {
         x: new Date(stat.date).getTime(),
         y: stat.sent
       })).reverse(),
-      color: '#11189E'
+      color: '#05062c'
     },
     {
       name: 'Requested',
@@ -216,7 +257,7 @@ const parseStatsResponse = (response: UserStatsResponse) => {
         x: new Date(stat.date).getTime(),
         y: stat.requested
       })).reverse(),
-      color: '#F6CC53'
+      color: '#F2C037'
     }
   ];
 };
@@ -225,11 +266,14 @@ const parseStatsResponse = (response: UserStatsResponse) => {
 const reviewChartOptions = ref({
   chart: {
     type: 'bar',
+    toolbar: {
+      show: false
+    }
   },
   plotOptions: {
     bar: {
       horizontal: false,
-      columnWidth: '55%',
+      columnWidth: '60%',
       distributed: true
     },
   },
@@ -237,16 +281,36 @@ const reviewChartOptions = ref({
     enabled: false
   },
   xaxis: {
-    categories: ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'],
+    categories: ['1⭐', '2⭐', '3⭐', '4⭐', '5⭐'],
     labels: {
-      show: false
+      style: {
+        fontSize: '12px',
+        colors: '#666'
+      }
     }
   },
-  title: {
-    text: 'Rating Distribution',
-    align: 'center'
+  yaxis: {
+    title: {
+      text: 'Count'
+    },
+    min: 0,
+    max: 20,
+    tickAmount: 4,
+    labels: {
+      formatter: function(val: number) {
+        return val.toString();
+      }
+    }
   },
-  colors: ['#05062C', '#05062C', '#05062C', '#05062C', '#05062C']
+  grid: {
+    show: true,
+    strokeDashArray: 3,
+    borderColor: '#e0e0e0'
+  },
+  colors: ['#05062c'],
+  legend: {
+    show: false
+  }
 });
 
 // Update reviewChartSeries to use the specified color
@@ -257,34 +321,12 @@ const reviewChartSeries = ref([
   }
 ]);
 
-// Insights chart configuration
-const insightsChartOptions = ref({
-  chart: {
-    type: 'bar',
-  },
-  plotOptions: {
-    bar: {
-      horizontal: true,
-    },
-  },
-  dataLabels: {
-    enabled: true
-  },
-  xaxis: {
-    categories: ['Website Clicks', 'Call Button Clicks'],
-  },
-  title: {
-    text: 'Profile Interactions',
-    align: 'center'
-  }
-});
-
-// Update insightsChartSeries to use the specified color
+// Update insightsChartSeries to use the specified color (keeping for data)
 const insightsChartSeries = ref([
   {
     name: 'Count',
     data: [0, 0],
-    color: '#EC9714' // Set color for Insights
+    color: '#F2C037' // Set color for Insights
   }
 ]);
 
@@ -292,61 +334,66 @@ const insightsChartSeries = ref([
 const loadReviews = async () => {
   if (!selectedClient.value) return;
 
+  const { startDate, endDate } = getDateRange(selectedPeriod.value!.value);
+  const startTime = `${startDate}T00:00:00Z`;
+  const endTime = `${endDate}T23:59:59Z`;
+  
   isLoadingReviews.value = true;
+  hasReviewsError.value = false;
   try {
-    const { startDate, endDate } = getDateRange(selectedPeriod.value!.value);
-    // add the time
-    const startTime = `${startDate}T00:00:00Z`;
-    const endTime = `${endDate}T23:59:59Z`;
     const response = await apiService.getReviews(startTime, endTime, selectedClient.value.id);
-
-    // Aggregate ratings across all locations (now already filtered by backend)
-    const totalRatings = {
-      one: 0,
-      two: 0,
-      three: 0,
-      four: 0,
-      five: 0
-    };
-
-    let totalWebsiteClicks = 0;
-    let totalCallButtonClicks = 0;
-
-    (response.locations ?? []).forEach(location => {
-      totalRatings.one += location.review_ratings.one;
-      totalRatings.two += location.review_ratings.two;
-      totalRatings.three += location.review_ratings.three;
-      totalRatings.four += location.review_ratings.four;
-      totalRatings.five += location.review_ratings.five;
-
-      totalWebsiteClicks += location.insights.number_of_business_profile_website_clicked;
-      totalCallButtonClicks += location.insights.number_of_business_profile_call_button_clicked;
-    });
-
-    // Update review chart
-    reviewChartSeries.value = [{
-      name: 'Reviews',
-      data: [
-        totalRatings.one,
-        totalRatings.two,
-        totalRatings.three,
-        totalRatings.four,
-        totalRatings.five
-      ],
-    }];
-
-    // Update insights chart
-    insightsChartSeries.value = [{
-      name: 'Count',
-      data: [totalWebsiteClicks, totalCallButtonClicks],
-      color: '#EC9714'
-    }];
-
-  } catch (error) {
+    processReviewsData(response);
+  } catch (error: any) {
     console.error('Failed to load reviews:', error);
+    hasReviewsError.value = true;
   } finally {
     isLoadingReviews.value = false;
   }
+};
+
+// Extract reviews processing into separate function for reuse
+const processReviewsData = (response: any) => {
+  // Aggregate ratings across all locations (now already filtered by backend)
+  const totalRatings = {
+    one: 0,
+    two: 0,
+    three: 0,
+    four: 0,
+    five: 0
+  };
+
+  let totalWebsiteClicks = 0;
+  let totalCallButtonClicks = 0;
+
+  (response.locations ?? []).forEach((location: any) => {
+    totalRatings.one += location.review_ratings.one;
+    totalRatings.two += location.review_ratings.two;
+    totalRatings.three += location.review_ratings.three;
+    totalRatings.four += location.review_ratings.four;
+    totalRatings.five += location.review_ratings.five;
+
+    totalWebsiteClicks += location.insights.number_of_business_profile_website_clicked;
+    totalCallButtonClicks += location.insights.number_of_business_profile_call_button_clicked;
+  });
+
+  // Update review chart
+  reviewChartSeries.value = [{
+    name: 'Reviews',
+    data: [
+      totalRatings.one,
+      totalRatings.two,
+      totalRatings.three,
+      totalRatings.four,
+      totalRatings.five
+    ],
+  }];
+
+  // Update insights chart
+  insightsChartSeries.value = [{
+    name: 'Count',
+    data: [totalWebsiteClicks, totalCallButtonClicks],
+    color: '#F2C037'
+  }];
 };
 
 // Watch for changes in selected client or period
@@ -361,5 +408,51 @@ watch([selectedClient, selectedPeriod], () => {
 /* Ensure charts take full width */
 .apexcharts-canvas {
   width: 100% !important;
+}
+
+/* Fade transition */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
+}
+
+/* Unified skeleton container styling */
+.unified-skeleton-container {
+  width: 100%;
+}
+
+/* Profile Interactions styling */
+.interaction-metric-card {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: box-shadow 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.interaction-metric-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.interaction-number {
+  font-size: 4rem;
+  font-weight: bold;
+  line-height: 1;
+  color: #F2C037;
+  margin-bottom: 0.5rem;
+}
+
+.interaction-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
 }
 </style>
