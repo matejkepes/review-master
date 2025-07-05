@@ -93,7 +93,6 @@ import { useApiService, type UserStatsResponse } from 'src/services/api-service'
 import ClientViewingIndicator from 'src/components/ClientViewingIndicator.vue';
 import SmartLoadingSpinner from 'src/components/SmartLoadingSpinner.vue';
 import DataVizSkeleton from 'src/components/DataVizSkeleton.vue';
-import { apiCache } from 'src/utils/apiCache';
 
 const { apiService } = useApiService();
 
@@ -200,23 +199,10 @@ const loadStats = async () => {
   const { startDate, endDate } = getDateRange(selectedPeriod.value!.value);
   const timeGrouping = selectedPeriod.value!.value.months ? 'Month' : 'Day';
   
-  // Check cache first
-  const cacheKey = apiCache.createStatsKey(selectedClient.value.id, startDate!, endDate!, timeGrouping);
-  const cachedResponse = apiCache.get<UserStatsResponse>(cacheKey);
-  
-  if (cachedResponse) {
-    parseStatsResponse(cachedResponse);
-    return;
-  }
-
   isLoading.value = true;
   hasStatsError.value = false;
   try {
     const response = await apiService.getUserStats(startDate!, endDate!, timeGrouping);
-    
-    // Cache the response
-    apiCache.set(cacheKey, response);
-    
     parseStatsResponse(response);
   } catch (error) {
     console.error('Failed to load stats:', error);
@@ -351,23 +337,10 @@ const loadReviews = async () => {
   const startTime = `${startDate}T00:00:00Z`;
   const endTime = `${endDate}T23:59:59Z`;
   
-  // Check cache first
-  const cacheKey = apiCache.createReviewsKey(selectedClient.value.id, startTime, endTime);
-  const cachedResponse = apiCache.get(cacheKey);
-  
-  if (cachedResponse) {
-    processReviewsData(cachedResponse);
-    return;
-  }
-
   isLoadingReviews.value = true;
   hasReviewsError.value = false;
   try {
     const response = await apiService.getReviews(startTime, endTime, selectedClient.value.id);
-    
-    // Cache the response
-    apiCache.set(cacheKey, response);
-    
     processReviewsData(response);
   } catch (error) {
     console.error('Failed to load reviews:', error);
