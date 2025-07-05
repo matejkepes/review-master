@@ -58,13 +58,13 @@
               <div class="row q-col-gutter-lg justify-center">
                 <div class="col-6">
                   <div class="interaction-metric-card">
-                    <div class="interaction-number text-orange">{{ insightsChartSeries[0]?.data[0] || 0 }}</div>
+                    <div class="interaction-number">{{ insightsChartSeries[0]?.data[0] || 0 }}</div>
                     <div class="interaction-label text-grey-6">WEBSITE CLICKS</div>
                   </div>
                 </div>
                 <div class="col-6">
                   <div class="interaction-metric-card">
-                    <div class="interaction-number text-orange">{{ insightsChartSeries[0]?.data[1] || 0 }}</div>
+                    <div class="interaction-number">{{ insightsChartSeries[0]?.data[1] || 0 }}</div>
                     <div class="interaction-label text-grey-6">CALL BUTTON CLICKS</div>
                   </div>
                 </div>
@@ -150,12 +150,12 @@ const chartSeries = ref<{ name: string; data: ChartDataPoint[]; color?: string }
   {
     name: 'Sent',
     data: [],
-    color: '#11189E'
+    color: '#2E3A5E'
   },
   {
     name: 'Requested',
     data: [],
-    color: '#F6CC53'
+    color: '#F2C037'
   }
 ]);
 
@@ -262,7 +262,7 @@ const parseStatsResponse = (response: UserStatsResponse) => {
         x: new Date(stat.date).getTime(),
         y: stat.sent
       })).reverse(),
-      color: '#11189E'
+      color: '#2E3A5E'
     },
     {
       name: 'Requested',
@@ -270,7 +270,7 @@ const parseStatsResponse = (response: UserStatsResponse) => {
         x: new Date(stat.date).getTime(),
         y: stat.requested
       })).reverse(),
-      color: '#F6CC53'
+      color: '#F2C037'
     }
   ];
 };
@@ -320,7 +320,7 @@ const reviewChartOptions = ref({
     strokeDashArray: 3,
     borderColor: '#e0e0e0'
   },
-  colors: ['#11189E'],
+  colors: ['#2E3A5E'],
   legend: {
     show: false
   }
@@ -339,7 +339,7 @@ const insightsChartSeries = ref([
   {
     name: 'Count',
     data: [0, 0],
-    color: '#EC9714' // Set color for Insights
+    color: '#F2C037' // Set color for Insights
   }
 ]);
 
@@ -418,7 +418,7 @@ const processReviewsData = (response: any) => {
   insightsChartSeries.value = [{
     name: 'Count',
     data: [totalWebsiteClicks, totalCallButtonClicks],
-    color: '#EC9714'
+    color: '#F2C037'
   }];
 };
 
@@ -471,7 +471,7 @@ watch([selectedClient, selectedPeriod], () => {
   font-size: 4rem;
   font-weight: bold;
   line-height: 1;
-  color: #EC9714;
+  color: #F2C037;
   margin-bottom: 0.5rem;
 }
 
