@@ -1,11 +1,12 @@
 <template>
-  <div class="smart-loading-container">
+  <div class="smart-loading-container" :class="{ 'section-header': sectionLevel }">
     <q-spinner-dots 
       size="40px" 
       color="primary" 
-      class="q-mb-md"
+      class="loading-spinner"
+      :class="{ 'section-spinner': sectionLevel }"
     />
-    <div class="loading-message">
+    <div class="loading-message" :class="{ 'section-message': sectionLevel }">
       {{ currentMessage }}
     </div>
   </div>
@@ -15,11 +16,13 @@
 import { ref, onMounted, onUnmounted } from 'vue';
 
 interface Props {
-  loadingType?: 'dashboard' | 'reports' | 'general'
+  loadingType?: 'dashboard' | 'reports' | 'reviews' | 'general'
+  sectionLevel?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  loadingType: 'general'
+  loadingType: 'general',
+  sectionLevel: false
 });
 
 const currentMessage = ref('');
@@ -37,6 +40,12 @@ const messages = {
     { time: 3000, text: "Gathering report data..." },
     { time: 8000, text: "Processing analytics..." },
     { time: 15000, text: "Almost ready - preparing final report..." }
+  ],
+  reviews: [
+    { time: 0, text: "Loading your reviews..." },
+    { time: 3000, text: "Analyzing customer feedback..." },
+    { time: 8000, text: "Calculating review metrics..." },
+    { time: 15000, text: "Preparing insights..." }
   ],
   general: [
     { time: 0, text: "Loading..." },
@@ -104,6 +113,29 @@ onUnmounted(() => {
   padding: 2rem;
 }
 
+/* Section-level loading styling */
+.section-header {
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding: 1rem 0;
+  gap: 1rem;
+  border-bottom: 1px solid #f0f0f0;
+  margin-bottom: 1.5rem;
+  background: linear-gradient(135deg, #fafafa 0%, #f5f5f5 100%);
+  border-radius: 8px;
+  padding: 1.5rem;
+}
+
+.loading-spinner {
+  margin-bottom: 1rem;
+}
+
+.section-spinner {
+  margin-bottom: 0;
+  animation: section-pulse 2s ease-in-out infinite;
+}
+
 .loading-message {
   color: #666;
   font-size: 14px;
@@ -112,4 +144,34 @@ onUnmounted(() => {
   font-weight: 500;
   transition: opacity 0.3s ease;
 }
+
+.section-message {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333;
+  text-align: left;
+  animation: section-text-pulse 2s ease-in-out infinite;
+}
+
+/* Enhanced animations for section-level loading */
+@keyframes section-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.8;
+  }
+}
+
+@keyframes section-text-pulse {
+  0%, 100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.7;
+  }
+}
+
 </style>

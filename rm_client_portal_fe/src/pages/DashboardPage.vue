@@ -35,10 +35,16 @@
 
       <!-- Reviews Section -->
       <div class="q-mt-xl">
-        <div class="text-h6 q-mb-md">Reviews</div>
+        <div v-if="!isLoadingReviews" class="text-h6 q-mb-md">Reviews</div>
 
         <div v-if="isLoadingReviews">
-          <SmartLoadingSpinner loadingType="dashboard" />
+          <!-- Section-level loading message -->
+          <SmartLoadingSpinner loadingType="reviews" :sectionLevel="true" />
+          
+          <!-- Single unified content area -->
+          <div class="unified-skeleton-container">
+            <DataVizSkeleton />
+          </div>
         </div>
         <div v-else-if="hasReviewsError" class="text-center q-pa-lg">
           <q-icon name="error_outline" size="48px" color="negative" class="q-mb-md" />
@@ -52,10 +58,10 @@
               <apexchart type="bar" height="350" :options="reviewChartOptions" :series="reviewChartSeries" />
             </div>
 
-          <!-- Insights -->
-          <div class="col-12 q-mt-md">
-            <apexchart type="bar" height="350" :options="insightsChartOptions" :series="insightsChartSeries" />
-          </div>
+            <!-- Insights -->
+            <div class="col-12 q-mt-md">
+              <apexchart type="bar" height="350" :options="insightsChartOptions" :series="insightsChartSeries" />
+            </div>
           </div>
         </transition>
       </div>
@@ -69,6 +75,7 @@ import { useStore } from 'stores/store';
 import { useApiService, type UserStatsResponse } from 'src/services/api-service';
 import ClientViewingIndicator from 'src/components/ClientViewingIndicator.vue';
 import SmartLoadingSpinner from 'src/components/SmartLoadingSpinner.vue';
+import DataVizSkeleton from 'src/components/DataVizSkeleton.vue';
 import { apiCache } from 'src/utils/apiCache';
 
 const { apiService } = useApiService();
@@ -417,5 +424,10 @@ watch([selectedClient, selectedPeriod], () => {
 }
 .fade-enter-from, .fade-leave-to {
   opacity: 0;
+}
+
+/* Unified skeleton container styling */
+.unified-skeleton-container {
+  width: 100%;
 }
 </style>
