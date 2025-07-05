@@ -17,7 +17,7 @@
 
         <!-- Stats content will go here -->
         <div v-if="isLoading">
-          <q-spinner-dots size="40px" color="primary" />
+          <SmartLoadingSpinner loadingType="dashboard" />
         </div>
         <div v-else class="row q-col-gutter-md">
           <div class="col-12">
@@ -31,7 +31,7 @@
         <div class="text-h6 q-mb-md">Reviews</div>
 
         <div v-if="isLoadingReviews">
-          <q-spinner-dots size="40px" color="primary" />
+          <SmartLoadingSpinner loadingType="dashboard" />
         </div>
         <div v-else class="row q-col-gutter-md">
           <!-- Ratings Distribution -->
@@ -54,6 +54,8 @@ import { computed, ref, watch } from 'vue';
 import { useStore } from 'stores/store';
 import { useApiService, type UserStatsResponse } from 'src/services/api-service';
 import ClientViewingIndicator from 'src/components/ClientViewingIndicator.vue';
+import SmartLoadingSpinner from 'src/components/SmartLoadingSpinner.vue';
+import { apiCache } from 'src/utils/apiCache';
 
 const { apiService } = useApiService();
 
@@ -155,15 +157,25 @@ const getDateRange = (period: { days?: number; months?: number }) => {
 const loadStats = async () => {
   if (!selectedClient.value) return;
 
+  const { startDate, endDate } = getDateRange(selectedPeriod.value!.value);
+  const timeGrouping = selectedPeriod.value!.value.months ? 'Month' : 'Day';
+  
+  // Check cache first
+  const cacheKey = apiCache.createStatsKey(selectedClient.value.id, startDate!, endDate!, timeGrouping);
+  const cachedResponse = apiCache.get<UserStatsResponse>(cacheKey);
+  
+  if (cachedResponse) {
+    parseStatsResponse(cachedResponse);
+    return;
+  }
+
   isLoading.value = true;
   try {
-    const { startDate, endDate } = getDateRange(selectedPeriod.value!.value);
-    const response = await apiService.getUserStats(
-      startDate!,
-      endDate!,
-      // "Day" or "Month"
-      selectedPeriod.value!.value.months ? 'Month' : 'Day'
-    );
+    const response = await apiService.getUserStats(startDate!, endDate!, timeGrouping);
+    
+    // Cache the response
+    apiCache.set(cacheKey, response);
+    
     parseStatsResponse(response);
   } catch (error) {
     console.error('Failed to load stats:', error);
@@ -292,61 +304,77 @@ const insightsChartSeries = ref([
 const loadReviews = async () => {
   if (!selectedClient.value) return;
 
+  const { startDate, endDate } = getDateRange(selectedPeriod.value!.value);
+  const startTime = `${startDate}T00:00:00Z`;
+  const endTime = `${endDate}T23:59:59Z`;
+  
+  // Check cache first
+  const cacheKey = apiCache.createReviewsKey(selectedClient.value.id, startTime, endTime);
+  const cachedResponse = apiCache.get(cacheKey);
+  
+  if (cachedResponse) {
+    processReviewsData(cachedResponse);
+    return;
+  }
+
   isLoadingReviews.value = true;
   try {
-    const { startDate, endDate } = getDateRange(selectedPeriod.value!.value);
-    // add the time
-    const startTime = `${startDate}T00:00:00Z`;
-    const endTime = `${endDate}T23:59:59Z`;
     const response = await apiService.getReviews(startTime, endTime, selectedClient.value.id);
-
-    // Aggregate ratings across all locations (now already filtered by backend)
-    const totalRatings = {
-      one: 0,
-      two: 0,
-      three: 0,
-      four: 0,
-      five: 0
-    };
-
-    let totalWebsiteClicks = 0;
-    let totalCallButtonClicks = 0;
-
-    (response.locations ?? []).forEach(location => {
-      totalRatings.one += location.review_ratings.one;
-      totalRatings.two += location.review_ratings.two;
-      totalRatings.three += location.review_ratings.three;
-      totalRatings.four += location.review_ratings.four;
-      totalRatings.five += location.review_ratings.five;
-
-      totalWebsiteClicks += location.insights.number_of_business_profile_website_clicked;
-      totalCallButtonClicks += location.insights.number_of_business_profile_call_button_clicked;
-    });
-
-    // Update review chart
-    reviewChartSeries.value = [{
-      name: 'Reviews',
-      data: [
-        totalRatings.one,
-        totalRatings.two,
-        totalRatings.three,
-        totalRatings.four,
-        totalRatings.five
-      ],
-    }];
-
-    // Update insights chart
-    insightsChartSeries.value = [{
-      name: 'Count',
-      data: [totalWebsiteClicks, totalCallButtonClicks],
-      color: '#EC9714'
-    }];
-
+    
+    // Cache the response
+    apiCache.set(cacheKey, response);
+    
+    processReviewsData(response);
   } catch (error) {
     console.error('Failed to load reviews:', error);
   } finally {
     isLoadingReviews.value = false;
   }
+};
+
+// Extract reviews processing into separate function for reuse
+const processReviewsData = (response: any) => {
+  // Aggregate ratings across all locations (now already filtered by backend)
+  const totalRatings = {
+    one: 0,
+    two: 0,
+    three: 0,
+    four: 0,
+    five: 0
+  };
+
+  let totalWebsiteClicks = 0;
+  let totalCallButtonClicks = 0;
+
+  (response.locations ?? []).forEach((location: any) => {
+    totalRatings.one += location.review_ratings.one;
+    totalRatings.two += location.review_ratings.two;
+    totalRatings.three += location.review_ratings.three;
+    totalRatings.four += location.review_ratings.four;
+    totalRatings.five += location.review_ratings.five;
+
+    totalWebsiteClicks += location.insights.number_of_business_profile_website_clicked;
+    totalCallButtonClicks += location.insights.number_of_business_profile_call_button_clicked;
+  });
+
+  // Update review chart
+  reviewChartSeries.value = [{
+    name: 'Reviews',
+    data: [
+      totalRatings.one,
+      totalRatings.two,
+      totalRatings.three,
+      totalRatings.four,
+      totalRatings.five
+    ],
+  }];
+
+  // Update insights chart
+  insightsChartSeries.value = [{
+    name: 'Count',
+    data: [totalWebsiteClicks, totalCallButtonClicks],
+    color: '#EC9714'
+  }];
 };
 
 // Watch for changes in selected client or period

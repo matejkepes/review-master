@@ -136,7 +136,7 @@
     <q-page-container class="q-px-lg q-py-md">
       <!-- Show loading spinner while clients are being fetched -->
       <div v-if="isLoading" class="row items-center justify-center" style="height: 100vh">
-        <q-spinner-dots size="40px" color="primary" />
+        <SmartLoadingSpinner loadingType="general" />
       </div>
 
       <!-- Show router view only after clients are loaded -->
