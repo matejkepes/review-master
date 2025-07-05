@@ -35,7 +35,6 @@
 
       <!-- Reviews Section -->
       <div class="q-mt-xl">
-        <div v-if="!isLoadingReviews" class="text-h6 q-mb-md">Reviews</div>
 
         <div v-if="isLoadingReviews">
           <!-- Section-level loading message -->
@@ -52,15 +51,33 @@
           <q-btn color="primary" label="Retry" @click="loadReviews" class="q-mt-md" />
         </div>
         <transition name="fade" appear>
-          <div v-if="!isLoadingReviews && !hasReviewsError" class="row q-col-gutter-md">
-            <!-- Ratings Distribution -->
-            <div class="col-12">
-              <apexchart type="bar" height="350" :options="reviewChartOptions" :series="reviewChartSeries" />
+          <div v-if="!isLoadingReviews && !hasReviewsError">
+            <!-- Profile Interactions -->
+            <div class="q-mt-xl">
+              <div class="text-h6 q-mb-lg">Profile Interactions</div>
+              <div class="row q-col-gutter-lg justify-center">
+                <div class="col-6">
+                  <div class="interaction-metric-card">
+                    <div class="interaction-number text-orange">{{ insightsChartSeries[0]?.data[0] || 0 }}</div>
+                    <div class="interaction-label text-grey-6">WEBSITE CLICKS</div>
+                  </div>
+                </div>
+                <div class="col-6">
+                  <div class="interaction-metric-card">
+                    <div class="interaction-number text-orange">{{ insightsChartSeries[0]?.data[1] || 0 }}</div>
+                    <div class="interaction-label text-grey-6">CALL BUTTON CLICKS</div>
+                  </div>
+                </div>
+              </div>
             </div>
 
-            <!-- Insights -->
-            <div class="col-12 q-mt-md">
-              <apexchart type="bar" height="350" :options="insightsChartOptions" :series="insightsChartSeries" />
+            <!-- Rating Distribution -->
+            <div class="q-mt-xl">
+              <div class="row items-center q-mb-md justify-between">
+                <div class="text-h6">Rating Distribution</div>
+                <q-btn flat round icon="menu" color="grey-6" />
+              </div>
+              <apexchart type="bar" height="350" :options="reviewChartOptions" :series="reviewChartSeries" />
             </div>
           </div>
         </transition>
@@ -262,11 +279,14 @@ const parseStatsResponse = (response: UserStatsResponse) => {
 const reviewChartOptions = ref({
   chart: {
     type: 'bar',
+    toolbar: {
+      show: false
+    }
   },
   plotOptions: {
     bar: {
       horizontal: false,
-      columnWidth: '55%',
+      columnWidth: '60%',
       distributed: true
     },
   },
@@ -274,16 +294,36 @@ const reviewChartOptions = ref({
     enabled: false
   },
   xaxis: {
-    categories: ['⭐', '⭐⭐', '⭐⭐⭐', '⭐⭐⭐⭐', '⭐⭐⭐⭐⭐'],
+    categories: ['1⭐', '2⭐', '3⭐', '4⭐', '5⭐'],
     labels: {
-      show: false
+      style: {
+        fontSize: '12px',
+        colors: '#666'
+      }
     }
   },
-  title: {
-    text: 'Rating Distribution',
-    align: 'center'
+  yaxis: {
+    title: {
+      text: 'Count'
+    },
+    min: 0,
+    max: 20,
+    tickAmount: 4,
+    labels: {
+      formatter: function(val: number) {
+        return val.toString();
+      }
+    }
   },
-  colors: ['#05062C', '#05062C', '#05062C', '#05062C', '#05062C']
+  grid: {
+    show: true,
+    strokeDashArray: 3,
+    borderColor: '#e0e0e0'
+  },
+  colors: ['#11189E'],
+  legend: {
+    show: false
+  }
 });
 
 // Update reviewChartSeries to use the specified color
@@ -294,29 +334,7 @@ const reviewChartSeries = ref([
   }
 ]);
 
-// Insights chart configuration
-const insightsChartOptions = ref({
-  chart: {
-    type: 'bar',
-  },
-  plotOptions: {
-    bar: {
-      horizontal: true,
-    },
-  },
-  dataLabels: {
-    enabled: true
-  },
-  xaxis: {
-    categories: ['Website Clicks', 'Call Button Clicks'],
-  },
-  title: {
-    text: 'Profile Interactions',
-    align: 'center'
-  }
-});
-
-// Update insightsChartSeries to use the specified color
+// Update insightsChartSeries to use the specified color (keeping for data)
 const insightsChartSeries = ref([
   {
     name: 'Count',
@@ -429,5 +447,38 @@ watch([selectedClient, selectedPeriod], () => {
 /* Unified skeleton container styling */
 .unified-skeleton-container {
   width: 100%;
+}
+
+/* Profile Interactions styling */
+.interaction-metric-card {
+  text-align: center;
+  padding: 2rem 1rem;
+  background: white;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  transition: box-shadow 0.2s ease;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.interaction-metric-card:hover {
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.interaction-number {
+  font-size: 4rem;
+  font-weight: bold;
+  line-height: 1;
+  color: #EC9714;
+  margin-bottom: 0.5rem;
+}
+
+.interaction-label {
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0.1em;
+  margin-top: 0.5rem;
 }
 </style>
