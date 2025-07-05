@@ -1,12 +1,22 @@
 <template>
-  <div class="smart-loading-container" :class="{ 'section-header': sectionLevel }">
+  <div 
+    class="smart-loading-container" 
+    :class="{ 'section-header': sectionLevel }"
+    role="status"
+    aria-live="polite"
+    :aria-label="`Loading: ${currentMessage}`"
+  >
     <q-spinner-dots 
       size="40px" 
       color="primary" 
       class="loading-spinner"
       :class="{ 'section-spinner': sectionLevel }"
+      aria-hidden="true"
     />
-    <div class="loading-message" :class="{ 'section-message': sectionLevel }">
+    <div 
+      class="loading-message" 
+      :class="{ 'section-message': sectionLevel }"
+    >
       {{ currentMessage }}
     </div>
   </div>
@@ -14,9 +24,12 @@
 
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue';
+import { loadingMessages, isValidLoadingType } from 'src/utils/loadingMessages';
+
+import type { LoadingType } from 'src/utils/loadingMessages';
 
 interface Props {
-  loadingType?: 'dashboard' | 'reports' | 'reviews' | 'general'
+  loadingType?: LoadingType
   sectionLevel?: boolean
 }
 
@@ -26,37 +39,17 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const currentMessage = ref('');
-const messageTimer = ref<NodeJS.Timeout | null>(null);
-
-const messages = {
-  dashboard: [
-    { time: 0, text: "Loading your dashboard..." },
-    { time: 3000, text: "Analyzing your Google Business data..." },
-    { time: 8000, text: "Processing performance metrics..." },
-    { time: 15000, text: "Almost ready - finalizing your reports..." }
-  ],
-  reports: [
-    { time: 0, text: "Loading your reports..." },
-    { time: 3000, text: "Gathering report data..." },
-    { time: 8000, text: "Processing analytics..." },
-    { time: 15000, text: "Almost ready - preparing final report..." }
-  ],
-  reviews: [
-    { time: 0, text: "Loading your reviews..." },
-    { time: 3000, text: "Analyzing customer feedback..." },
-    { time: 8000, text: "Calculating review metrics..." },
-    { time: 15000, text: "Preparing insights..." }
-  ],
-  general: [
-    { time: 0, text: "Loading..." },
-    { time: 3000, text: "Processing data..." },
-    { time: 8000, text: "Almost ready..." },
-    { time: 15000, text: "Finalizing..." }
-  ]
-};
+const messageTimer = ref<ReturnType<typeof setTimeout> | null>(null);
 
 const startMessageProgression = () => {
-  const messageSet = messages[props.loadingType];
+  const loadingType = isValidLoadingType(props.loadingType) ? props.loadingType : 'general';
+  const messageSet = loadingMessages[loadingType];
+  
+  if (!messageSet || messageSet.length === 0) {
+    currentMessage.value = 'Loading...';
+    return;
+  }
+  
   let messageIndex = 0;
   
   // Set initial message
@@ -173,5 +166,6 @@ onUnmounted(() => {
     opacity: 0.7;
   }
 }
+
 
 </style>

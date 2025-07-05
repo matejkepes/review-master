@@ -103,6 +103,7 @@ const isLoadingReviews = ref(false);
 const hasStatsError = ref(false);
 const hasReviewsError = ref(false);
 
+
 // Add this type near the top of the script
 type ChartDataPoint = {
   x: number;
@@ -204,7 +205,7 @@ const loadStats = async () => {
   try {
     const response = await apiService.getUserStats(startDate!, endDate!, timeGrouping);
     parseStatsResponse(response);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Failed to load stats:', error);
     hasStatsError.value = true;
   } finally {
@@ -342,7 +343,7 @@ const loadReviews = async () => {
   try {
     const response = await apiService.getReviews(startTime, endTime, selectedClient.value.id);
     processReviewsData(response);
-  } catch (error) {
+  } catch (error: any) {
     console.error('Failed to load reviews:', error);
     hasReviewsError.value = true;
   } finally {
