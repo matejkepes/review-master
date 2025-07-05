@@ -19,11 +19,18 @@
         <div v-if="isLoading">
           <SmartLoadingSpinner loadingType="dashboard" />
         </div>
-        <div v-else class="row q-col-gutter-md">
-          <div class="col-12">
-            <apexchart type="area" height="350" :options="chartOptions" :series="chartSeries" />
-          </div>
+        <div v-else-if="hasStatsError" class="text-center q-pa-lg">
+          <q-icon name="error_outline" size="48px" color="negative" class="q-mb-md" />
+          <div class="text-subtitle1 text-grey-7">Failed to load statistics</div>
+          <q-btn color="primary" label="Retry" @click="loadStats" class="q-mt-md" />
         </div>
+        <transition name="fade" appear>
+          <div v-if="!isLoading && !hasStatsError" class="row q-col-gutter-md">
+            <div class="col-12">
+              <apexchart type="area" height="350" :options="chartOptions" :series="chartSeries" />
+            </div>
+          </div>
+        </transition>
       </div>
 
       <!-- Reviews Section -->
@@ -33,17 +40,24 @@
         <div v-if="isLoadingReviews">
           <SmartLoadingSpinner loadingType="dashboard" />
         </div>
-        <div v-else class="row q-col-gutter-md">
-          <!-- Ratings Distribution -->
-          <div class="col-12">
-            <apexchart type="bar" height="350" :options="reviewChartOptions" :series="reviewChartSeries" />
-          </div>
+        <div v-else-if="hasReviewsError" class="text-center q-pa-lg">
+          <q-icon name="error_outline" size="48px" color="negative" class="q-mb-md" />
+          <div class="text-subtitle1 text-grey-7">Failed to load reviews</div>
+          <q-btn color="primary" label="Retry" @click="loadReviews" class="q-mt-md" />
+        </div>
+        <transition name="fade" appear>
+          <div v-if="!isLoadingReviews && !hasReviewsError" class="row q-col-gutter-md">
+            <!-- Ratings Distribution -->
+            <div class="col-12">
+              <apexchart type="bar" height="350" :options="reviewChartOptions" :series="reviewChartSeries" />
+            </div>
 
           <!-- Insights -->
           <div class="col-12 q-mt-md">
             <apexchart type="bar" height="350" :options="insightsChartOptions" :series="insightsChartSeries" />
           </div>
-        </div>
+          </div>
+        </transition>
       </div>
     </div>
   </q-page>
@@ -63,6 +77,8 @@ const { apiService } = useApiService();
 const store = useStore();
 const isLoading = ref(false);
 const isLoadingReviews = ref(false);
+const hasStatsError = ref(false);
+const hasReviewsError = ref(false);
 
 // Add this type near the top of the script
 type ChartDataPoint = {
@@ -170,6 +186,7 @@ const loadStats = async () => {
   }
 
   isLoading.value = true;
+  hasStatsError.value = false;
   try {
     const response = await apiService.getUserStats(startDate!, endDate!, timeGrouping);
     
@@ -179,6 +196,7 @@ const loadStats = async () => {
     parseStatsResponse(response);
   } catch (error) {
     console.error('Failed to load stats:', error);
+    hasStatsError.value = true;
   } finally {
     isLoading.value = false;
   }
@@ -318,6 +336,7 @@ const loadReviews = async () => {
   }
 
   isLoadingReviews.value = true;
+  hasReviewsError.value = false;
   try {
     const response = await apiService.getReviews(startTime, endTime, selectedClient.value.id);
     
@@ -327,6 +346,7 @@ const loadReviews = async () => {
     processReviewsData(response);
   } catch (error) {
     console.error('Failed to load reviews:', error);
+    hasReviewsError.value = true;
   } finally {
     isLoadingReviews.value = false;
   }
@@ -389,5 +409,13 @@ watch([selectedClient, selectedPeriod], () => {
 /* Ensure charts take full width */
 .apexcharts-canvas {
   width: 100% !important;
+}
+
+/* Fade transition */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.5s ease;
+}
+.fade-enter-from, .fade-leave-to {
+  opacity: 0;
 }
 </style>
