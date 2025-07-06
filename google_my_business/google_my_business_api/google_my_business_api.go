@@ -201,8 +201,7 @@ func GetLocationsFromJSON(in []byte, account string, db *sql.DB, lookupMode int)
 						locationName := fmt.Sprintf("%s", rec["title"])
 						// fmt.Printf("locationName = %s\n", locationName)
 
-						// Debug raw title field and handle null/empty case
-						log.Printf("DEBUG Location: Raw title field: %v, Type: %T", rec["title"], rec["title"])
+						// Handle null/empty case
 						if rec["title"] == nil || locationName == "" || locationName == "<nil>" || locationName == "null" {
 							log.Printf("WARNING: Location without title found - Using a fallback name")
 							// Try to use the name field for the location as fallback
@@ -242,11 +241,6 @@ func GetLocationsFromJSON(in []byte, account string, db *sql.DB, lookupMode int)
 						// Set the location path
 						grcfgmbln.GoogleMyBusinessLocationPath = fmt.Sprintf("%s/%s", account, rec["name"])
 
-						log.Printf("DEBUG Location: Using database configuration - Name: '%s', Path: '%s', Postal: '%s', ClientID: %d",
-							grcfgmbln.GoogleMyBusinessLocationName,
-							grcfgmbln.GoogleMyBusinessLocationPath,
-							grcfgmbln.GoogleMyBusinessPostalCode,
-							grcfgmbln.ClientID)
 
 						// Removed because some customers like to respond themselves but we always want the report for these
 						// if !(grcfgmbln.GoogleMyBusinessReplyToUnspecfifiedStarRating ||
