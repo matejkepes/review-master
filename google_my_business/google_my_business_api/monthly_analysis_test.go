@@ -27,7 +27,7 @@ func mockGetAccounts(client *http.Client) []string {
 // Mock GetLocations for testing
 // This function is patched by the test to return locations that already have client IDs set
 // This eliminates the need for the database lookup inside AnalyzeClientReviews
-func mockGetLocations(client *http.Client, account string, db *sql.DB, lookupMode int) []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode {
+func mockGetLocations(client *http.Client, account string, db *sql.DB, lookupMode int, clientFilter ...int) []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode {
 	// Return mock locations
 	return []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode{
 		{
@@ -587,7 +587,7 @@ func TestAnalyzeClientReviews(t *testing.T) {
 
 			// Create a special version of GetLocations that directly returns locations
 			// with the correct client ID, bypassing the database lookup
-			GetLocationsFunc = func(client *http.Client, account string, db *sql.DB, lookupMode int) []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode {
+			GetLocationsFunc = func(client *http.Client, account string, db *sql.DB, lookupMode int, clientFilter ...int) []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode {
 				// For tests, ensure locations have the correct client ID already set
 				clientID := uint64(1) // This matches our test client ID
 				return []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode{

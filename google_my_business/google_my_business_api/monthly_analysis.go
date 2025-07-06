@@ -233,35 +233,43 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 		// Step 4: Process each account
 		for _, account := range accounts {
 			// Get locations for this account
-			// Set report=true to get only locations with report enabled
-			allLocations := GetLocationsFunc(httpClient, account, sqlDb, database.LookupModeReport)
-			if len(allLocations) == 0 {
-				log.Printf("No locations found for account %s", account)
+			// When client filter is specified, pass all filtered client IDs to prevent WARNING messages
+			// for locations that don't belong to any of the filtered clients
+			var clientLocations []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode
+			if len(clientFilter) > 0 {
+				// Pass all filtered client IDs to avoid warnings for unrelated locations
+				allLocations := GetLocationsFunc(httpClient, account, sqlDb, database.LookupModeReport, clientFilter...)
+				// Filter to only this specific client
+				for _, loc := range allLocations {
+					if loc.ClientID == uint64(clientInfo.ClientID) {
+						clientLocations = append(clientLocations, loc)
+					}
+				}
+			} else {
+				// No client filter, get locations for this specific client
+				clientLocations = GetLocationsFunc(httpClient, account, sqlDb, database.LookupModeReport, clientInfo.ClientID)
+			}
+			if len(clientLocations) == 0 {
+				log.Printf("No locations found for client %s (ID: %d) in account %s",
+					clientInfo.ClientName, clientInfo.ClientID, account)
 				continue
 			}
 
-			// Filter locations to only include those belonging to the current client
-			var clientLocations []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode
-			for _, loc := range allLocations {
-				// If the location already has the correct client ID, use it directly
-				// This is especially useful for testing where we can pre-populate the client ID
-				if loc.ClientID == uint64(clientInfo.ClientID) {
-					clientLocations = append(clientLocations, loc)
-					continue
-				}
-
-				// Otherwise, look up each location by name and postal code to verify if it belongs to this client
+			// Note: clientLocations are already filtered to this client by the GetLocations function
+			// We need to ensure they have the correct lookup mode settings for analysis
+			for i, loc := range clientLocations {
+				// Double-check the location configuration for analysis mode
 				dbLocation := database.ConfigFromGoogleMyBusinessLocationNameAndPostalCode(
 					sqlDb,
 					loc.GoogleMyBusinessLocationName,
 					loc.GoogleMyBusinessPostalCode,
 					database.LookupModeAnalysis)
 
-				// If the location belongs to this client, add it to our filtered list
+				// If the location is properly configured for analysis, use the analysis config
 				if dbLocation.ClientID == uint64(clientInfo.ClientID) {
-					// Use the location from the API but ensure it has the correct client ID and settings
-					loc.ClientID = dbLocation.ClientID
-					clientLocations = append(clientLocations, loc)
+					// Update with analysis-mode configuration
+					clientLocations[i] = dbLocation
+					clientLocations[i].GoogleMyBusinessLocationPath = loc.GoogleMyBusinessLocationPath
 				}
 			}
 
