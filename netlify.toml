@@ -1,0 +1,12 @@
+[build]
+  base = "rm_client_portal_fe"
+  command = "quasar build"
+  publish = "dist/spa"
+
+[build.environment]
+  NODE_VERSION = "18"
+
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
