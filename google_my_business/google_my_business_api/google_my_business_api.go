@@ -156,12 +156,21 @@ func getLocationsPage(client *http.Client, account string, db *sql.DB, lookupMod
 	// change as of new API v1
 	resp, err := client.Get(googleMyBusinessBusinessInformationAPIURL + account + "/locations" + locationsParams + readMaskParams)
 	if err != nil {
-		log.Fatalf("Unable to retrieve locations error: %v", err)
+		log.Printf("Error calling Google My Business locations API for account %s: %v", account, err)
+		return []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode{}, ""
 	}
 	defer resp.Body.Close()
+	
+	// Check response status
+	if resp.StatusCode != http.StatusOK {
+		log.Printf("Non-200 response status when fetching locations for account %s: %d", account, resp.StatusCode)
+		return []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode{}, ""
+	}
+	
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf("Error reading body err: %v", err)
+		log.Printf("Error reading response body for locations in account %s: %v", account, err)
+		return []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode{}, ""
 	}
 	// change as of new API v1 location name does not include the accounts/{accountId}/ part of the path
 	grcfgmblns, nextPageToken := GetLocationsFromJSON(body, account, db, lookupMode, clientFilter...)
