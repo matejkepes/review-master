@@ -389,17 +389,26 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 			continue
 		}
 
-		// Save the client report
-		reportID, err := db.SaveClientReport(clientInfo.ClientID, periodStart, periodEnd, reportJSON)
-		if err != nil {
-			log.Printf("Error saving report for client %d: %v", clientInfo.ClientID, err)
-			summary.ClientsFailed++
-			summary.FailedClients = append(summary.FailedClients, FailedClientInfo{
-				ClientID:   clientInfo.ClientID,
-				ClientName: clientInfo.ClientName,
-				Error:      err.Error(),
-			})
-			continue
+		// Save the client report (unless --no-save flag is set)
+		var reportID int64
+		if !noSave {
+			var err error
+			reportID, err = db.SaveClientReport(clientInfo.ClientID, periodStart, periodEnd, reportJSON)
+			if err != nil {
+				log.Printf("Error saving report for client %d: %v", clientInfo.ClientID, err)
+				summary.ClientsFailed++
+				summary.FailedClients = append(summary.FailedClients, FailedClientInfo{
+					ClientID:   clientInfo.ClientID,
+					ClientName: clientInfo.ClientName,
+					Error:      err.Error(),
+				})
+				continue
+			}
+			log.Printf("Report saved to database for client %d", clientInfo.ClientID)
+		} else {
+			// Use a placeholder reportID for PDF generation when not saving
+			reportID = 0
+			log.Printf("Skipping database save for client %d (--no-save flag)", clientInfo.ClientID)
 		}
 
 		// Step 6: Generate PDF report
