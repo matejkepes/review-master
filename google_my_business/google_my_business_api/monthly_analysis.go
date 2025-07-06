@@ -126,6 +126,33 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 
 	log.Printf("Found %d clients with monthly review analysis enabled", len(clients))
 
+	// Filter clients if specific client IDs were provided
+	if len(clientFilter) > 0 {
+		var filteredClients []database.ClientWithMonthlyReviewAnalysis
+		clientMap := make(map[int]bool)
+		
+		// Create a map for fast lookup
+		for _, clientID := range clientFilter {
+			clientMap[clientID] = true
+		}
+		
+		// Filter clients to only include those in the filter
+		for _, client := range clients {
+			if clientMap[client.ClientID] {
+				filteredClients = append(filteredClients, client)
+				delete(clientMap, client.ClientID) // Remove found clients from map
+			}
+		}
+		
+		// Warn about client IDs that weren't found
+		for clientID := range clientMap {
+			log.Printf("Warning: Client ID %d not found or not enabled for monthly analysis", clientID)
+		}
+		
+		clients = filteredClients
+		log.Printf("Filtered to %d specific clients", len(clients))
+	}
+
 	// Early exit if no clients
 	if len(clients) == 0 {
 		summary.ElapsedTime = time.Since(startTime)
