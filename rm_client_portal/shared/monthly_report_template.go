@@ -56,7 +56,7 @@ const MonthlyReportTemplate = `
         }
         
         .container {
-            max-width: 1200px;
+            max-width: min(1200px, 100vw - 32px);
             margin: 0 auto;
             padding: 20px;
             min-height: 100vh;
@@ -205,7 +205,7 @@ const MonthlyReportTemplate = `
         /* Location card styles */
         .location-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
             gap: 20px;
         }
         
@@ -496,9 +496,14 @@ const MonthlyReportTemplate = `
         }
         
         /* Responsive adjustments */
-        @media (max-width: 768px) {
+        @media (max-width: 800px) {
             .location-cards {
                 grid-template-columns: 1fr;
+                gap: 16px;
+            }
+            
+            .container {
+                padding: 12px;
             }
             
             .report-header {
