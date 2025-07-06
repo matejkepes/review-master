@@ -4,7 +4,7 @@ import (
 	"html/template"
 	"log"
 	"rm_client_portal/database"
-	"rm_client_portal/shared"
+	"shared-templates"
 	"strconv"
 
 	"github.com/gin-gonic/gin"
@@ -112,7 +112,7 @@ func ReportHTMLHandler(c *gin.Context) {
 	}
 
 	// Try to find the report across all user's clients
-	var report *shared.ClientReportData
+	var report *shared_templates.ClientReportData
 
 	for _, client := range clients {
 		clientID := int(client.ID)
@@ -133,7 +133,7 @@ func ReportHTMLHandler(c *gin.Context) {
 	}
 
 	// Parse and execute the HTML template
-	tmpl, err := template.New("report").Parse(shared.MonthlyReportTemplate)
+	tmpl, err := template.New("report").Parse(shared_templates.MonthlyReportTemplate)
 	if err != nil {
 		log.Printf("Error parsing template: %v", err)
 		c.JSON(500, gin.H{

@@ -8,7 +8,7 @@ import (
 	"google_my_business/ai_service/review"
 	"google_my_business/database"
 	"google_my_business/email_service"
-	"google_my_business/shared"
+	"shared-templates"
 	"html/template"
 	"log"
 	"net/http"
@@ -40,7 +40,7 @@ type DBInterface interface {
 	GetClientsWithMonthlyReviewAnalysisEnabled() ([]database.ClientWithMonthlyReviewAnalysis, error)
 
 	// GetClientReportByClientAndPeriod checks if a report exists for a time period
-	GetClientReportByClientAndPeriod(clientID int, periodStart, periodEnd time.Time) (*shared.ClientReportData, error)
+	GetClientReportByClientAndPeriod(clientID int, periodStart, periodEnd time.Time) (*shared_templates.ClientReportData, error)
 
 	// DeleteClientReport deletes an existing report
 	DeleteClientReport(reportID int64) error
@@ -52,7 +52,7 @@ type DBInterface interface {
 // ReviewAnalyzerInterface defines the operations needed from the analyzer
 type ReviewAnalyzerInterface interface {
 	// Analyze processes a batch of reviews
-	Analyze(batch review.ReviewBatch) (*shared.AnalysisResult, error)
+	Analyze(batch review.ReviewBatch) (*shared_templates.AnalysisResult, error)
 }
 
 // FailedClientInfo contains information about a client that failed processing
@@ -86,8 +86,8 @@ type LocationReport struct {
 	LocationAddress string `json:"locationAddress"`
 	ReviewCount     int    `json:"reviewCount"`
 	// Embed the AnalysisResult fields directly to avoid double nesting
-	Analysis shared.Analysis          `json:"analysis"`
-	Metadata shared.AnalysisMetadata  `json:"metadata"`
+	Analysis shared_templates.Analysis          `json:"analysis"`
+	Metadata shared_templates.AnalysisMetadata  `json:"metadata"`
 	Reviews  []map[string]interface{} `json:"reviews,omitempty"`
 }
 
@@ -199,7 +199,7 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 		log.Printf("Found %d Google accounts for client %d", len(accounts), clientInfo.ClientID)
 
 		// Collection of location results for this client
-		var locationResults []shared.AnalysisResult
+		var locationResults []shared_templates.AnalysisResult
 		var locationReports []LocationReport
 
 		// Step 4: Process each account
@@ -269,8 +269,8 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 						LocationName:    location.GoogleMyBusinessLocationName,
 						LocationAddress: location.GoogleMyBusinessPostalCode,
 						ReviewCount:     0,
-						Analysis:        shared.Analysis{}, // Empty analysis struct
-						Metadata: shared.AnalysisMetadata{
+						Analysis:        shared_templates.Analysis{}, // Empty analysis struct
+						Metadata: shared_templates.AnalysisMetadata{
 							LocationName: location.GoogleMyBusinessLocationName,
 							LocationID:   location.GoogleMyBusinessLocationPath,
 							BusinessName: clientInfo.ClientName,
@@ -294,8 +294,8 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 						LocationName:    location.GoogleMyBusinessLocationName,
 						LocationAddress: location.GoogleMyBusinessPostalCode,
 						ReviewCount:     reviewCount,
-						Analysis:        shared.Analysis{}, // Empty analysis struct
-						Metadata: shared.AnalysisMetadata{
+						Analysis:        shared_templates.Analysis{}, // Empty analysis struct
+						Metadata: shared_templates.AnalysisMetadata{
 							LocationName: location.GoogleMyBusinessLocationName,
 							LocationID:   location.GoogleMyBusinessLocationPath,
 							BusinessName: clientInfo.ClientName,
@@ -413,7 +413,7 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 // generatePDFReport creates a PDF report for a client
 func generatePDFReport(clientInfo database.ClientWithMonthlyReviewAnalysis,
 	periodStart time.Time, periodEnd time.Time,
-	locationResults []shared.AnalysisResult, reportID int64) ([]byte, error) {
+	locationResults []shared_templates.AnalysisResult, reportID int64) ([]byte, error) {
 
 	log.Printf("Generating PDF report with %d location results", len(locationResults))
 
@@ -427,7 +427,7 @@ func generatePDFReport(clientInfo database.ClientWithMonthlyReviewAnalysis,
 	}
 
 	// Create client report data structure
-	clientReport := &shared.ClientReportData{
+	clientReport := &shared_templates.ClientReportData{
 		ReportID:        reportID,
 		ClientID:        clientInfo.ClientID,
 		ClientName:      clientInfo.ClientName,
@@ -438,7 +438,7 @@ func generatePDFReport(clientInfo database.ClientWithMonthlyReviewAnalysis,
 	}
 
 	// Create and parse template
-	tmpl, err := template.New("report").Parse(shared.MonthlyReportTemplate)
+	tmpl, err := template.New("report").Parse(shared_templates.MonthlyReportTemplate)
 	if err != nil {
 		return nil, fmt.Errorf("error parsing template: %v", err)
 	}

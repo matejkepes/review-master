@@ -1,6 +1,9 @@
-package shared
+package shared_templates
 
-// MonthlyReportTemplate contains the HTML template for monthly review analysis reports.
+// MonthlyReportTemplate contains the shared HTML template for monthly review analysis reports.
+//
+// This template is used by both google_my_business and rm_client_portal services
+// to ensure consistent report formatting across all generated PDFs and web views.
 //
 // This template is designed to be self-contained and portable between Go projects.
 // It uses JavaScript for all formatting and requires no external helper functions.

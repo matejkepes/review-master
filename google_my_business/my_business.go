@@ -58,7 +58,7 @@ import (
 	"google_my_business/database"
 	"google_my_business/email_service"
 	"google_my_business/google_my_business_api"
-	"google_my_business/shared"
+	"shared-templates"
 
 	_ "github.com/go-sql-driver/mysql"
 )
@@ -99,7 +99,7 @@ func (a *DBAdapter) GetClientsWithMonthlyReviewAnalysisEnabled() ([]database.Cli
 }
 
 // GetClientReportByClientAndPeriod checks if a report exists for a time period
-func (a *DBAdapter) GetClientReportByClientAndPeriod(clientID int, periodStart, periodEnd time.Time) (*shared.ClientReportData, error) {
+func (a *DBAdapter) GetClientReportByClientAndPeriod(clientID int, periodStart, periodEnd time.Time) (*shared_templates.ClientReportData, error) {
 	report, err := database.GetClientReportByClientAndPeriod(a.db, clientID, periodStart, periodEnd)
 	if err != nil {
 		// Check if it's a "not found" error

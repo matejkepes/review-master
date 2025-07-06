@@ -5,7 +5,7 @@ import (
 	"errors"
 	"google_my_business/ai_service/review"
 	"google_my_business/database"
-	"google_my_business/shared"
+	"shared-templates"
 	"net/http"
 	"testing"
 	"time"
@@ -145,7 +145,7 @@ type MockReviewAnalyzer struct {
 }
 
 // Analyze is a mock implementation
-func (m *MockReviewAnalyzer) Analyze(batch review.ReviewBatch) (*shared.AnalysisResult, error) {
+func (m *MockReviewAnalyzer) Analyze(batch review.ReviewBatch) (*shared_templates.AnalysisResult, error) {
 	m.analyzeWasCalled = true
 
 	if m.returnError {
@@ -153,16 +153,16 @@ func (m *MockReviewAnalyzer) Analyze(batch review.ReviewBatch) (*shared.Analysis
 	}
 
 	// Create a simple analysis result
-	return &shared.AnalysisResult{
-		Analysis: shared.Analysis{
-			OverallSummary: shared.OverallSummary{
+	return &shared_templates.AnalysisResult{
+		Analysis: shared_templates.Analysis{
+			OverallSummary: shared_templates.OverallSummary{
 				SummaryText:       "This is a test summary",
 				PositiveThemes:    []string{"Service", "Punctuality"},
 				NegativeThemes:    []string{"Communication"},
 				OverallPerception: "Positive",
 				AverageRating:     4.5,
 			},
-			SentimentAnalysis: shared.SentimentAnalysis{
+			SentimentAnalysis: shared_templates.SentimentAnalysis{
 				PositiveCount:      1,
 				PositivePercentage: 50.0,
 				NeutralCount:       1,
@@ -173,7 +173,7 @@ func (m *MockReviewAnalyzer) Analyze(batch review.ReviewBatch) (*shared.Analysis
 				SentimentTrend:     "Stable",
 			},
 		},
-		Metadata: shared.AnalysisMetadata{
+		Metadata: shared_templates.AnalysisMetadata{
 			GeneratedAt:   time.Now(),
 			ReviewCount:   2,
 			LocationID:    batch.LocationID,
@@ -190,7 +190,7 @@ func (m *MockReviewAnalyzer) Analyze(batch review.ReviewBatch) (*shared.Analysis
 // MockDB implements a minimal DB interface for testing
 type MockDB struct {
 	clients        []database.ClientWithMonthlyReviewAnalysis
-	existingReport *shared.ClientReportData
+	existingReport *shared_templates.ClientReportData
 	deleteError    error
 	saveError      error
 	savedReportID  int64
@@ -212,7 +212,7 @@ func (m *MockDB) GetClientsWithMonthlyReviewAnalysisEnabled() ([]database.Client
 	return m.clients, nil
 }
 
-func (m *MockDB) GetClientReportByClientAndPeriod(clientID int, periodStart, periodEnd time.Time) (*shared.ClientReportData, error) {
+func (m *MockDB) GetClientReportByClientAndPeriod(clientID int, periodStart, periodEnd time.Time) (*shared_templates.ClientReportData, error) {
 	return m.existingReport, nil
 }
 
@@ -335,7 +335,7 @@ func TestAnalyzeClientReviews(t *testing.T) {
 						},
 					},
 				},
-				existingReport: &shared.ClientReportData{
+				existingReport: &shared_templates.ClientReportData{
 					ReportID: 456,
 				},
 			},
@@ -363,7 +363,7 @@ func TestAnalyzeClientReviews(t *testing.T) {
 						},
 					},
 				},
-				existingReport: &shared.ClientReportData{
+				existingReport: &shared_templates.ClientReportData{
 					ReportID:    123,
 					ClientID:    1,
 					GeneratedAt: time.Now(),
@@ -440,7 +440,7 @@ func TestAnalyzeClientReviews(t *testing.T) {
 						},
 					},
 				},
-				existingReport: &shared.ClientReportData{
+				existingReport: &shared_templates.ClientReportData{
 					ReportID: 456,
 				},
 				deleteError: errors.New("failed to delete report"),

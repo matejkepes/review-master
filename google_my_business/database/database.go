@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"google_my_business/shared"
+	"shared-templates"
 	"log"
 	"time"
 
@@ -247,7 +247,7 @@ func SaveClientReport(db *sql.DB, clientID int, periodStart, periodEnd time.Time
 }
 
 // GetClientReportByID retrieves a specific report by its ID
-func GetClientReportByID(db *sql.DB, reportID int64) (*shared.ClientReportData, error) {
+func GetClientReportByID(db *sql.DB, reportID int64) (*shared_templates.ClientReportData, error) {
 	query := `
 		SELECT report_id, client_id, report_period_start, report_period_end, 
 			   generated_at, locations
@@ -281,13 +281,13 @@ func GetClientReportByID(db *sql.DB, reportID int64) (*shared.ClientReportData, 
 	}
 
 	// Unmarshal the location results JSON
-	var locationResults []shared.AnalysisResult
+	var locationResults []shared_templates.AnalysisResult
 	if err := json.Unmarshal(locationResultsJSON, &locationResults); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal location results: %w", err)
 	}
 
 	// Create and return the client report data
-	return &shared.ClientReportData{
+	return &shared_templates.ClientReportData{
 		ReportID:        reportID,
 		ClientID:        clientID,
 		ClientName:      clientName,
@@ -299,7 +299,7 @@ func GetClientReportByID(db *sql.DB, reportID int64) (*shared.ClientReportData, 
 }
 
 // GetClientReportsByClientID retrieves all reports for a specific client
-func GetClientReportsByClientID(db *sql.DB, clientID int) ([]*shared.ClientReportData, error) {
+func GetClientReportsByClientID(db *sql.DB, clientID int) ([]*shared_templates.ClientReportData, error) {
 	query := `
 		SELECT report_id, client_id, report_period_start, report_period_end, 
 			   generated_at, locations
@@ -321,7 +321,7 @@ func GetClientReportsByClientID(db *sql.DB, clientID int) ([]*shared.ClientRepor
 		clientName = fmt.Sprintf("Client %d", clientID) // Fallback if name not found
 	}
 
-	var reports []*shared.ClientReportData
+	var reports []*shared_templates.ClientReportData
 
 	for rows.Next() {
 		var reportID int64
@@ -343,13 +343,13 @@ func GetClientReportsByClientID(db *sql.DB, clientID int) ([]*shared.ClientRepor
 		}
 
 		// Unmarshal the location results JSON
-		var locationResults []shared.AnalysisResult
+		var locationResults []shared_templates.AnalysisResult
 		if err := json.Unmarshal(locationResultsJSON, &locationResults); err != nil {
 			return nil, fmt.Errorf("failed to unmarshal location results: %w", err)
 		}
 
 		// Create the client report data
-		report := &shared.ClientReportData{
+		report := &shared_templates.ClientReportData{
 			ReportID:        reportID,
 			ClientID:        clientID,
 			ClientName:      clientName,
@@ -370,7 +370,7 @@ func GetClientReportsByClientID(db *sql.DB, clientID int) ([]*shared.ClientRepor
 }
 
 // GetClientReportByClientAndPeriod retrieves a report for a specific client and time period
-func GetClientReportByClientAndPeriod(db *sql.DB, clientID int, periodStart, periodEnd time.Time) (*shared.ClientReportData, error) {
+func GetClientReportByClientAndPeriod(db *sql.DB, clientID int, periodStart, periodEnd time.Time) (*shared_templates.ClientReportData, error) {
 	query := `
 		SELECT report_id, client_id, report_period_start, report_period_end, 
 			   generated_at, locations
@@ -406,13 +406,13 @@ func GetClientReportByClientAndPeriod(db *sql.DB, clientID int, periodStart, per
 	}
 
 	// Unmarshal the location results JSON
-	var locationResults []shared.AnalysisResult
+	var locationResults []shared_templates.AnalysisResult
 	if err := json.Unmarshal(locationResultsJSON, &locationResults); err != nil {
 		return nil, fmt.Errorf("failed to unmarshal location results: %w", err)
 	}
 
 	// Create and return the client report data
-	return &shared.ClientReportData{
+	return &shared_templates.ClientReportData{
 		ReportID:        reportID,
 		ClientID:        clientID,
 		ClientName:      clientName,

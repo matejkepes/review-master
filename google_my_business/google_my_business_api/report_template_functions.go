@@ -2,7 +2,7 @@ package google_my_business_api
 
 import (
 	"bytes"
-	"google_my_business/shared"
+	"shared-templates"
 	"html/template"
 )
 
@@ -12,11 +12,11 @@ func CreateReportTemplate() (*template.Template, error) {
 	tmpl := template.New("report")
 
 	// Parse the template
-	return tmpl.Parse(shared.MonthlyReportTemplate)
+	return tmpl.Parse(shared_templates.MonthlyReportTemplate)
 }
 
 // RenderReportToString renders the report template to a string
-func RenderReportToString(data *shared.ClientReportData) (string, error) {
+func RenderReportToString(data *shared_templates.ClientReportData) (string, error) {
 	tmpl, err := CreateReportTemplate()
 	if err != nil {
 		return "", err

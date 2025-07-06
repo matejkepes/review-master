@@ -6,6 +6,7 @@ require (
 	github.com/spf13/viper v1.19.0
 	golang.org/x/oauth2 v0.24.0
 	gopkg.in/natefinch/lumberjack.v2 v2.2.1
+	shared-templates v0.0.0
 )
 
 require (
@@ -66,3 +67,5 @@ require (
 	gopkg.in/testfixtures.v2 v2.6.0
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+replace shared-templates => ../shared-templates
