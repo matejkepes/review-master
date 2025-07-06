@@ -119,12 +119,13 @@ func GetAccountsFromJSON(in []byte) []string {
 
 // GetLocations - get locations for account
 // lookupMode parameter indicates which mode to use (reply, report, or analysis)
-func GetLocations(client *http.Client, account string, db *sql.DB, lookupMode int) []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode {
+// clientFilter parameter optionally filters locations to only those belonging to specific clients
+func GetLocations(client *http.Client, account string, db *sql.DB, lookupMode int, clientFilter ...int) []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode {
 	var pageToken string
 	var grcfgmblns []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode
 
 	for {
-		grcfgmblnsp, nextPageToken := getLocationsPage(client, account, db, lookupMode, pageToken)
+		grcfgmblnsp, nextPageToken := getLocationsPage(client, account, db, lookupMode, pageToken, clientFilter...)
 		grcfgmblns = append(grcfgmblns, grcfgmblnsp...)
 		if nextPageToken == "" {
 			break
@@ -138,7 +139,8 @@ func GetLocations(client *http.Client, account string, db *sql.DB, lookupMode in
 // getLocationsPage - get locations for account page at a time (default page size is 100)
 // lookupMode parameter indicates which mode to use (reply, report, or analysis)
 // pageToken parameter indicates when the locations has already been called and there are more results
-func getLocationsPage(client *http.Client, account string, db *sql.DB, lookupMode int, pageToken string) ([]database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode, string) {
+// clientFilter parameter optionally filters locations to only those belonging to specific clients
+func getLocationsPage(client *http.Client, account string, db *sql.DB, lookupMode int, pageToken string, clientFilter ...int) ([]database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode, string) {
 	locationsParams := ""
 	if pageToken != "" {
 		locationsParams += "?pageToken=" + pageToken
@@ -154,21 +156,31 @@ func getLocationsPage(client *http.Client, account string, db *sql.DB, lookupMod
 	// change as of new API v1
 	resp, err := client.Get(googleMyBusinessBusinessInformationAPIURL + account + "/locations" + locationsParams + readMaskParams)
 	if err != nil {
-		log.Fatalf("Unable to retrieve locations error: %v", err)
+		log.Printf("Error calling Google My Business locations API for account %s: %v", account, err)
+		return []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode{}, ""
 	}
 	defer resp.Body.Close()
+	
+	// Check response status
+	if resp.StatusCode != http.StatusOK {
+		log.Printf("Non-200 response status when fetching locations for account %s: %d", account, resp.StatusCode)
+		return []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode{}, ""
+	}
+	
 	body, err := io.ReadAll(resp.Body)
 	if err != nil {
-		log.Fatalf("Error reading body err: %v", err)
+		log.Printf("Error reading response body for locations in account %s: %v", account, err)
+		return []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode{}, ""
 	}
 	// change as of new API v1 location name does not include the accounts/{accountId}/ part of the path
-	grcfgmblns, nextPageToken := GetLocationsFromJSON(body, account, db, lookupMode)
+	grcfgmblns, nextPageToken := GetLocationsFromJSON(body, account, db, lookupMode, clientFilter...)
 	return grcfgmblns, nextPageToken
 }
 
 // GetLocationsFromJSON - get locations from JSON
 // change as of new API v1 location name does not include the accounts/{accountId}/ part of the path
-func GetLocationsFromJSON(in []byte, account string, db *sql.DB, lookupMode int) ([]database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode, string) {
+// clientFilter parameter optionally filters locations to only those belonging to specific clients
+func GetLocationsFromJSON(in []byte, account string, db *sql.DB, lookupMode int, clientFilter ...int) ([]database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode, string) {
 	f := map[string]interface{}{
 		"key": "value",
 	}
@@ -201,8 +213,7 @@ func GetLocationsFromJSON(in []byte, account string, db *sql.DB, lookupMode int)
 						locationName := fmt.Sprintf("%s", rec["title"])
 						// fmt.Printf("locationName = %s\n", locationName)
 
-						// Debug raw title field and handle null/empty case
-						log.Printf("DEBUG Location: Raw title field: %v, Type: %T", rec["title"], rec["title"])
+						// Handle null/empty case
 						if rec["title"] == nil || locationName == "" || locationName == "<nil>" || locationName == "null" {
 							log.Printf("WARNING: Location without title found - Using a fallback name")
 							// Try to use the name field for the location as fallback
@@ -235,18 +246,33 @@ func GetLocationsFromJSON(in []byte, account string, db *sql.DB, lookupMode int)
 						// Load the location configuration from the database
 						grcfgmbln := database.ConfigFromGoogleMyBusinessLocationNameAndPostalCode(db, locationName, postalCode, lookupMode)
 						if grcfgmbln.ClientID == 0 {
-							log.Printf("WARNING: No configuration found for location '%s' with postal code '%s'", locationName, postalCode)
+							// Only log WARNING if no client filter is specified, or if the location might belong to a filtered client
+							if len(clientFilter) == 0 {
+								// No client filter specified, this is a legitimate warning
+								log.Printf("WARNING: No configuration found for location '%s' with postal code '%s'", locationName, postalCode)
+							}
+							// If client filter is specified, silently skip locations that don't match any client
 							continue
+						}
+
+						// If client filter is specified, check if this location belongs to one of the filtered clients
+						if len(clientFilter) > 0 {
+							clientMatches := false
+							for _, filterClientID := range clientFilter {
+								if grcfgmbln.ClientID == uint64(filterClientID) {
+									clientMatches = true
+									break
+								}
+							}
+							if !clientMatches {
+								// This location doesn't belong to any of the filtered clients, skip it silently
+								continue
+							}
 						}
 
 						// Set the location path
 						grcfgmbln.GoogleMyBusinessLocationPath = fmt.Sprintf("%s/%s", account, rec["name"])
 
-						log.Printf("DEBUG Location: Using database configuration - Name: '%s', Path: '%s', Postal: '%s', ClientID: %d",
-							grcfgmbln.GoogleMyBusinessLocationName,
-							grcfgmbln.GoogleMyBusinessLocationPath,
-							grcfgmbln.GoogleMyBusinessPostalCode,
-							grcfgmbln.ClientID)
 
 						// Removed because some customers like to respond themselves but we always want the report for these
 						// if !(grcfgmbln.GoogleMyBusinessReplyToUnspecfifiedStarRating ||

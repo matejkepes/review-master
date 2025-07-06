@@ -93,7 +93,8 @@ type LocationReport struct {
 
 // AnalyzeClientReviews processes reviews for all eligible clients
 func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer ReviewAnalyzerInterface,
-	targetMonth *time.Time, forceReprocess bool, emailSvc email_service.EmailService) (ProcessingSummary, error) {
+	targetMonth *time.Time, forceReprocess bool, emailSvc email_service.EmailService, 
+	debugMode bool, noSave bool, noEmail bool, clientFilter []int) (ProcessingSummary, error) {
 	startTime := time.Now()
 
 	// Initialize processing summary
@@ -124,6 +125,33 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 	}
 
 	log.Printf("Found %d clients with monthly review analysis enabled", len(clients))
+
+	// Filter clients if specific client IDs were provided
+	if len(clientFilter) > 0 {
+		var filteredClients []database.ClientWithMonthlyReviewAnalysis
+		clientMap := make(map[int]bool)
+		
+		// Create a map for fast lookup
+		for _, clientID := range clientFilter {
+			clientMap[clientID] = true
+		}
+		
+		// Filter clients to only include those in the filter
+		for _, client := range clients {
+			if clientMap[client.ClientID] {
+				filteredClients = append(filteredClients, client)
+				delete(clientMap, client.ClientID) // Remove found clients from map
+			}
+		}
+		
+		// Warn about client IDs that weren't found
+		for clientID := range clientMap {
+			log.Printf("Warning: Client ID %d not found or not enabled for monthly analysis", clientID)
+		}
+		
+		clients = filteredClients
+		log.Printf("Filtered to %d specific clients", len(clients))
+	}
 
 	// Early exit if no clients
 	if len(clients) == 0 {
@@ -205,35 +233,43 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 		// Step 4: Process each account
 		for _, account := range accounts {
 			// Get locations for this account
-			// Set report=true to get only locations with report enabled
-			allLocations := GetLocationsFunc(httpClient, account, sqlDb, database.LookupModeReport)
-			if len(allLocations) == 0 {
-				log.Printf("No locations found for account %s", account)
+			// When client filter is specified, pass all filtered client IDs to prevent WARNING messages
+			// for locations that don't belong to any of the filtered clients
+			var clientLocations []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode
+			if len(clientFilter) > 0 {
+				// Pass all filtered client IDs to avoid warnings for unrelated locations
+				allLocations := GetLocationsFunc(httpClient, account, sqlDb, database.LookupModeReport, clientFilter...)
+				// Filter to only this specific client
+				for _, loc := range allLocations {
+					if loc.ClientID == uint64(clientInfo.ClientID) {
+						clientLocations = append(clientLocations, loc)
+					}
+				}
+			} else {
+				// No client filter, get locations for this specific client
+				clientLocations = GetLocationsFunc(httpClient, account, sqlDb, database.LookupModeReport, clientInfo.ClientID)
+			}
+			if len(clientLocations) == 0 {
+				log.Printf("No locations found for client %s (ID: %d) in account %s",
+					clientInfo.ClientName, clientInfo.ClientID, account)
 				continue
 			}
 
-			// Filter locations to only include those belonging to the current client
-			var clientLocations []database.GoogleReviewsConfigFromGoogleMyBusinessLocationNameAndPostalCode
-			for _, loc := range allLocations {
-				// If the location already has the correct client ID, use it directly
-				// This is especially useful for testing where we can pre-populate the client ID
-				if loc.ClientID == uint64(clientInfo.ClientID) {
-					clientLocations = append(clientLocations, loc)
-					continue
-				}
-
-				// Otherwise, look up each location by name and postal code to verify if it belongs to this client
+			// Note: clientLocations are already filtered to this client by the GetLocations function
+			// We need to ensure they have the correct lookup mode settings for analysis
+			for i, loc := range clientLocations {
+				// Double-check the location configuration for analysis mode
 				dbLocation := database.ConfigFromGoogleMyBusinessLocationNameAndPostalCode(
 					sqlDb,
 					loc.GoogleMyBusinessLocationName,
 					loc.GoogleMyBusinessPostalCode,
 					database.LookupModeAnalysis)
 
-				// If the location belongs to this client, add it to our filtered list
+				// If the location is properly configured for analysis, use the analysis config
 				if dbLocation.ClientID == uint64(clientInfo.ClientID) {
-					// Use the location from the API but ensure it has the correct client ID and settings
-					loc.ClientID = dbLocation.ClientID
-					clientLocations = append(clientLocations, loc)
+					// Update with analysis-mode configuration
+					clientLocations[i] = dbLocation
+					clientLocations[i].GoogleMyBusinessLocationPath = loc.GoogleMyBusinessLocationPath
 				}
 			}
 
@@ -283,6 +319,34 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 				// Step 5.2: Convert reviews to the format expected by the analyzer
 				reviewBatch := prepareReviewBatch(reviews, location, clientInfo, periodStart, periodEnd)
 
+				// Debug output: Print reviews before LLM analysis if debug mode is enabled
+				if debugMode && len(reviewBatch.Reviews) > 0 {
+					fmt.Printf("\nDEBUG: Reviews for location %s before LLM analysis:\n", location.GoogleMyBusinessLocationName)
+					fmt.Printf("================================================\n")
+					for i, review := range reviewBatch.Reviews {
+						// Extract reviewer name from raw review data or use "Anonymous"
+						reviewerName := "Anonymous"
+						if i < len(reviews) {
+							rawReview := reviews[i]
+							if reviewer, exists := rawReview["reviewer"].(map[string]interface{}); exists {
+								if displayName, hasName := reviewer["displayName"].(string); hasName && displayName != "" {
+									reviewerName = displayName
+								}
+							}
+						}
+						
+						// Format date
+						dateStr := "Unknown"
+						if !review.Date.IsZero() {
+							dateStr = review.Date.Format("2006-01-02")
+						}
+						
+						// Print review in format: date, reviewer_name, stars, text
+						fmt.Printf("%s, %s, %d stars, %s\n", dateStr, reviewerName, review.Rating, review.Text)
+					}
+					fmt.Printf("================================================\n\n")
+				}
+
 				// Step 5.3: Analyze the reviews
 				// Check if the batch has any reviews before attempting analysis
 				if len(reviewBatch.Reviews) == 0 {
@@ -309,6 +373,19 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 				if err != nil {
 					log.Printf("Error analyzing reviews for location %s: %v", location.GoogleMyBusinessLocationName, err)
 					continue
+				}
+
+				// Debug output: Print AnalysisResult JSON after LLM analysis if debug mode is enabled
+				if debugMode {
+					fmt.Printf("\nDEBUG: AnalysisResult JSON for location %s after LLM analysis:\n", location.GoogleMyBusinessLocationName)
+					fmt.Printf("========================================================\n")
+					analysisJSON, err := json.MarshalIndent(analysisResult, "", "  ")
+					if err != nil {
+						fmt.Printf("Error marshaling analysis result to JSON: %v\n", err)
+					} else {
+						fmt.Printf("%s\n", string(analysisJSON))
+					}
+					fmt.Printf("========================================================\n\n")
 				}
 
 				// If location name is not properly set in metadata, set it explicitly
@@ -361,17 +438,26 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 			continue
 		}
 
-		// Save the client report
-		reportID, err := db.SaveClientReport(clientInfo.ClientID, periodStart, periodEnd, reportJSON)
-		if err != nil {
-			log.Printf("Error saving report for client %d: %v", clientInfo.ClientID, err)
-			summary.ClientsFailed++
-			summary.FailedClients = append(summary.FailedClients, FailedClientInfo{
-				ClientID:   clientInfo.ClientID,
-				ClientName: clientInfo.ClientName,
-				Error:      err.Error(),
-			})
-			continue
+		// Save the client report (unless --no-save flag is set)
+		var reportID int64
+		if !noSave {
+			var err error
+			reportID, err = db.SaveClientReport(clientInfo.ClientID, periodStart, periodEnd, reportJSON)
+			if err != nil {
+				log.Printf("Error saving report for client %d: %v", clientInfo.ClientID, err)
+				summary.ClientsFailed++
+				summary.FailedClients = append(summary.FailedClients, FailedClientInfo{
+					ClientID:   clientInfo.ClientID,
+					ClientName: clientInfo.ClientName,
+					Error:      err.Error(),
+				})
+				continue
+			}
+			log.Printf("Report saved to database for client %d", clientInfo.ClientID)
+		} else {
+			// Use a placeholder reportID for PDF generation when not saving
+			reportID = 0
+			log.Printf("Skipping database save for client %d (--no-save flag)", clientInfo.ClientID)
 		}
 
 		// Step 6: Generate PDF report
@@ -386,8 +472,8 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 				summary.PDFsGenerated++
 				log.Printf("PDF report generated for client %d", clientInfo.ClientID)
 
-				// Step 7: Send email with PDF report if we have an email service and PDF content
-				if emailSvc != nil && len(pdfContent) > 0 {
+				// Step 7: Send email with PDF report (unless --no-email flag is set)
+				if !noEmail && emailSvc != nil && len(pdfContent) > 0 {
 					err = sendReportEmail(emailSvc, clientInfo, periodStart, pdfContent)
 					if err != nil {
 						log.Printf("Error sending report email for client %d: %v", clientInfo.ClientID, err)
@@ -396,6 +482,8 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 						summary.EmailsSent++
 						log.Printf("Report email sent for client %d", clientInfo.ClientID)
 					}
+				} else if noEmail {
+					log.Printf("Skipping email sending for client %d (--no-email flag)", clientInfo.ClientID)
 				}
 			}
 		}

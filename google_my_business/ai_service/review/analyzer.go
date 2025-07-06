@@ -365,9 +365,7 @@ func (a *ReviewAnalyzer) Analyze(batch ReviewBatch) (*shared_templates.AnalysisR
 		return nil, errors.New("analysis result missing strengths")
 	}
 
-	if len(result.Analysis.KeyTakeaways.AreasForImprovement) == 0 {
-		return nil, errors.New("analysis result missing areas for improvement")
-	}
+	// Note: AreasForImprovement can be empty for businesses with only positive reviews
 
 	// Always calculate average rating using all reviews (including those without text)
 	// This ensures consistency regardless of what the AI provides

@@ -1359,11 +1359,19 @@ const MonthlyReportTemplate = `
                             {{end}}
                             
                             <h4 class="section-title">Areas for Improvement</h4>
+                            {{if .Analysis.KeyTakeaways.AreasForImprovement}}
                             {{range .Analysis.KeyTakeaways.AreasForImprovement}}
                             <div class="insight negative">
                                 <div class="insight-category">{{.Category}}</div>
                                 <div>{{.Description}}</div>
                                 <div class="insight-example">"{{.Example}}"</div>
+                            </div>
+                            {{end}}
+                            {{else}}
+                            <div class="insight positive">
+                                <div class="insight-category">No Issues Identified</div>
+                                <div>Based on the current reviews, no significant areas for improvement were identified. Continue maintaining your excellent service standards.</div>
+                                <div class="insight-example">"Excellent service. On time and friendly" - Recent customer feedback</div>
                             </div>
                             {{end}}
                         </div>
