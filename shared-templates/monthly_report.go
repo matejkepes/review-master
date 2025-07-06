@@ -141,12 +141,13 @@ const MonthlyReportTemplate = `
         
         .metrics-dashboard {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 25px;
+            grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+            gap: 20px;
             margin-top: 30px;
-            max-width: 800px;
+            max-width: 100%;
             margin-left: auto;
             margin-right: auto;
+            padding: 0 10px;
         }
         
         .metric-card {
@@ -208,7 +209,7 @@ const MonthlyReportTemplate = `
         /* Location card styles */
         .location-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 20px;
         }
         
@@ -499,7 +500,13 @@ const MonthlyReportTemplate = `
         }
         
         /* Responsive adjustments */
-        @media (max-width: 800px) {
+        @media (max-width: 768px) {
+            .metrics-dashboard {
+                grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+                gap: 15px;
+                padding: 0 5px;
+            }
+            
             .location-cards {
                 grid-template-columns: 1fr;
                 gap: 16px;
@@ -508,9 +515,49 @@ const MonthlyReportTemplate = `
             .container {
                 padding: 12px;
             }
+        }
+        
+        @media (max-width: 600px) {
+            .metrics-dashboard {
+                grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+                gap: 12px;
+                padding: 0;
+            }
+            
+            .metric-card {
+                padding: 20px 15px;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .metrics-dashboard {
+                grid-template-columns: 1fr !important;
+                gap: 10px;
+                padding: 0 5px;
+                max-width: calc(100vw - 20px);
+            }
+            
+            .metric-card {
+                padding: 18px 12px;
+                min-width: 0;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .metric-value {
+                font-size: 36px;
+            }
+            
+            .container {
+                padding: 8px;
+            }
             
             .report-header {
-                padding: 20px;
+                padding: 15px;
             }
             
             .header-content {
@@ -525,6 +572,40 @@ const MonthlyReportTemplate = `
             
             .average-rating {
                 font-size: 28px;
+            }
+        }
+        
+        @media (max-width: 360px) {
+            .metrics-dashboard {
+                grid-template-columns: 1fr !important;
+                gap: 8px;
+                padding: 0;
+                margin: 15px 0;
+                max-width: calc(100vw - 16px);
+            }
+            
+            .metric-card {
+                padding: 15px 10px;
+                margin: 0;
+                min-width: 0;
+                width: 100%;
+                box-sizing: border-box;
+            }
+            
+            .metric-value {
+                font-size: 32px;
+            }
+            
+            .metric-label {
+                font-size: 12px;
+            }
+            
+            .container {
+                padding: 6px;
+            }
+            
+            .executive-summary {
+                padding: 20px 15px;
             }
         }
         
