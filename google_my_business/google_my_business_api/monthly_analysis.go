@@ -423,8 +423,8 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 				summary.PDFsGenerated++
 				log.Printf("PDF report generated for client %d", clientInfo.ClientID)
 
-				// Step 7: Send email with PDF report if we have an email service and PDF content
-				if emailSvc != nil && len(pdfContent) > 0 {
+				// Step 7: Send email with PDF report (unless --no-email flag is set)
+				if !noEmail && emailSvc != nil && len(pdfContent) > 0 {
 					err = sendReportEmail(emailSvc, clientInfo, periodStart, pdfContent)
 					if err != nil {
 						log.Printf("Error sending report email for client %d: %v", clientInfo.ClientID, err)
@@ -433,6 +433,8 @@ func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer Revi
 						summary.EmailsSent++
 						log.Printf("Report email sent for client %d", clientInfo.ClientID)
 					}
+				} else if noEmail {
+					log.Printf("Skipping email sending for client %d (--no-email flag)", clientInfo.ClientID)
 				}
 			}
 		}
