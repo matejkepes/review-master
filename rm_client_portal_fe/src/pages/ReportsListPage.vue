@@ -10,7 +10,7 @@
 
       <!-- Loading spinner -->
       <div v-if="isLoading" class="row items-center justify-center q-pa-lg">
-        <q-spinner-dots size="40px" color="primary" />
+        <SmartLoadingSpinner loadingType="reports" />
       </div>
 
       <!-- Reports table -->
@@ -55,6 +55,7 @@ import { useRouter } from 'vue-router';
 import { useStore } from 'stores/store';
 import { apiService } from 'src/services/api-service';
 import ClientViewingIndicator from 'src/components/ClientViewingIndicator.vue';
+import SmartLoadingSpinner from 'src/components/SmartLoadingSpinner.vue';
 
 const router = useRouter();
 const store = useStore();
