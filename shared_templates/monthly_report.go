@@ -213,6 +213,14 @@ const MonthlyReportTemplate = `
             gap: 20px;
         }
         
+        @media (min-width: 1200px) {
+            .location-cards {
+                grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+                max-width: 1200px;
+                margin: 0 auto;
+            }
+        }
+        
         .location-card {
             background-color: #fff;
             border-radius: 8px;
