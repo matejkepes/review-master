@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"google_my_business/database"
-	"shared-templates"
+	"shared_templates"
 	"html/template"
 	"log"
 	"math/rand"

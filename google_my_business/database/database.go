@@ -4,7 +4,7 @@ import (
 	"database/sql"
 	"encoding/json"
 	"fmt"
-	"shared-templates"
+	"shared_templates"
 	"log"
 	"time"
 

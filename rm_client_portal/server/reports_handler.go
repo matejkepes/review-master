@@ -4,7 +4,7 @@ import (
 	"html/template"
 	"log"
 	"rm_client_portal/database"
-	"shared-templates"
+	"shared_templates"
 	"strconv"
 
 	"github.com/gin-gonic/gin"

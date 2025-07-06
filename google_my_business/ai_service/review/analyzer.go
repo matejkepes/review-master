@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"google_my_business/ai_service"
-	"shared-templates"
+	"shared_templates"
 	"strings"
 	"time"
 )

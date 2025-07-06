@@ -8,7 +8,7 @@ import (
 	"google_my_business/ai_service/review"
 	"google_my_business/database"
 	"google_my_business/email_service"
-	"shared-templates"
+	"shared_templates"
 	"html/template"
 	"log"
 	"net/http"

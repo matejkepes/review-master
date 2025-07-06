@@ -5,7 +5,7 @@ import (
 	"errors"
 	"google_my_business/ai_service/review"
 	"google_my_business/database"
-	"shared-templates"
+	"shared_templates"
 	"net/http"
 	"testing"
 	"time"

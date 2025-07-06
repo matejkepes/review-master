@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"rm_client_portal/config"
 	"rm_client_portal/database"
-	"shared-templates"
+	"shared_templates"
 	"time"
 
 	jwt "github.com/appleboy/gin-jwt"

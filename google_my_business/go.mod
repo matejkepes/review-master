@@ -28,7 +28,7 @@ require (
 	gopkg.in/natefinch/lumberjack.v2 v2.0.0
 	gopkg.in/resty.v1 v1.12.0 // indirect
 	gopkg.in/testfixtures.v2 v2.6.0 // indirect
-	shared-templates v0.0.0
+	shared_templates v0.0.0
 )
 
-replace shared-templates => ../shared-templates
+replace shared_templates => ../shared_templates

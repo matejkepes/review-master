@@ -18,7 +18,7 @@ Eliminates code duplication by providing a single source of truth for HTML templ
 ## Usage
 
 ```go
-import "shared-templates"
+import "shared_templates"
 
 // Parse the template
 tmpl, err := template.New("monthly_report").Parse(shared_templates.MonthlyReportTemplate)
@@ -39,8 +39,8 @@ Both consuming services include this module via:
 
 ```go
 // In go.mod
-require shared-templates v0.0.0
-replace shared-templates => ../shared-templates
+require shared_templates v0.0.0
+replace shared_templates => ../shared_templates
 ```
 
 ## Maintenance

@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"shared-templates"
+	"shared_templates"
 	"time"
 
 	// mysql driver

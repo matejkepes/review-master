@@ -58,7 +58,7 @@ import (
 	"google_my_business/database"
 	"google_my_business/email_service"
 	"google_my_business/google_my_business_api"
-	"shared-templates"
+	"shared_templates"
 
 	_ "github.com/go-sql-driver/mysql"
 )

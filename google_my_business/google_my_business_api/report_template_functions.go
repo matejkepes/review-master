@@ -2,7 +2,7 @@ package google_my_business_api
 
 import (
 	"bytes"
-	"shared-templates"
+	"shared_templates"
 	"html/template"
 )
 
