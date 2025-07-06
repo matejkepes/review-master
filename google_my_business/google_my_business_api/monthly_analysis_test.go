@@ -626,7 +626,7 @@ func TestAnalyzeClientReviews(t *testing.T) {
 			}
 
 			// Run test
-			summary, err := AnalyzeClientReviews(tt.db, httpClient, mockAnalyzer, targetMonthPtr, tt.forceReprocess, mockEmailSvc)
+			summary, err := AnalyzeClientReviews(tt.db, httpClient, mockAnalyzer, targetMonthPtr, tt.forceReprocess, mockEmailSvc, false, false, false, nil)
 
 			// Skip run checks
 			if tt.skipRun {

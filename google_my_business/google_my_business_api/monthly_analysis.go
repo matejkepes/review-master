@@ -93,7 +93,8 @@ type LocationReport struct {
 
 // AnalyzeClientReviews processes reviews for all eligible clients
 func AnalyzeClientReviews(db DBInterface, httpClient *http.Client, analyzer ReviewAnalyzerInterface,
-	targetMonth *time.Time, forceReprocess bool, emailSvc email_service.EmailService) (ProcessingSummary, error) {
+	targetMonth *time.Time, forceReprocess bool, emailSvc email_service.EmailService, 
+	debugMode bool, noSave bool, noEmail bool, clientFilter []int) (ProcessingSummary, error) {
 	startTime := time.Now()
 
 	// Initialize processing summary

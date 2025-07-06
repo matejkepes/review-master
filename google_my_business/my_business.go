@@ -44,6 +44,7 @@ import (
 	"os"
 	"path/filepath"
 	"regexp"
+	"strconv"
 	"strings"
 	"sync"
 	"time"
@@ -578,7 +579,38 @@ func min(a, b int) int {
 }
 
 // runMonthlyAnalysis runs the monthly analysis process
-func runMonthlyAnalysis(targetMonthStr string, forceReprocess bool, retryOnly bool, emailSummary string) {
+func runMonthlyAnalysis(targetMonthStr string, forceReprocess bool, retryOnly bool, emailSummary string, noEmail bool, noSave bool, clientsFilter string, debugMode bool) {
+	// Parse and validate client filter if provided
+	var clientIDs []int
+	if clientsFilter != "" {
+		// Split by comma and trim whitespace
+		clientStrs := strings.Split(clientsFilter, ",")
+		for _, clientStr := range clientStrs {
+			clientStr = strings.TrimSpace(clientStr)
+			if clientStr == "" {
+				continue // Skip empty strings
+			}
+			
+			// Parse to integer
+			clientID, err := strconv.Atoi(clientStr)
+			if err != nil {
+				log.Fatalf("Invalid client ID '%s': must be a valid integer", clientStr)
+			}
+			
+			if clientID <= 0 {
+				log.Fatalf("Invalid client ID '%d': must be a positive integer", clientID)
+			}
+			
+			clientIDs = append(clientIDs, clientID)
+		}
+		
+		if len(clientIDs) == 0 {
+			log.Fatalf("No valid client IDs found in filter: %s", clientsFilter)
+		}
+		
+		fmt.Printf("Processing specific clients: %v\n", clientIDs)
+	}
+
 	// Load system configuration
 	cfg := config.ReadProperties()
 
@@ -670,7 +702,7 @@ func runMonthlyAnalysis(targetMonthStr string, forceReprocess bool, retryOnly bo
 	}
 
 	// Run the analysis process
-	summary, err := google_my_business_api.AnalyzeClientReviews(dbAdapter, httpClient, analyzer, &targetMonth, forceReprocess, emailSvc)
+	summary, err := google_my_business_api.AnalyzeClientReviews(dbAdapter, httpClient, analyzer, &targetMonth, forceReprocess, emailSvc, debugMode, noSave, noEmail, clientIDs)
 	if err != nil {
 		log.Fatalf("Analysis failed: %v", err)
 	}
@@ -777,6 +809,19 @@ func main() {
 	var emailSummary string
 	flag.StringVar(&emailSummary, "email-summary", "", "Email address to send processing summary")
 
+	// New debugging and control flags for monthly analysis
+	var noEmail bool
+	flag.BoolVar(&noEmail, "no-email", false, "Save reports but skip email sending")
+
+	var noSave bool
+	flag.BoolVar(&noSave, "no-save", false, "Skip database save operations")
+
+	var clientsFilter string
+	flag.StringVar(&clientsFilter, "clients", "", "Process only specified client IDs (comma-separated)")
+
+	var debugMode bool
+	flag.BoolVar(&debugMode, "debug", false, "Print detailed debug information to stdout")
+
 	flag.Parse()
 
 	// Process positional arguments for monthly analysis (for backward compatibility)
@@ -788,7 +833,7 @@ func main() {
 
 	// Handle monthly analysis command
 	if runMonthlyAnalysisCmd {
-		runMonthlyAnalysis(monthlyAnalysisMonth, forceReprocess, retryOnly, emailSummary)
+		runMonthlyAnalysis(monthlyAnalysisMonth, forceReprocess, retryOnly, emailSummary, noEmail, noSave, clientsFilter, debugMode)
 		return
 	}
 
