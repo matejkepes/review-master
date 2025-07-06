@@ -748,7 +748,16 @@ func runMonthlyAnalysis(targetMonthStr string, forceReprocess bool, retryOnly bo
 	fmt.Printf("Total reviews: %d\n", summary.TotalReviews)
 	fmt.Printf("Total reviews analyzed: %d\n", summary.TotalReviewsAnalyzed)
 	fmt.Printf("PDFs generated: %d\n", summary.PDFsGenerated)
-	fmt.Printf("Emails sent: %d\n", summary.EmailsSent)
+	if noSave {
+		fmt.Printf("Reports saved: 0 (disabled)\n")
+	} else {
+		fmt.Printf("Reports saved: %d\n", summary.ClientsSucceeded)
+	}
+	if noEmail {
+		fmt.Printf("Emails sent: %d (disabled)\n", summary.EmailsSent)
+	} else {
+		fmt.Printf("Emails sent: %d\n", summary.EmailsSent)
+	}
 	fmt.Printf("Total processing time: %v\n", summary.ElapsedTime)
 
 	if len(summary.FailedClients) > 0 {
