@@ -5,7 +5,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"log"
-	"rm_client_portal/shared"
+	"shared_templates"
 	"time"
 
 	// mysql driver
@@ -13,17 +13,17 @@ import (
 )
 
 // validateLocationResults safely unmarshals location results JSON with NULL and error handling
-func validateLocationResults(data []byte) ([]shared.AnalysisResult, error) {
+func validateLocationResults(data []byte) ([]shared_templates.AnalysisResult, error) {
 	// Handle NULL or empty data
 	if len(data) == 0 {
 		log.Printf("Warning: NULL or empty location results data, returning empty slice")
-		return []shared.AnalysisResult{}, nil
+		return []shared_templates.AnalysisResult{}, nil
 	}
 
-	var results []shared.AnalysisResult
+	var results []shared_templates.AnalysisResult
 	if err := json.Unmarshal(data, &results); err != nil {
 		log.Printf("Warning: Failed to unmarshal location results JSON: %v", err)
-		return []shared.AnalysisResult{}, nil // Return empty slice instead of error to prevent crashes
+		return []shared_templates.AnalysisResult{}, nil // Return empty slice instead of error to prevent crashes
 	}
 
 	return results, nil
@@ -343,7 +343,7 @@ func ConfigFromGoogleMyBusinessLocationNameAndPostalCode(googleMyBusinessLocatio
 }
 
 // GetClientReportsByClientID retrieves all reports for a specific client
-func GetClientReportsByClientID(clientID int) ([]*shared.ClientReportData, error) {
+func GetClientReportsByClientID(clientID int) ([]*shared_templates.ClientReportData, error) {
 	query := `
 		SELECT report_id, client_id, report_period_start, report_period_end, 
 			   generated_at, locations
@@ -365,7 +365,7 @@ func GetClientReportsByClientID(clientID int) ([]*shared.ClientReportData, error
 		clientName = fmt.Sprintf("Client %d", clientID) // Fallback if name not found
 	}
 
-	var reports []*shared.ClientReportData
+	var reports []*shared_templates.ClientReportData
 
 	for rows.Next() {
 		var reportID int64
@@ -393,7 +393,7 @@ func GetClientReportsByClientID(clientID int) ([]*shared.ClientReportData, error
 		}
 
 		// Create the client report data
-		report := &shared.ClientReportData{
+		report := &shared_templates.ClientReportData{
 			ReportID:        reportID,
 			ClientID:        clientID,
 			ClientName:      clientName,
@@ -414,7 +414,7 @@ func GetClientReportsByClientID(clientID int) ([]*shared.ClientReportData, error
 }
 
 // GetClientReportByIDForClient retrieves a specific report by its ID with client permission check
-func GetClientReportByIDForClient(reportID int64, clientID int) (*shared.ClientReportData, error) {
+func GetClientReportByIDForClient(reportID int64, clientID int) (*shared_templates.ClientReportData, error) {
 	query := `
 		SELECT report_id, client_id, report_period_start, report_period_end, 
 			   generated_at, locations
@@ -454,7 +454,7 @@ func GetClientReportByIDForClient(reportID int64, clientID int) (*shared.ClientR
 	}
 
 	// Create and return the client report data
-	return &shared.ClientReportData{
+	return &shared_templates.ClientReportData{
 		ReportID:        reportID2,
 		ClientID:        clientID2,
 		ClientName:      clientName,

@@ -6,7 +6,7 @@ import (
 	"net/http"
 	"rm_client_portal/config"
 	"rm_client_portal/database"
-	"rm_client_portal/shared"
+	"shared_templates"
 	"time"
 
 	jwt "github.com/appleboy/gin-jwt"
@@ -243,7 +243,7 @@ func authJWTMiddleware() (*jwt.GinJWTMiddleware, error) {
 // APIMiddleware will add the log filename to the context
 func APIMiddleware(logFilename string) gin.HandlerFunc {
 	return func(c *gin.Context) {
-		c.Set(shared.LoggerFilename, logFilename)
+		c.Set(shared_templates.LoggerFilename, logFilename)
 		c.Next()
 	}
 }

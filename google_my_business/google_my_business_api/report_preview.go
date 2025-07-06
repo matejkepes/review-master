@@ -6,7 +6,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"google_my_business/database"
-	"google_my_business/shared"
+	"shared_templates"
 	"html/template"
 	"log"
 	"math/rand"
@@ -276,7 +276,7 @@ func handleReportPreview(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	`, clientIDStr, monthStr, clientIDStr, monthStr, clientIDStr, monthStr)))
 
 	// Create and parse template
-	tmpl, err := template.New("report").Parse(shared.MonthlyReportTemplate)
+	tmpl, err := template.New("report").Parse(shared_templates.MonthlyReportTemplate)
 
 	if err != nil {
 		log.Printf("Error parsing template: %v", err)
@@ -327,7 +327,7 @@ func handleDownloadHTML(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	}
 
 	// Create and parse template
-	tmpl, err := template.New("report").Parse(shared.MonthlyReportTemplate)
+	tmpl, err := template.New("report").Parse(shared_templates.MonthlyReportTemplate)
 	if err != nil {
 		log.Printf("Error parsing template: %v", err)
 		http.Error(w, "Error parsing template", http.StatusInternalServerError)
@@ -385,7 +385,7 @@ func handleGeneratePDF(w http.ResponseWriter, r *http.Request, db *sql.DB) {
 	var htmlBuffer bytes.Buffer
 
 	// Create and parse template
-	tmpl, err := template.New("report").Parse(shared.MonthlyReportTemplate)
+	tmpl, err := template.New("report").Parse(shared_templates.MonthlyReportTemplate)
 	if err != nil {
 		log.Printf("Error parsing template: %v", err)
 		http.Error(w, "Error parsing template", http.StatusInternalServerError)
@@ -564,7 +564,7 @@ func getClientByID(db *sql.DB, clientID int) (*Client, error) {
 }
 
 // generateDummyClientReportForClient creates sample data for a specific client and month
-func generateDummyClientReportForClient(db *sql.DB, clientID int, targetMonth time.Time) (*shared.ClientReportData, error) {
+func generateDummyClientReportForClient(db *sql.DB, clientID int, targetMonth time.Time) (*shared_templates.ClientReportData, error) {
 	// Get client info from database
 	client, err := getClientByID(db, clientID)
 	if err != nil {
@@ -583,7 +583,7 @@ func generateDummyClientReportForClient(db *sql.DB, clientID int, targetMonth ti
 
 	// Create dummy locations (2-4)
 	locationCount := 2 + rand.Intn(3)
-	locationResults := make([]shared.AnalysisResult, locationCount)
+	locationResults := make([]shared_templates.AnalysisResult, locationCount)
 
 	locationNames := []string{
 		fmt.Sprintf("%s - Main Location", client.Name),
@@ -620,7 +620,7 @@ func generateDummyClientReportForClient(db *sql.DB, clientID int, targetMonth ti
 		positiveThemes := []string{"Professional service", "Friendly staff", "Clean environment"}
 		negativeThemes := []string{"Wait times", "Parking issues"}
 
-		strengths := []shared.Insight{
+		strengths := []shared_templates.Insight{
 			{
 				Category:    "Service Quality",
 				Description: "Customers consistently praise the professional and efficient service delivery.",
@@ -633,7 +633,7 @@ func generateDummyClientReportForClient(db *sql.DB, clientID int, targetMonth ti
 			},
 		}
 
-		improvements := []shared.Insight{
+		improvements := []shared_templates.Insight{
 			{
 				Category:    "Wait Times",
 				Description: "Some customers mention longer than expected wait times during busy periods.",
@@ -642,9 +642,9 @@ func generateDummyClientReportForClient(db *sql.DB, clientID int, targetMonth ti
 		}
 
 		// Create negative review categories
-		negativeCategories := []shared.ReviewCategory{}
+		negativeCategories := []shared_templates.ReviewCategory{}
 		if negativeCount > 0 {
-			negativeCategories = []shared.ReviewCategory{
+			negativeCategories = []shared_templates.ReviewCategory{
 				{
 					Name:       "Wait Time",
 					Count:      negativeCount / 2,
@@ -677,16 +677,16 @@ func generateDummyClientReportForClient(db *sql.DB, clientID int, targetMonth ti
 		}
 
 		// Create the analysis result
-		locationResults[i] = shared.AnalysisResult{
-			Analysis: shared.Analysis{
-				OverallSummary: shared.OverallSummary{
+		locationResults[i] = shared_templates.AnalysisResult{
+			Analysis: shared_templates.Analysis{
+				OverallSummary: shared_templates.OverallSummary{
 					SummaryText:       fmt.Sprintf("Analysis of %s for %s shows positive customer sentiment with opportunities for improvement in operational efficiency.", locationName, targetMonth.Format("January 2006")),
 					PositiveThemes:    positiveThemes,
 					NegativeThemes:    negativeThemes,
 					OverallPerception: "Customers generally view the business positively with high satisfaction rates.",
 					AverageRating:     3.8 + rand.Float64()*1.0,
 				},
-				SentimentAnalysis: shared.SentimentAnalysis{
+				SentimentAnalysis: shared_templates.SentimentAnalysis{
 					PositiveCount:      positiveCount,
 					PositivePercentage: positivePercentage,
 					NeutralCount:       neutralCount,
@@ -696,20 +696,20 @@ func generateDummyClientReportForClient(db *sql.DB, clientID int, targetMonth ti
 					TotalReviews:       reviewCount,
 					SentimentTrend:     "stable",
 				},
-				KeyTakeaways: shared.KeyTakeaways{
+				KeyTakeaways: shared_templates.KeyTakeaways{
 					Strengths:           strengths,
 					AreasForImprovement: improvements,
 				},
-				NegativeReviewBreakdown: shared.NegativeReviewBreakdown{
+				NegativeReviewBreakdown: shared_templates.NegativeReviewBreakdown{
 					Categories:                 negativeCategories,
 					ImprovementRecommendations: recommendations,
 				},
-				TrainingRecommendations: shared.TrainingRecommendations{
+				TrainingRecommendations: shared_templates.TrainingRecommendations{
 					ForOperators: operatorTraining,
 					ForDrivers:   driverTraining,
 				},
 			},
-			Metadata: shared.AnalysisMetadata{
+			Metadata: shared_templates.AnalysisMetadata{
 				GeneratedAt:   time.Now(),
 				ReviewCount:   reviewCount,
 				LocationID:    fmt.Sprintf("accounts/123/locations/%d", 100+i),
@@ -730,7 +730,7 @@ func generateDummyClientReportForClient(db *sql.DB, clientID int, targetMonth ti
 	}
 
 	// Create the complete client report
-	return &shared.ClientReportData{
+	return &shared_templates.ClientReportData{
 		ReportID:        int64(rand.Intn(10000) + 1000),
 		ClientID:        clientID,
 		ClientName:      client.Name,
@@ -742,7 +742,7 @@ func generateDummyClientReportForClient(db *sql.DB, clientID int, targetMonth ti
 }
 
 // generateDummyClientReport creates sample data for the client report preview (legacy function for compatibility)
-func generateDummyClientReport() *shared.ClientReportData {
+func generateDummyClientReport() *shared_templates.ClientReportData {
 	// Seed random number generator
 	rand.Seed(time.Now().UnixNano())
 
@@ -754,7 +754,7 @@ func generateDummyClientReport() *shared.ClientReportData {
 
 	// Create dummy locations (3-5)
 	locationCount := 3 + rand.Intn(3)
-	locationResults := make([]shared.AnalysisResult, locationCount)
+	locationResults := make([]shared_templates.AnalysisResult, locationCount)
 
 	locationNames := []string{
 		"Downtown Office",
@@ -774,13 +774,13 @@ func generateDummyClientReport() *shared.ClientReportData {
 
 		// Define location-specific negative issues for consistency
 		var negativeThemes []string
-		var locationImprovements []shared.Insight
+		var locationImprovements []shared_templates.Insight
 		var negativeCategories []string
 
 		// Generate consistent negative themes based on location
 		if i == 0 { // Downtown Office
 			negativeThemes = []string{"Wait times", "Parking issues"}
-			locationImprovements = []shared.Insight{
+			locationImprovements = []shared_templates.Insight{
 				{
 					Category:    "Wait Times",
 					Description: "Some customers mention long wait times during peak hours.",
@@ -795,7 +795,7 @@ func generateDummyClientReport() *shared.ClientReportData {
 			negativeCategories = []string{"Wait Time", "Parking Problems", "Staff Issues"}
 		} else if i == 1 { // Airport Terminal
 			negativeThemes = []string{"Finding location", "Communication issues"}
-			locationImprovements = []shared.Insight{
+			locationImprovements = []shared_templates.Insight{
 				{
 					Category:    "Signage Issues",
 					Description: "Several customers reported difficulty finding the location due to poor signage.",
@@ -810,7 +810,7 @@ func generateDummyClientReport() *shared.ClientReportData {
 			negativeCategories = []string{"Location Problems", "Communication Issues", "Service Quality"}
 		} else { // Shopping Center, Hotel Branch, etc.
 			negativeThemes = []string{"Service speed", "Staff availability"}
-			locationImprovements = []shared.Insight{
+			locationImprovements = []shared_templates.Insight{
 				{
 					Category:    "Service Speed",
 					Description: "Customers mention slower than expected service delivery.",
@@ -842,7 +842,7 @@ func generateDummyClientReport() *shared.ClientReportData {
 		negativePercentage := float64(negativeCount) / float64(reviewCount) * 100
 
 		// Create strengths (2-3)
-		strengths := []shared.Insight{
+		strengths := []shared_templates.Insight{
 			{
 				Category:    "Staff Friendliness",
 				Description: "Customers frequently praise the friendly and helpful staff.",
@@ -852,19 +852,19 @@ func generateDummyClientReport() *shared.ClientReportData {
 
 		// Add location-specific strength
 		if i == 0 {
-			strengths = append(strengths, shared.Insight{
+			strengths = append(strengths, shared_templates.Insight{
 				Category:    "Central Location",
 				Description: "Many clients appreciate the convenient downtown location.",
 				Example:     "Located right in the center of town, very easy to find and get to.",
 			})
 		} else if i == 1 {
-			strengths = append(strengths, shared.Insight{
+			strengths = append(strengths, shared_templates.Insight{
 				Category:    "Transportation Access",
 				Description: "Customers value the easy access to transportation options.",
 				Example:     "Right next to the train station, making it very convenient for travelers.",
 			})
 		} else {
-			strengths = append(strengths, shared.Insight{
+			strengths = append(strengths, shared_templates.Insight{
 				Category:    "Modern Facilities",
 				Description: "Clients appreciate the clean and up-to-date facilities.",
 				Example:     "Everything is new and well-maintained, making for a pleasant experience.",
@@ -872,7 +872,7 @@ func generateDummyClientReport() *shared.ClientReportData {
 		}
 
 		// Create improvement areas (1-2)
-		improvements := []shared.Insight{
+		improvements := []shared_templates.Insight{
 			{
 				Category:    "Wait Times",
 				Description: "Some customers mention long wait times during peak hours.",
@@ -882,13 +882,13 @@ func generateDummyClientReport() *shared.ClientReportData {
 
 		// Add location-specific improvement area
 		if i == 1 {
-			improvements = append(improvements, shared.Insight{
+			improvements = append(improvements, shared_templates.Insight{
 				Category:    "Signage Issues",
 				Description: "Several customers reported difficulty finding the location due to poor signage.",
 				Example:     "Walked around for 10 minutes trying to find your office. Need better signs.",
 			})
 		} else if i == 2 {
-			improvements = append(improvements, shared.Insight{
+			improvements = append(improvements, shared_templates.Insight{
 				Category:    "Parking Concerns",
 				Description: "Customers mention limited parking options near the location.",
 				Example:     "Great service but the parking situation is terrible. Had to park three blocks away.",
@@ -955,16 +955,16 @@ func generateDummyClientReport() *shared.ClientReportData {
 		}
 
 		// Create the analysis result
-		locationResults[i] = shared.AnalysisResult{
-			Analysis: shared.Analysis{
-				OverallSummary: shared.OverallSummary{
+		locationResults[i] = shared_templates.AnalysisResult{
+			Analysis: shared_templates.Analysis{
+				OverallSummary: shared_templates.OverallSummary{
 					SummaryText:       fmt.Sprintf("Reviews for %s show generally positive customer experiences with some areas for improvement. Customers appreciate the staff friendliness but note concerns about wait times during busy periods.", locationName),
 					PositiveThemes:    positiveThemes,
 					NegativeThemes:    negativeThemes,
 					OverallPerception: "Customers generally view the business positively with most expressing satisfaction.",
 					AverageRating:     4.0 + rand.Float64(),
 				},
-				SentimentAnalysis: shared.SentimentAnalysis{
+				SentimentAnalysis: shared_templates.SentimentAnalysis{
 					PositiveCount:      positiveCount,
 					PositivePercentage: positivePercentage,
 					NeutralCount:       neutralCount,
@@ -974,20 +974,20 @@ func generateDummyClientReport() *shared.ClientReportData {
 					TotalReviews:       reviewCount,
 					SentimentTrend:     "improving",
 				},
-				KeyTakeaways: shared.KeyTakeaways{
+				KeyTakeaways: shared_templates.KeyTakeaways{
 					Strengths:           strengths,
 					AreasForImprovement: locationImprovements,
 				},
-				NegativeReviewBreakdown: shared.NegativeReviewBreakdown{
+				NegativeReviewBreakdown: shared_templates.NegativeReviewBreakdown{
 					Categories:                 generateCoherentNegativeCategories(negativeCount, negativeCategories),
 					ImprovementRecommendations: recommendations,
 				},
-				TrainingRecommendations: shared.TrainingRecommendations{
+				TrainingRecommendations: shared_templates.TrainingRecommendations{
 					ForOperators: operatorTraining,
 					ForDrivers:   driverTraining,
 				},
 			},
-			Metadata: shared.AnalysisMetadata{
+			Metadata: shared_templates.AnalysisMetadata{
 				GeneratedAt:   time.Now(),
 				ReviewCount:   reviewCount,
 				LocationID:    fmt.Sprintf("accounts/123/locations/%d", 100+i),
@@ -1005,7 +1005,7 @@ func generateDummyClientReport() *shared.ClientReportData {
 	}
 
 	// Create the complete client report
-	return &shared.ClientReportData{
+	return &shared_templates.ClientReportData{
 		ReportID:        123,
 		ClientID:        456,
 		ClientName:      "ABC Business Services",
@@ -1027,9 +1027,9 @@ func formatPercentage(val float64) string {
 }
 
 // generateRandomNegativeCategories generates random negative categories for the NegativeReviewBreakdown
-func generateRandomNegativeCategories(negativeCount int, locationIndex int) []shared.ReviewCategory {
+func generateRandomNegativeCategories(negativeCount int, locationIndex int) []shared_templates.ReviewCategory {
 	if negativeCount == 0 {
-		return []shared.ReviewCategory{}
+		return []shared_templates.ReviewCategory{}
 	}
 
 	// Define possible negative categories with realistic names
@@ -1073,7 +1073,7 @@ func generateRandomNegativeCategories(negativeCount int, locationIndex int) []sh
 	// Generate random distribution that adds up to 100%
 	remainingCount := negativeCount
 
-	categories := make([]shared.ReviewCategory, numCategories)
+	categories := make([]shared_templates.ReviewCategory, numCategories)
 
 	for i := 0; i < numCategories-1; i++ {
 		// Random count between 1 and remaining count
@@ -1083,7 +1083,7 @@ func generateRandomNegativeCategories(negativeCount int, locationIndex int) []sh
 		}
 		count := 1 + rand.Intn(maxCount)
 
-		categories[i] = shared.ReviewCategory{
+		categories[i] = shared_templates.ReviewCategory{
 			Name:       selectedCategories[i],
 			Count:      count,
 			Percentage: float64(count) / float64(negativeCount) * 100,
@@ -1093,7 +1093,7 @@ func generateRandomNegativeCategories(negativeCount int, locationIndex int) []sh
 	}
 
 	// Last category gets remaining count
-	categories[numCategories-1] = shared.ReviewCategory{
+	categories[numCategories-1] = shared_templates.ReviewCategory{
 		Name:       selectedCategories[numCategories-1],
 		Count:      remainingCount,
 		Percentage: float64(remainingCount) / float64(negativeCount) * 100,
@@ -1103,9 +1103,9 @@ func generateRandomNegativeCategories(negativeCount int, locationIndex int) []sh
 }
 
 // generateCoherentNegativeCategories generates negative categories for the NegativeReviewBreakdown
-func generateCoherentNegativeCategories(negativeCount int, negativeCategories []string) []shared.ReviewCategory {
+func generateCoherentNegativeCategories(negativeCount int, negativeCategories []string) []shared_templates.ReviewCategory {
 	if negativeCount == 0 {
-		return []shared.ReviewCategory{}
+		return []shared_templates.ReviewCategory{}
 	}
 
 	// Define possible negative categories with realistic names
@@ -1138,7 +1138,7 @@ func generateCoherentNegativeCategories(negativeCount int, negativeCategories []
 	// Generate random distribution that adds up to 100%
 	remainingCount := negativeCount
 
-	categories := make([]shared.ReviewCategory, numCategories)
+	categories := make([]shared_templates.ReviewCategory, numCategories)
 
 	for i := 0; i < numCategories-1; i++ {
 		// Random count between 1 and remaining count
@@ -1148,7 +1148,7 @@ func generateCoherentNegativeCategories(negativeCount int, negativeCategories []
 		}
 		count := 1 + rand.Intn(maxCount)
 
-		categories[i] = shared.ReviewCategory{
+		categories[i] = shared_templates.ReviewCategory{
 			Name:       selectedCategories[i],
 			Count:      count,
 			Percentage: float64(count) / float64(negativeCount) * 100,
@@ -1158,7 +1158,7 @@ func generateCoherentNegativeCategories(negativeCount int, negativeCategories []
 	}
 
 	// Last category gets remaining count
-	categories[numCategories-1] = shared.ReviewCategory{
+	categories[numCategories-1] = shared_templates.ReviewCategory{
 		Name:       selectedCategories[numCategories-1],
 		Count:      remainingCount,
 		Percentage: float64(remainingCount) / float64(negativeCount) * 100,

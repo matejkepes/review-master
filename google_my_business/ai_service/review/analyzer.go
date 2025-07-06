@@ -5,7 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"google_my_business/ai_service"
-	"google_my_business/shared"
+	"shared_templates"
 	"strings"
 	"time"
 )
@@ -249,7 +249,7 @@ Provide your analysis in the exact JSON format specified below:
 }
 
 // Analyze processes a batch of reviews and returns a structured analysis
-func (a *ReviewAnalyzer) Analyze(batch ReviewBatch) (*shared.AnalysisResult, error) {
+func (a *ReviewAnalyzer) Analyze(batch ReviewBatch) (*shared_templates.AnalysisResult, error) {
 	// Filter out reviews with empty text, but keep track of all ratings for average calculation
 	var filteredReviews []Review
 	var allRatings []int
@@ -280,29 +280,29 @@ func (a *ReviewAnalyzer) Analyze(batch ReviewBatch) (*shared.AnalysisResult, err
 			avgRating := total / float64(len(allRatings))
 
 			// Create a minimal analysis result with metadata
-			result := &shared.AnalysisResult{
-				Analysis: shared.Analysis{
-					OverallSummary: shared.OverallSummary{
+			result := &shared_templates.AnalysisResult{
+				Analysis: shared_templates.Analysis{
+					OverallSummary: shared_templates.OverallSummary{
 						SummaryText:       "No text content in reviews to analyze. Analysis based on ratings only.",
 						AverageRating:     avgRating,
 						PositiveThemes:    []string{"Not available - no review text"},
 						NegativeThemes:    []string{"Not available - no review text"},
 						OverallPerception: "Analysis limited to numeric ratings only.",
 					},
-					SentimentAnalysis: shared.SentimentAnalysis{
+					SentimentAnalysis: shared_templates.SentimentAnalysis{
 						TotalReviews:   len(allRatings),
 						SentimentTrend: "Unable to determine from ratings only",
 					},
-					KeyTakeaways: shared.KeyTakeaways{
-						Strengths: []shared.Insight{
+					KeyTakeaways: shared_templates.KeyTakeaways{
+						Strengths: []shared_templates.Insight{
 							{Category: "Limited Data", Description: "Unable to identify strengths without review text", Example: ""},
 						},
-						AreasForImprovement: []shared.Insight{
+						AreasForImprovement: []shared_templates.Insight{
 							{Category: "Limited Data", Description: "Unable to identify areas for improvement without review text", Example: ""},
 						},
 					},
 				},
-				Metadata: shared.AnalysisMetadata{
+				Metadata: shared_templates.AnalysisMetadata{
 					GeneratedAt:   time.Now(),
 					ReviewCount:   len(allRatings),
 					LocationID:    batch.LocationID,
@@ -345,7 +345,7 @@ func (a *ReviewAnalyzer) Analyze(batch ReviewBatch) (*shared.AnalysisResult, err
 	jsonData := response[jsonStart : jsonEnd+1]
 
 	// Parse the LLM response into a structured analysis result
-	result := &shared.AnalysisResult{}
+	result := &shared_templates.AnalysisResult{}
 	if err := json.Unmarshal([]byte(jsonData), result); err != nil {
 		// print the response
 		fmt.Println(response)
@@ -378,7 +378,7 @@ func (a *ReviewAnalyzer) Analyze(batch ReviewBatch) (*shared.AnalysisResult, err
 	result.Analysis.OverallSummary.AverageRating = total / float64(len(allRatings))
 
 	// Add metadata to the result
-	result.Metadata = shared.AnalysisMetadata{
+	result.Metadata = shared_templates.AnalysisMetadata{
 		GeneratedAt:   time.Now(),
 		ReviewCount:   len(allRatings), // Use the total count including non-text reviews
 		LocationID:    batch.LocationID,
